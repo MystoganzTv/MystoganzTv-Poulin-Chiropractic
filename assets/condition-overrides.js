@@ -18,6 +18,14 @@
     Home: "https://www.poulinchiro.com/data/uploads/Poulin-Cox-9-2021.jpg",
     About: "https://www.poulinchiro.com/data/images/mikepoulin--1--1.jpg",
   };
+  var VIDEO_LIBRARY = [
+    {
+      title: "Educational Video Spotlight",
+      description: "A patient-friendly video resource that fits naturally into Poulin Chiropractic's educational approach.",
+      youtubeId: "AMPFZ9gH-tE",
+      youtubeUrl: "https://www.youtube.com/watch?v=AMPFZ9gH-tE",
+    },
+  ];
   var HERO_POSITIONS = {
     Home: "center 22%",
     About: "center 18%",
@@ -446,6 +454,109 @@
       ".pc-home-hero-card-float *{" +
       "color:inherit !important;" +
       "}" +
+      ".pc-video-section{" +
+      "padding:5rem 1.5rem;" +
+      "background:linear-gradient(180deg, #f7fbfa 0%, #ffffff 100%);" +
+      "}" +
+      ".pc-video-shell{" +
+      "max-width:72rem;" +
+      "margin:0 auto;" +
+      "padding:2.1rem;" +
+      "border-radius:2rem;" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "background:#ffffff;" +
+      "box-shadow:0 28px 68px rgba(15,23,42,0.08);" +
+      "}" +
+      ".pc-video-grid{" +
+      "display:grid;" +
+      "grid-template-columns:minmax(0, 1.3fr) minmax(320px, 0.9fr);" +
+      "gap:2rem;" +
+      "align-items:center;" +
+      "}" +
+      ".pc-video-kicker{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "padding:0.42rem 0.72rem;" +
+      "border-radius:999px;" +
+      "background:rgba(29,111,102,0.08);" +
+      "color:hsl(var(--primary));" +
+      "font-size:0.72rem;" +
+      "font-weight:700;" +
+      "letter-spacing:0.16em;" +
+      "text-transform:uppercase;" +
+      "}" +
+      ".pc-video-title{" +
+      "margin:1rem 0 0;" +
+      "font-family:var(--font-display);" +
+      "font-size:clamp(2rem, 3vw, 2.9rem);" +
+      "line-height:1.03;" +
+      "letter-spacing:-0.03em;" +
+      "color:hsl(var(--foreground));" +
+      "text-wrap:balance;" +
+      "}" +
+      ".pc-video-copy{" +
+      "margin:1rem 0 0;" +
+      "max-width:34rem;" +
+      "font-size:1rem;" +
+      "line-height:1.75;" +
+      "color:rgba(71,85,105,0.9);" +
+      "}" +
+      ".pc-video-actions{" +
+      "display:flex;" +
+      "flex-wrap:wrap;" +
+      "gap:0.9rem;" +
+      "margin-top:1.4rem;" +
+      "}" +
+      ".pc-video-button{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "justify-content:center;" +
+      "min-height:3rem;" +
+      "padding:0.85rem 1.3rem;" +
+      "border-radius:999px;" +
+      "font-size:0.95rem;" +
+      "font-weight:600;" +
+      "text-decoration:none;" +
+      "transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;" +
+      "}" +
+      ".pc-video-button--primary{" +
+      "background:linear-gradient(135deg, #1d6f66 0%, #257c72 100%);" +
+      "color:#ffffff;" +
+      "box-shadow:0 16px 34px rgba(29,111,102,0.24);" +
+      "}" +
+      ".pc-video-button--ghost{" +
+      "border:1px solid rgba(25,84,74,0.14);" +
+      "background:#ffffff;" +
+      "color:hsl(var(--foreground));" +
+      "}" +
+      ".pc-video-button:hover{" +
+      "transform:translateY(-1px);" +
+      "}" +
+      ".pc-video-frame-wrap{" +
+      "position:relative;" +
+      "overflow:hidden;" +
+      "border-radius:1.5rem;" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "box-shadow:0 20px 48px rgba(15,23,42,0.12);" +
+      "background:#0f172a;" +
+      "}" +
+      ".pc-video-frame-wrap::before{" +
+      "content:'';" +
+      "display:block;" +
+      "padding-top:56.25%;" +
+      "}" +
+      ".pc-video-frame{" +
+      "position:absolute;" +
+      "inset:0;" +
+      "width:100%;" +
+      "height:100%;" +
+      "border:0;" +
+      "}" +
+      ".pc-video-note{" +
+      "margin-top:1rem;" +
+      "font-size:0.9rem;" +
+      "color:rgba(100,116,139,0.92);" +
+      "}" +
       "@media (max-width: 768px){" +
       "[data-inline-condition-filters='true']{" +
       "padding-top:1.2rem !important;" +
@@ -471,6 +582,20 @@
       ".pc-condition-body{" +
       "font-size:0.98rem;" +
       "line-height:1.75;" +
+      "}" +
+      ".pc-video-section{" +
+      "padding:4rem 1rem;" +
+      "}" +
+      ".pc-video-shell{" +
+      "padding:1.35rem;" +
+      "border-radius:1.5rem;" +
+      "}" +
+      ".pc-video-grid{" +
+      "grid-template-columns:minmax(0, 1fr);" +
+      "gap:1.35rem;" +
+      "}" +
+      ".pc-video-title{" +
+      "font-size:1.9rem;" +
       "}" +
       "}";
     document.head.appendChild(style);
@@ -775,6 +900,67 @@
     return match;
   }
 
+  function buildVideoSectionMarkup(video) {
+    return (
+      '<section class="pc-video-section" data-inline-video-section="true">' +
+      '<div class="pc-video-shell">' +
+      '<div class="pc-video-grid">' +
+      '<div>' +
+      '<p class="pc-video-kicker">Video Resources</p>' +
+      '<h2 class="pc-video-title">Hear the care philosophy directly from video.</h2>' +
+      '<p class="pc-video-copy">' +
+      escapeHtml(video.description) +
+      " Start here with a featured educational clip, and we can keep building a stronger video library from here." +
+      "</p>" +
+      '<div class="pc-video-actions">' +
+      '<a class="pc-video-button pc-video-button--primary" href="' +
+      escapeHtml(video.youtubeUrl) +
+      '" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>' +
+      '<a class="pc-video-button pc-video-button--ghost" href="/Contact/">Ask About This Treatment</a>' +
+      "</div>" +
+      '<p class="pc-video-note">' +
+      escapeHtml(video.title) +
+      "</p>" +
+      "</div>" +
+      '<div class="pc-video-frame-wrap">' +
+      '<iframe class="pc-video-frame" src="https://www.youtube.com/embed/' +
+      escapeHtml(video.youtubeId) +
+      '?rel=0" title="' +
+      escapeHtml(video.title) +
+      '" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</section>"
+    );
+  }
+
+  function insertVideoSection() {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/Home/") {
+      return;
+    }
+
+    if (document.querySelector("[data-inline-video-section='true']")) {
+      return;
+    }
+
+    var video = VIDEO_LIBRARY[0];
+    if (!video) {
+      return;
+    }
+
+    var anchorSection = findSectionByText("Dedicated to Your Spinal Health");
+    if (anchorSection && anchorSection.parentNode) {
+      anchorSection.insertAdjacentHTML("afterend", buildVideoSectionMarkup(video));
+      return;
+    }
+
+    var main = document.querySelector("main");
+    if (main) {
+      main.insertAdjacentHTML("beforeend", buildVideoSectionMarkup(video));
+    }
+  }
+
   function isLightColor(color) {
     var match = String(color || "").match(/rgba?\(([^)]+)\)/i);
     if (!match) {
@@ -874,6 +1060,7 @@
     renderConditionDetailRoute();
     applyHeroImages();
     applyRouteHeroEnhancements();
+    insertVideoSection();
   }
 
   function scheduleApply() {
