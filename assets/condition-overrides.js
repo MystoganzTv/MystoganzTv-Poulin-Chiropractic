@@ -5,6 +5,24 @@
   var OBSERVER = null;
   var ROUTE_HOOKED = false;
   var STYLE_ID = "pc-condition-overrides-style";
+  var HERO_IMAGES = {
+    Home: "https://www.poulinchiro.com/img/data/images/Dr%20Pouli%20Herndon%201920x960.jpg?t=1737663495",
+    About: "https://www.poulinchiro.com/corporate/images/Our%20Team.png",
+    Services: "https://www.poulinchiro.com/corporate/images/chiropractic-services-cadeusus.jpg",
+    Conditions: "https://www.poulinchiro.com/data/uploads/Doctor-Cox-with-Doctor-Poulin.jpg",
+    Testimonials: "https://www.poulinchiro.com/corporate/images/Depositphotos_187007346_l-2015-430.jpg",
+    Contact: "https://www.poulinchiro.com/data/uploads/ashburnoffice20130523.jpg",
+    ConditionDetail: "https://www.poulinchiro.com/data/uploads/doctor_cox_with_doctor_poulin.jpg",
+  };
+  var HERO_POSITIONS = {
+    Home: "center 28%",
+    About: "center 24%",
+    Services: "center 42%",
+    Conditions: "center 36%",
+    Testimonials: "center 32%",
+    Contact: "center 44%",
+    ConditionDetail: "center 34%",
+  };
 
   if (!dataset || !dataset.articles || !dataset.aliases) {
     return;
@@ -107,18 +125,6 @@
       });
   }
 
-  function getConditionHeadings(condition) {
-    var source = getArticleBodyHtml(condition);
-    var matches = source.match(/<h2>([\s\S]*?)<\/h2>/gi) || [];
-
-    return matches
-      .map(function (match) {
-        return normalizeHeadingText(match);
-      })
-      .filter(Boolean)
-      .slice(0, 5);
-  }
-
   function injectStyles() {
     if (document.getElementById(STYLE_ID)) {
       return;
@@ -132,29 +138,32 @@
       "top:auto !important;" +
       "z-index:auto !important;" +
       "border-bottom:none !important;" +
-      "padding-top:2.5rem !important;" +
-      "padding-bottom:3.5rem !important;" +
+      "padding-top:1.6rem !important;" +
+      "padding-bottom:2rem !important;" +
       "background:linear-gradient(180deg, rgba(242,249,247,0.92) 0%, rgba(255,255,255,0.98) 35%, rgba(255,255,255,1) 100%) !important;" +
       "}" +
       "[data-inline-condition-filters='true'] [data-inline-condition-filters-inner='true']{" +
       "max-width:72rem !important;" +
       "}" +
       "[data-inline-condition-search-wrap='true']{" +
-      "padding:0.45rem;" +
-      "border-radius:1.75rem;" +
+      "display:block;" +
+      "width:min(100%, 43rem);" +
+      "margin:0 auto 1.15rem;" +
+      "padding:0.2rem 0.3rem;" +
+      "border-radius:1.2rem;" +
       "background:rgba(255,255,255,0.92);" +
       "border:1px solid rgba(25,84,74,0.12);" +
-      "box-shadow:0 20px 45px rgba(15,23,42,0.08);" +
+      "box-shadow:0 12px 26px rgba(15,23,42,0.05);" +
       "backdrop-filter:blur(10px);" +
       "}" +
       "[data-inline-condition-search='true']{" +
-      "height:4.6rem !important;" +
+      "height:3rem !important;" +
       "border:none !important;" +
       "box-shadow:none !important;" +
       "background:transparent !important;" +
-      "font-size:1.15rem;" +
-      "padding-left:4rem !important;" +
-      "padding-right:1.5rem !important;" +
+      "font-size:0.98rem;" +
+      "padding-left:3.2rem !important;" +
+      "padding-right:1rem !important;" +
       "color:hsl(var(--foreground));" +
       "}" +
       "[data-inline-condition-search='true']::placeholder{" +
@@ -163,16 +172,35 @@
       "[data-inline-condition-chip-row='true']{" +
       "display:flex;" +
       "flex-wrap:wrap;" +
+      "align-items:center;" +
       "gap:0.85rem;" +
       "margin-bottom:1.25rem;" +
       "}" +
       "[data-inline-condition-filter-chip='true']{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "justify-content:center;" +
+      "min-height:3.1rem;" +
       "border-radius:999px !important;" +
       "border:1px solid rgba(25,84,74,0.14) !important;" +
       "background:rgba(255,255,255,0.9) !important;" +
       "box-shadow:0 4px 16px rgba(15,23,42,0.04);" +
-      "padding:0.85rem 1.35rem !important;" +
+      "padding:0.72rem 1.15rem !important;" +
+      "color:#64748b !important;" +
       "transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease !important;" +
+      "}" +
+      "[data-inline-condition-filter-chip='true'],[data-inline-condition-filter-chip='true'] *{" +
+      "color:#64748b !important;" +
+      "}" +
+      "[data-inline-condition-filter-chip='true'][data-inline-active='true']," +
+      "[data-inline-condition-filter-chip='true'].bg-primary," +
+      "[data-inline-condition-filter-chip='true'].text-primary-foreground{" +
+      "background:linear-gradient(135deg, #1d6f66 0%, #257c72 100%) !important;" +
+      "border-color:rgba(29,111,102,0.22) !important;" +
+      "box-shadow:0 12px 24px rgba(29,111,102,0.22) !important;" +
+      "}" +
+      "[data-inline-condition-filter-chip='true'][data-inline-active='true'],[data-inline-condition-filter-chip='true'][data-inline-active='true'] *,[data-inline-condition-filter-chip='true'].bg-primary,[data-inline-condition-filter-chip='true'].bg-primary *,[data-inline-condition-filter-chip='true'].text-primary-foreground,[data-inline-condition-filter-chip='true'].text-primary-foreground *{" +
+      "color:#ffffff !important;" +
       "}" +
       "[data-inline-condition-filter-chip='true']:hover{" +
       "transform:translateY(-1px);" +
@@ -238,19 +266,19 @@
       "display:inline-flex;" +
       "align-items:center;" +
       "gap:0.55rem;" +
-      "padding:0.5rem 0.85rem;" +
-      "border-radius:999px;" +
-      "background:rgba(25,84,74,0.08);" +
+      "padding:0;" +
+      "border-radius:0;" +
+      "background:transparent;" +
       "color:hsl(var(--primary));" +
-      "font-size:0.72rem;" +
+      "font-size:0.76rem;" +
       "font-weight:700;" +
-      "letter-spacing:0.22em;" +
+      "letter-spacing:0.18em;" +
       "text-transform:uppercase;" +
       "}" +
       ".pc-condition-title{" +
       "margin:1rem 0 0;" +
       "font-family:var(--font-display);" +
-      "font-size:clamp(2rem, 4vw, 3.35rem);" +
+      "font-size:clamp(2rem, 3.6vw, 3rem);" +
       "line-height:1.04;" +
       "letter-spacing:-0.03em;" +
       "color:hsl(var(--foreground));" +
@@ -262,24 +290,6 @@
       "font-size:1rem;" +
       "line-height:1.75;" +
       "color:hsl(var(--muted-foreground));" +
-      "}" +
-      ".pc-condition-meta{" +
-      "display:flex;" +
-      "flex-wrap:wrap;" +
-      "gap:0.75rem;" +
-      "margin-top:1.15rem;" +
-      "}" +
-      ".pc-condition-badge{" +
-      "display:inline-flex;" +
-      "align-items:center;" +
-      "padding:0.55rem 0.9rem;" +
-      "border-radius:999px;" +
-      "border:1px solid rgba(25,84,74,0.12);" +
-      "background:#fff;" +
-      "font-size:0.84rem;" +
-      "font-weight:600;" +
-      "color:hsl(var(--foreground));" +
-      "box-shadow:0 10px 25px rgba(15,23,42,0.05);" +
       "}" +
       ".pc-condition-close{" +
       "position:relative;" +
@@ -328,63 +338,6 @@
       "font-size:1.08rem;" +
       "color:hsl(var(--foreground) / 0.86);" +
       "}" +
-      ".pc-condition-layout{" +
-      "display:grid;" +
-      "grid-template-columns:minmax(0, 240px) minmax(0, 1fr);" +
-      "gap:1.5rem;" +
-      "align-items:start;" +
-      "}" +
-      ".pc-condition-rail{" +
-      "position:sticky;" +
-      "top:1.25rem;" +
-      "display:flex;" +
-      "flex-direction:column;" +
-      "gap:1rem;" +
-      "}" +
-      ".pc-condition-sidecard{" +
-      "padding:1rem 1.05rem;" +
-      "border-radius:1.25rem;" +
-      "border:1px solid rgba(25,84,74,0.1);" +
-      "background:rgba(248,252,251,0.9);" +
-      "box-shadow:0 16px 32px rgba(15,23,42,0.04);" +
-      "}" +
-      ".pc-condition-sideeyebrow{" +
-      "font-size:0.72rem;" +
-      "font-weight:700;" +
-      "letter-spacing:0.18em;" +
-      "text-transform:uppercase;" +
-      "color:hsl(var(--primary));" +
-      "margin:0 0 0.55rem;" +
-      "}" +
-      ".pc-condition-sidetext{" +
-      "font-size:0.95rem;" +
-      "line-height:1.7;" +
-      "color:hsl(var(--muted-foreground));" +
-      "margin:0;" +
-      "}" +
-      ".pc-condition-toc{" +
-      "display:grid;" +
-      "gap:0.55rem;" +
-      "}" +
-      ".pc-condition-toc-item{" +
-      "display:flex;" +
-      "align-items:center;" +
-      "gap:0.65rem;" +
-      "font-size:0.92rem;" +
-      "line-height:1.4;" +
-      "color:hsl(var(--foreground));" +
-      "}" +
-      ".pc-condition-toc-item::before{" +
-      "content:'';" +
-      "width:0.45rem;height:0.45rem;" +
-      "border-radius:999px;" +
-      "background:hsl(var(--primary));" +
-      "opacity:0.5;" +
-      "flex-shrink:0;" +
-      "}" +
-      ".pc-condition-content{" +
-      "min-width:0;" +
-      "}" +
       ".pc-condition-body ul,.pc-condition-body ol{" +
       "margin:1rem 0 1.2rem;" +
       "padding-left:1.2rem;" +
@@ -411,6 +364,35 @@
       "padding:4.5rem 1.5rem 2.25rem;" +
       "background:linear-gradient(180deg, #12212b 0%, #17333a 42%, #f7fbfa 42%, #f7fbfa 100%);" +
       "}" +
+      "[data-inline-hero='true']{" +
+      "position:relative;" +
+      "isolation:isolate;" +
+      "overflow:hidden;" +
+      "background:transparent !important;" +
+      "}" +
+      "[data-inline-hero='true']::before{" +
+      "content:'';" +
+      "position:absolute;" +
+      "inset:0;" +
+      "z-index:0;" +
+      "background:linear-gradient(180deg, rgba(7,18,26,0.56) 0%, rgba(15,30,37,0.5) 52%, rgba(8,18,26,0.38) 100%), var(--pc-hero-image) var(--pc-hero-position, center) / cover no-repeat;" +
+      "transform:scale(1.03);" +
+      "}" +
+      "[data-inline-hero='true']::after{" +
+      "content:'';" +
+      "position:absolute;" +
+      "inset:0;" +
+      "z-index:0;" +
+      "background:linear-gradient(135deg, rgba(240,248,246,0.14), rgba(255,255,255,0.04));" +
+      "pointer-events:none;" +
+      "}" +
+      "[data-inline-hero='true'] .max-w-4xl,[data-inline-hero='true'] .max-w-6xl,[data-inline-hero='true'] .max-w-7xl{" +
+      "position:relative;" +
+      "z-index:1;" +
+      "}" +
+      "[data-inline-hero='true'] h1,[data-inline-hero='true'] h2,[data-inline-hero='true'] h3,[data-inline-hero='true'] p,[data-inline-hero='true'] a:not(.bg-primary):not(.bg-secondary){" +
+      "text-shadow:0 8px 24px rgba(7,18,26,0.26);" +
+      "}" +
       ".pc-condition-page-hero-inner{" +
       "max-width:72rem;" +
       "margin:0 auto;" +
@@ -428,8 +410,8 @@
       "}" +
       "@media (max-width: 768px){" +
       "[data-inline-condition-filters='true']{" +
-      "padding-top:1.75rem !important;" +
-      "padding-bottom:2.5rem !important;" +
+      "padding-top:1.2rem !important;" +
+      "padding-bottom:1.75rem !important;" +
       "}" +
       ".pc-condition-shell,.pc-condition-shell--page{" +
       "padding:1.3rem;" +
@@ -439,17 +421,6 @@
       "flex-direction:column;" +
       "margin-bottom:1.2rem;" +
       "padding-bottom:1.15rem;" +
-      "}" +
-      ".pc-condition-layout{" +
-      "grid-template-columns:minmax(0,1fr);" +
-      "}" +
-      ".pc-condition-rail{" +
-      "position:relative;" +
-      "top:auto;" +
-      "order:2;" +
-      "}" +
-      ".pc-condition-content{" +
-      "order:1;" +
       "}" +
       ".pc-condition-title{" +
       "font-size:2rem;" +
@@ -478,20 +449,11 @@
     }
 
     var wrapperClass = compact ? "pc-condition-shell" : "pc-condition-shell pc-condition-shell--page";
-    var category = condition.category ? escapeHtml(condition.category) : "Condition";
     var title = escapeHtml(condition.title || conditionName);
     var summary = escapeHtml(getConditionSummary(condition, conditionName));
-    var headings = getConditionHeadings(condition);
     var closeButton = compact
       ? '<button type="button" class="pc-condition-close" data-inline-condition-close="true" aria-label="Close article">×</button>'
       : "";
-    var tocMarkup = headings.length
-      ? headings
-          .map(function (heading) {
-            return '<div class="pc-condition-toc-item">' + escapeHtml(heading) + "</div>";
-          })
-          .join("")
-      : '<div class="pc-condition-toc-item">Full local care overview</div><div class="pc-condition-toc-item">Symptoms and definition</div><div class="pc-condition-toc-item">Examination and treatment</div>';
 
     return (
       '<article class="' +
@@ -506,33 +468,11 @@
       '<p class="pc-condition-subtitle">' +
       summary +
       "</p>" +
-      '<div class="pc-condition-meta">' +
-      '<span class="pc-condition-badge">' +
-      category +
-      "</span>" +
-      '<span class="pc-condition-badge">Local Full Article</span>' +
-      "</div>" +
       "</div>" +
       closeButton +
       "</div>" +
-      '<div class="pc-condition-layout">' +
-      '<aside class="pc-condition-rail">' +
-      '<div class="pc-condition-sidecard">' +
-      '<p class="pc-condition-sideeyebrow">Quick Overview</p>' +
-      '<p class="pc-condition-sidetext">' +
-      summary +
-      "</p>" +
-      "</div>" +
-      '<div class="pc-condition-sidecard">' +
-      '<p class="pc-condition-sideeyebrow">In This Article</p>' +
-      '<div class="pc-condition-toc">' +
-      tocMarkup +
-      "</div>" +
-      "</div>" +
-      "</aside>" +
-      '<div class="pc-condition-content pc-condition-body">' +
+      '<div class="pc-condition-body">' +
       getArticleBodyHtml(condition) +
-      "</div>" +
       "</div>" +
       "</article>"
     );
@@ -594,7 +534,8 @@
   function enhanceConditionLinks() {
     document.querySelectorAll("a[href*='ConditionDetail?']").forEach(function (anchor) {
       var conditionName = getConditionFromHref(anchor.getAttribute("href"));
-      if (!getConditionByName(conditionName)) {
+      var condition = getConditionByName(conditionName);
+      if (!condition) {
         return;
       }
 
@@ -611,6 +552,44 @@
 
       anchor.setAttribute("title", "Read the full article for " + conditionName);
       anchor.setAttribute("aria-expanded", ACTIVE_CONDITION === normalizeConditionName(conditionName) ? "true" : "false");
+      hideCategoryBadge(anchor, condition);
+    });
+  }
+
+  function hideCategoryBadge(anchor, condition) {
+    var category = normalizeHeadingText(condition && condition.category);
+    if (!category) {
+      return;
+    }
+
+    Array.prototype.slice.call(anchor.querySelectorAll("span, div, p")).forEach(function (node) {
+      if (normalizeHeadingText(node.textContent) !== category) {
+        return;
+      }
+
+      node.style.display = "none";
+      if (node.parentElement && normalizeHeadingText(node.parentElement.textContent) === category) {
+        node.parentElement.style.display = "none";
+      }
+    });
+  }
+
+  function chipLooksActive(chip) {
+    return !!(
+      chip &&
+      (chip.classList.contains("bg-primary") ||
+        chip.classList.contains("text-primary-foreground") ||
+        chip.getAttribute("aria-pressed") === "true" ||
+        chip.getAttribute("data-state") === "active" ||
+        chip.querySelector(".bg-primary, .text-primary-foreground, [data-state='active'], [aria-pressed='true']"))
+    );
+  }
+
+  function syncFilterChipStates(chips) {
+    chips.forEach(function (chip) {
+      var isActive = chipLooksActive(chip);
+      chip.dataset.inlineActive = isActive ? "true" : "false";
+      chip.style.color = isActive ? "#ffffff" : "#64748b";
     });
   }
 
@@ -653,6 +632,7 @@
     chips.forEach(function (chip) {
       chip.dataset.inlineConditionFilterChip = "true";
     });
+    syncFilterChipStates(chips);
 
     if (chips.length && chips[0].parentElement) {
       chips[0].parentElement.dataset.inlineConditionChipRow = "true";
@@ -664,6 +644,28 @@
         anchor.parentElement.dataset.inlineConditionCardWrap = "true";
       }
     });
+  }
+
+  function getRouteKey() {
+    var segments = window.location.pathname.split("/").filter(Boolean);
+    var page = segments[0] || "Home";
+    return page === "ConditionDetail" ? "ConditionDetail" : page;
+  }
+
+  function applyHeroImages() {
+    var routeKey = getRouteKey();
+    var imageUrl = HERO_IMAGES[routeKey];
+    var imagePosition = HERO_POSITIONS[routeKey] || "center";
+    var hero = document.querySelector("main > div > section");
+
+    if (!hero || !imageUrl) {
+      return;
+    }
+
+    hero.dataset.inlineHero = "true";
+    hero.style.setProperty("--pc-hero-image", "url('" + imageUrl + "')");
+    hero.style.setProperty("--pc-hero-position", imagePosition);
+    hero.style.background = "transparent";
   }
 
   function buildStandaloneDetailPage(conditionName) {
@@ -709,6 +711,7 @@
     enhanceConditionLinks();
     enhanceConditionsLayout();
     renderConditionDetailRoute();
+    applyHeroImages();
   }
 
   function scheduleApply() {
