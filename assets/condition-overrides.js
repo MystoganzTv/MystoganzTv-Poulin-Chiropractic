@@ -2,6 +2,8 @@
   var dataset = window.__POULIN_CONDITION_ARTICLES__;
   var ACTIVE_CONDITION = null;
   var ACTIVE_PANEL = null;
+  var ACTIVE_TOPIC = null;
+  var ACTIVE_TOPIC_PANEL = null;
   var OBSERVER = null;
   var ROUTE_HOOKED = false;
   var STYLE_ID = "pc-condition-overrides-style";
@@ -78,6 +80,259 @@
     return key ? dataset.articles[key] || null : null;
   }
 
+  var PAIN_TOPIC_LIBRARY = [
+    {
+      slug: "back-pain",
+      title: "Back Pain",
+      category: "Lumbar Focus",
+      imageUrl: "https://www.poulinchiro.com/corporate/uploads/patient-bending-pain-newspaper-small.JPG",
+      imagePosition: "center 42%",
+      excerpt:
+        "Back pain can feel similar from the outside while coming from very different tissues underneath. The goal is to identify whether the driver is disc, joint, ligament, muscle, stenosis, or nerve irritation before choosing care.",
+      sourceUrl: "https://www.poulinchiro.com/chiropractic-topics/ashburn-and-herndon-back-pain",
+      sections: [
+        {
+          heading: "Why back pain needs a real workup",
+          paragraphs: [
+            "Low back pain often gets treated like one single diagnosis, but the experience can be completely different from one patient to the next. Some people have pain only in the low back. Others feel it spread into the buttock, thigh, calf, or foot. That travel pattern matters.",
+            "The Poulin reference material emphasizes that as symptoms travel farther down the leg, the problem is often more mechanically complex. That can point to disc pressure, stenosis, or nerve root involvement instead of a simpler strain."
+          ]
+        },
+        {
+          heading: "What may be causing it",
+          list: [
+            "Disc irritation or disc herniation creating pressure changes in the low back.",
+            "Facet joint or sacroiliac irritation that feels local but flares with movement.",
+            "Muscle and ligament overload after lifting, twisting, or long periods of sitting.",
+            "Nerve irritation that sends pain, tingling, or heaviness into the buttock or leg."
+          ]
+        },
+        {
+          heading: "How Poulin approaches it conservatively",
+          paragraphs: [
+            "The chiropractic topic pages consistently point patients toward a conservative, non-surgical path first when it is clinically appropriate. The idea is to reduce mechanical irritation, improve motion, and calm the tissues that are keeping the spine irritated.",
+            "Cox Technic Flexion Distraction and Decompression is presented as the office's signature approach because it aims to lower disc pressure, open spinal spaces, and create a better environment for healing without aggressive force."
+          ]
+        },
+        {
+          heading: "What usually helps patients most",
+          list: [
+            "A precise exam instead of guessing from symptoms alone.",
+            "Matching care to the pattern of pain instead of using the same plan for everyone.",
+            "Avoiding the positions and routines that keep re-aggravating the area.",
+            "Knowing when leg symptoms or weakness mean the case needs closer attention."
+          ]
+        }
+      ],
+      relatedConditions: ["Back Pain", "Degenerative Disc Disease", "Disc Herniation (Lumbar)", "Facet Syndrome", "Sacroiliac Joint Dysfunction", "Spinal Stenosis"],
+    },
+    {
+      slug: "arm-shoulder-pain",
+      title: "Arm & Shoulder Pain",
+      category: "Cervical & Shoulder",
+      imageUrl: "https://www.poulinchiro.com/corporate/uploads/arm-dermatomes.jpg",
+      imagePosition: "center center",
+      excerpt:
+        "Arm and shoulder pain can come from the shoulder itself, but it can also start in the neck. Tingling, numbness, weakness, and pain patterns help separate a local shoulder problem from a cervical nerve problem.",
+      sourceUrl: "https://www.poulinchiro.com/chiropractic-topics/ashburn-and-herndon-arm-pain",
+      sections: [
+        {
+          heading: "Why the source is not always the shoulder",
+          paragraphs: [
+            "One of the biggest frustrations with arm pain is that the sore area is not always the true source. Pain at the shoulder blade, elbow, hand, or fingers may actually start higher up in the cervical spine.",
+            "That is why Poulin's arm pain material keeps returning to the same theme: diagnose the generator first. A painful shoulder, a compressed cervical nerve, and an irritated thoracic outlet can all feel similar at first glance."
+          ]
+        },
+        {
+          heading: "Patterns that matter",
+          list: [
+            "Pain with numbness or tingling can suggest nerve involvement.",
+            "Weak grip, altered sensation, or pain below the elbow often changes the clinical picture.",
+            "Pain tied to overhead motion may point more strongly to shoulder mechanics.",
+            "Neck stiffness with radiating arm symptoms makes cervical evaluation especially important."
+          ]
+        },
+        {
+          heading: "How conservative care fits in",
+          paragraphs: [
+            "The source pages describe a gentle path that begins with examination and uses care to reduce irritation around the involved spinal tissues. When arm symptoms are neck related, decompressing the cervical spine and restoring motion can be part of the strategy.",
+            "That same approach is paired with movement guidance and home advice so patients are not just feeling temporary relief in the office."
+          ]
+        },
+        {
+          heading: "What this section is designed to answer",
+          list: [
+            "Is the arm pain being driven by the neck?",
+            "Does the symptom pattern sound like radiculopathy?",
+            "Is there a mechanical reason the pain keeps returning?",
+            "Which related conditions should I read next?"
+          ]
+        }
+      ],
+      relatedConditions: ["Arm Pain / Radiculopathy", "Neck Pain", "Disc Herniation (Cervical)", "Thoracic Outlet Syndrome", "Myelopathy", "Whiplash"],
+    },
+    {
+      slug: "neck-pain",
+      title: "Neck Pain",
+      category: "Cervical Focus",
+      imageUrl: "https://www.poulinchiro.com/corporate/images/chiropractic-services-cadeusus.jpg",
+      imagePosition: "center center",
+      excerpt:
+        "Neck pain can build from posture, stress, trauma, disc changes, arthritis, or nerve irritation. The important question is not just where it hurts, but what movement or structure is actually provoking it.",
+      sourceUrl: "https://www.poulinchiro.com/chiropractic-topics/ashburn-and-herndon-neck-pain",
+      sections: [
+        {
+          heading: "Neck pain is common, but not simple",
+          paragraphs: [
+            "Neck pain can show up as stiffness, headaches, pain into the shoulder blade, or symptoms that travel down the arm. Some patients feel it after a sudden event like a crash or sports injury. Others notice it after months of desk work, poor posture, or repeated strain.",
+            "The Poulin neck pain topic page frames the problem well: the cervical spine contains joints, muscles, ligaments, discs, and nerves, so several structures can create similar pain until a proper examination sorts them out."
+          ]
+        },
+        {
+          heading: "Clues that help narrow it down",
+          list: [
+            "Pain only in the neck often behaves differently than pain that runs into the arm or hand.",
+            "Headaches, upper back tightness, and shoulder blade pain can still come from the neck.",
+            "A history of trauma changes the questions that need to be asked.",
+            "Limited range of motion and pain with rotation may signal joint and disc involvement."
+          ]
+        },
+        {
+          heading: "What the office aims to do",
+          paragraphs: [
+            "The conservative model used across Poulin's educational pages is built around reducing mechanical stress, restoring motion, and improving how the cervical spine handles load throughout the day.",
+            "When the clinical picture fits, that means using gentle decompressive care, not simply forcing motion into an already irritated area."
+          ]
+        },
+        {
+          heading: "Why patients keep reading from here",
+          list: [
+            "To understand whether symptoms are staying local or becoming nerve related.",
+            "To compare neck pain with whiplash, arthritis, disc herniation, and arm pain patterns.",
+            "To move from a vague symptom label into a more specific explanation."
+          ]
+        }
+      ],
+      relatedConditions: ["Neck Pain", "Whiplash", "Disc Herniation (Cervical)", "Arthritis", "Arm Pain / Radiculopathy", "Thoracic Outlet Syndrome"],
+    },
+    {
+      slug: "leg-pain",
+      title: "Leg Pain",
+      category: "Radicular Patterns",
+      imageUrl: "https://www.poulinchiro.com/corporate/uploads/lower-dermatomes.jpg",
+      imagePosition: "center center",
+      excerpt:
+        "Leg pain often makes people focus on the leg itself, but many cases are driven from the low back. Sciatica, femoral nerve irritation, stenosis, SI dysfunction, and hip-related patterns can overlap until the exam makes the source clearer.",
+      sourceUrl: "https://www.poulinchiro.com/chiropractic-topics/ashburn-and-herndon-leg-pain",
+      sections: [
+        {
+          heading: "Why leg pain is usually a spine conversation too",
+          paragraphs: [
+            "Leg pain can feel like burning, tingling, heaviness, numbness, or a deep ache. It may live in the buttock, back of the thigh, calf, shin, groin, or front of the thigh. That route matters because it often follows irritated nerve pathways.",
+            "The Poulin leg pain page explains that the leg may be where symptoms show up, but the low back is frequently where the real irritation begins."
+          ]
+        },
+        {
+          heading: "Common pain patterns patients describe",
+          list: [
+            "Sciatic-type pain down the back or side of the leg.",
+            "Femoral-type pain into the groin or front of the thigh.",
+            "Pain that is worse with standing or walking and eases with flexion.",
+            "Numbness, tingling, or weakness that feels more neurological than muscular."
+          ]
+        },
+        {
+          heading: "What needs to be differentiated",
+          paragraphs: [
+            "A patient with leg pain may be dealing with disc herniation, stenosis, SI dysfunction, hip referral, or a post-surgical issue. Those are not interchangeable problems, and they should not all be managed with the same assumptions.",
+            "That is why this section is built to connect the symptom to its related condition articles instead of stopping at the generic phrase leg pain."
+          ]
+        },
+        {
+          heading: "How conservative care is positioned",
+          list: [
+            "Lower mechanical pressure on the involved spinal tissues.",
+            "Make room for calmer nerve function when irritation is driving symptoms.",
+            "Support walking, sitting, and daily movement with less flare-up.",
+            "Help patients understand when a symptom pattern deserves faster follow-up."
+          ]
+        }
+      ],
+      relatedConditions: ["Leg Pain / Sciatica", "Femoral Nerve Root Pain", "Disc Herniation (Lumbar)", "Spinal Stenosis", "Sacroiliac Joint Dysfunction", "Back Pain"],
+    },
+    {
+      slug: "post-surgical-continued-pain",
+      title: "Post-Surgical Continued Pain",
+      category: "Post-Surgical Care",
+      imageUrl: "https://www.poulinchiro.com/data/uploads/doctor_cox_with_doctor_poulin.jpg",
+      imagePosition: "center 32%",
+      excerpt:
+        "Surgery can solve one problem while leaving irritation, scar tissue, adjacent-level stress, or persistent nerve symptoms behind. Patients still need a thoughtful conservative plan when pain does not fully resolve or returns later.",
+      sourceUrl: "https://www.poulinchiro.com/id-your-pain/by-conditions/persistent-post-surgical-pain",
+      sections: [
+        {
+          heading: "When surgery is not the end of the story",
+          paragraphs: [
+            "Persistent or returning pain after surgery is emotionally exhausting because many patients expected the operation to be the final step. The Poulin reference page meets that reality directly: pain may improve, change, or remain because the spine has still been altered mechanically.",
+            "That does not automatically mean the situation is hopeless. It means the next stage of care has to respect the surgical history and the current tissue behavior."
+          ]
+        },
+        {
+          heading: "Why pain may remain or come back",
+          list: [
+            "Scar tissue and persistent nerve sensitivity around the surgical site.",
+            "Stress transferred to discs and joints next to the operated level.",
+            "Residual stenosis or instability patterns that still need management.",
+            "Biomechanical changes that make daily movement feel guarded or painful."
+          ]
+        },
+        {
+          heading: "How conservative management fits after surgery",
+          paragraphs: [
+            "The source material presents chiropractic flexion distraction and decompression as a cautious, non-surgical option for appropriate post-surgical cases. The emphasis is not on pretending surgery never happened. It is on working safely with what the spine is now.",
+            "That usually means a gentler pace, careful re-evaluation, and a plan built around tolerance instead of force."
+          ]
+        },
+        {
+          heading: "Topics patients usually want next",
+          list: [
+            "Is this more like persistent post-surgical pain or failed back surgical syndrome?",
+            "Are nearby levels now taking extra stress?",
+            "What can still improve without another procedure?"
+          ]
+        }
+      ],
+      relatedConditions: ["Persistent Post-Surgical Pain", "Post-Surgical Continued Pain", "Failed Back Surgical Syndrome", "Spinal Instability", "Degenerative Disc Disease"],
+    },
+    {
+      slug: "other-conditions",
+      title: "Other Conditions",
+      category: "Condition Library",
+      imageUrl: "https://www.poulinchiro.com/data/uploads/ashburnoffice20130523.jpg",
+      imagePosition: "center center",
+      excerpt:
+        "Not every patient fits neatly into the back, neck, arm, leg, or post-surgical buckets. This section opens the wider condition library so people can explore structural, inflammatory, degenerative, nerve, and other patterns in one place.",
+      sourceUrl: "https://www.poulinchiro.com/id-your-pain/by-conditions",
+      sections: [],
+      relatedConditions: ["Arthritis", "Compression Fracture", "Hyperkyphosis", "Osteoporosis", "Scoliosis", "Viscerosomatic Disease"],
+    },
+  ];
+
+  function getPainTopicBySlug(slug) {
+    var match = null;
+
+    PAIN_TOPIC_LIBRARY.some(function (topic) {
+      if (topic.slug !== slug) {
+        return false;
+      }
+
+      match = topic;
+      return true;
+    });
+
+    return match;
+  }
+
   function getConditionFromHref(href) {
     if (!href || href.indexOf("ConditionDetail?") === -1) {
       return null;
@@ -101,6 +356,155 @@
     }
 
     return beautifyArticleHtml(condition.contentHtml);
+  }
+
+  function buildTopicSectionsHtml(sections) {
+    return (sections || [])
+      .map(function (section) {
+        var html = '<section class="pc-topic-copy-section">';
+        html += "<h3>" + escapeHtml(section.heading || "") + "</h3>";
+
+        (section.paragraphs || []).forEach(function (paragraph) {
+          html += "<p>" + escapeHtml(paragraph) + "</p>";
+        });
+
+        if (section.list && section.list.length) {
+          html += "<ul>";
+          section.list.forEach(function (item) {
+            html += "<li>" + escapeHtml(item) + "</li>";
+          });
+          html += "</ul>";
+        }
+
+        html += "</section>";
+        return html;
+      })
+      .join("");
+  }
+
+  function groupConditionsByCategory(limitPerCategory) {
+    var grouped = {};
+    var categories = ["Pain", "Degenerative", "Structural", "Nerve", "Inflammatory", "Other"];
+    var names = Object.keys(dataset.aliases || {});
+
+    names.forEach(function (name) {
+      var condition = getConditionByName(name);
+      var category = normalizeHeadingText(condition && condition.category) || "Other";
+
+      if (grouped[category]) {
+        return;
+      }
+
+      grouped[category] = [];
+    });
+
+    names.forEach(function (name) {
+      var condition = getConditionByName(name);
+      var category = normalizeHeadingText(condition && condition.category) || "Other";
+
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+
+      if (grouped[category].indexOf(name) !== -1) {
+        return;
+      }
+
+      if (grouped[category].length >= limitPerCategory) {
+        return;
+      }
+
+      grouped[category].push(name);
+    });
+
+    return categories
+      .filter(function (category) {
+        return grouped[category] && grouped[category].length;
+      })
+      .map(function (category) {
+        return {
+          name: category,
+          items: grouped[category],
+        };
+      });
+  }
+
+  function buildOtherConditionsShowcaseHtml() {
+    return groupConditionsByCategory(6)
+      .map(function (group) {
+        var items = group.items
+          .map(function (item) {
+            return '<li><a href="/Conditions/#condition-' + escapeHtml(slugifyConditionName(item)) + '">' + escapeHtml(item) + "</a></li>";
+          })
+          .join("");
+
+        return (
+          '<article class="pc-topic-related-group">' +
+          '<p class="pc-topic-related-kicker">' +
+          escapeHtml(group.name) +
+          "</p>" +
+          "<ul>" +
+          items +
+          "</ul>" +
+          "</article>"
+        );
+      })
+      .join("");
+  }
+
+  function buildTopicBodyHtml(topic) {
+    if (!topic) {
+      return "";
+    }
+
+    if (topic.slug === "other-conditions") {
+      return (
+        '<section class="pc-topic-copy-section">' +
+        "<h3>The broader condition library</h3>" +
+        "<p>Some patients walk in knowing they have a diagnosis like scoliosis, spinal stenosis, arthritis, or osteoporosis. Others only know that something is not right. This library-style view gives those visitors a cleaner way to browse by category without leaving the site.</p>" +
+        "<p>Instead of forcing every symptom into one bucket, this section opens the rest of the Poulin condition collection so patients can move from symptom language into the specific diagnoses they have already been told about.</p>" +
+        "</section>" +
+        '<section class="pc-topic-copy-section">' +
+        "<h3>Explore by category</h3>" +
+        '<div class="pc-topic-related-grid">' +
+        buildOtherConditionsShowcaseHtml() +
+        "</div>" +
+        "</section>"
+      );
+    }
+
+    return buildTopicSectionsHtml(topic.sections);
+  }
+
+  function buildTopicRelatedHtml(topic) {
+    var names = (topic && topic.relatedConditions) || [];
+    var items = names
+      .filter(function (name) {
+        return !!getConditionByName(name);
+      })
+      .map(function (name) {
+        return (
+          '<a class="pc-topic-related-pill" href="/Conditions/#condition-' +
+          escapeHtml(slugifyConditionName(name)) +
+          '">' +
+          escapeHtml(name) +
+          "</a>"
+        );
+      })
+      .join("");
+
+    if (!items) {
+      return "";
+    }
+
+    return (
+      '<section class="pc-topic-copy-section">' +
+      "<h3>Related conditions to explore next</h3>" +
+      '<div class="pc-topic-related-pills">' +
+      items +
+      "</div>" +
+      "</section>"
+    );
   }
 
   function stripLeadingHeadingLabel(text) {
@@ -557,6 +961,345 @@
       "font-size:0.9rem;" +
       "color:rgba(100,116,139,0.92);" +
       "}" +
+      ".pc-topic-section,.pc-blog-section{" +
+      "padding:4.75rem 1.5rem;" +
+      "background:linear-gradient(180deg, #f8fcfb 0%, #ffffff 100%);" +
+      "}" +
+      ".pc-topic-shell,.pc-blog-shell{" +
+      "max-width:76rem;" +
+      "margin:0 auto;" +
+      "}" +
+      ".pc-topic-intro,.pc-blog-intro{" +
+      "display:flex;" +
+      "justify-content:space-between;" +
+      "gap:1.5rem;" +
+      "align-items:end;" +
+      "margin-bottom:1.8rem;" +
+      "}" +
+      ".pc-topic-eyebrow,.pc-blog-eyebrow{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "padding:0.42rem 0.72rem;" +
+      "border-radius:999px;" +
+      "background:rgba(29,111,102,0.08);" +
+      "color:hsl(var(--primary));" +
+      "font-size:0.72rem;" +
+      "font-weight:700;" +
+      "letter-spacing:0.16em;" +
+      "text-transform:uppercase;" +
+      "}" +
+      ".pc-topic-heading,.pc-blog-heading{" +
+      "margin:0.95rem 0 0;" +
+      "font-family:var(--font-display);" +
+      "font-size:clamp(2.1rem, 3vw, 3.25rem);" +
+      "line-height:1.03;" +
+      "letter-spacing:-0.035em;" +
+      "color:hsl(var(--foreground));" +
+      "text-wrap:balance;" +
+      "}" +
+      ".pc-topic-copy,.pc-blog-copy{" +
+      "margin:1rem 0 0;" +
+      "max-width:40rem;" +
+      "font-size:1rem;" +
+      "line-height:1.75;" +
+      "color:rgba(71,85,105,0.92);" +
+      "}" +
+      ".pc-topic-grid{" +
+      "display:grid;" +
+      "grid-template-columns:repeat(3, minmax(0, 1fr));" +
+      "gap:1rem;" +
+      "}" +
+      ".pc-topic-card{" +
+      "position:relative;" +
+      "overflow:hidden;" +
+      "display:flex;" +
+      "align-items:flex-end;" +
+      "min-height:17rem;" +
+      "padding:1.5rem;" +
+      "border:none;" +
+      "border-radius:1.6rem;" +
+      "background:linear-gradient(180deg, rgba(10,19,29,0.08), rgba(7,18,26,0.68)), var(--pc-topic-card-image) var(--pc-topic-card-position, center center) / cover no-repeat;" +
+      "box-shadow:0 24px 52px rgba(15,23,42,0.12);" +
+      "text-align:left;" +
+      "cursor:pointer;" +
+      "isolation:isolate;" +
+      "transition:transform 180ms ease, box-shadow 180ms ease;" +
+      "}" +
+      ".pc-topic-card::after{" +
+      "content:'';" +
+      "position:absolute;" +
+      "inset:0;" +
+      "background:linear-gradient(180deg, rgba(7,18,26,0.02) 0%, rgba(7,18,26,0.08) 30%, rgba(7,18,26,0.74) 100%);" +
+      "z-index:0;" +
+      "}" +
+      ".pc-topic-card:hover{" +
+      "transform:translateY(-3px);" +
+      "box-shadow:0 30px 60px rgba(15,23,42,0.16);" +
+      "}" +
+      ".pc-topic-card[data-inline-active='true']{" +
+      "box-shadow:0 0 0 2px rgba(35,118,107,0.28), 0 32px 66px rgba(15,23,42,0.18);" +
+      "}" +
+      ".pc-topic-card-content{" +
+      "position:relative;" +
+      "z-index:1;" +
+      "display:flex;" +
+      "flex-direction:column;" +
+      "gap:0.55rem;" +
+      "}" +
+      ".pc-topic-card-label{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "width:max-content;" +
+      "padding:0.34rem 0.62rem;" +
+      "border-radius:999px;" +
+      "background:rgba(255,255,255,0.14);" +
+      "border:1px solid rgba(255,255,255,0.18);" +
+      "font-size:0.7rem;" +
+      "font-weight:700;" +
+      "letter-spacing:0.14em;" +
+      "text-transform:uppercase;" +
+      "color:rgba(255,255,255,0.88);" +
+      "}" +
+      ".pc-topic-card-title{" +
+      "margin:0;" +
+      "font-family:var(--font-display);" +
+      "font-size:clamp(1.55rem, 2vw, 2.2rem);" +
+      "line-height:1.06;" +
+      "letter-spacing:-0.03em;" +
+      "color:#ffffff;" +
+      "text-wrap:balance;" +
+      "}" +
+      ".pc-topic-card-meta{" +
+      "display:flex;" +
+      "align-items:center;" +
+      "gap:0.6rem;" +
+      "font-size:0.92rem;" +
+      "font-weight:600;" +
+      "color:rgba(255,255,255,0.88);" +
+      "}" +
+      ".pc-topic-panel{" +
+      "margin-top:1.4rem;" +
+      "}" +
+      ".pc-topic-article{" +
+      "overflow:hidden;" +
+      "border-radius:2rem;" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "background:#ffffff;" +
+      "box-shadow:0 32px 78px rgba(15,23,42,0.1);" +
+      "}" +
+      ".pc-topic-hero{" +
+      "display:grid;" +
+      "grid-template-columns:minmax(280px, 0.9fr) minmax(0, 1.1fr);" +
+      "gap:0;" +
+      "background:linear-gradient(135deg, rgba(227,245,240,0.9) 0%, rgba(250,252,251,0.94) 44%, rgba(255,255,255,1) 100%);" +
+      "}" +
+      ".pc-topic-hero-media{" +
+      "min-height:20rem;" +
+      "background:linear-gradient(180deg, rgba(10,19,29,0.14), rgba(7,18,26,0.3)), var(--pc-topic-hero-image) var(--pc-topic-hero-position, center center) / cover no-repeat;" +
+      "}" +
+      ".pc-topic-hero-copy{" +
+      "padding:2.25rem 2.2rem;" +
+      "display:flex;" +
+      "flex-direction:column;" +
+      "justify-content:center;" +
+      "gap:1rem;" +
+      "}" +
+      ".pc-topic-hero-kicker{" +
+      "display:inline-flex;" +
+      "width:max-content;" +
+      "padding:0.42rem 0.7rem;" +
+      "border-radius:999px;" +
+      "background:rgba(255,255,255,0.7);" +
+      "color:hsl(var(--primary));" +
+      "font-size:0.72rem;" +
+      "font-weight:700;" +
+      "letter-spacing:0.15em;" +
+      "text-transform:uppercase;" +
+      "}" +
+      ".pc-topic-hero-title{" +
+      "margin:0;" +
+      "font-family:var(--font-display);" +
+      "font-size:clamp(2.15rem, 3vw, 3.15rem);" +
+      "line-height:1.02;" +
+      "letter-spacing:-0.04em;" +
+      "color:hsl(var(--foreground));" +
+      "text-wrap:balance;" +
+      "}" +
+      ".pc-topic-hero-copy p{" +
+      "margin:0;" +
+      "font-size:1rem;" +
+      "line-height:1.8;" +
+      "color:rgba(71,85,105,0.92);" +
+      "}" +
+      ".pc-topic-hero-actions{" +
+      "display:flex;" +
+      "flex-wrap:wrap;" +
+      "gap:0.8rem;" +
+      "padding-top:0.2rem;" +
+      "}" +
+      ".pc-topic-badge{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "justify-content:center;" +
+      "min-height:2.6rem;" +
+      "padding:0.7rem 1rem;" +
+      "border-radius:999px;" +
+      "background:rgba(29,111,102,0.08);" +
+      "color:hsl(var(--primary));" +
+      "font-size:0.9rem;" +
+      "font-weight:600;" +
+      "text-decoration:none;" +
+      "}" +
+      ".pc-topic-close{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "justify-content:center;" +
+      "width:2.75rem;" +
+      "height:2.75rem;" +
+      "border-radius:999px;" +
+      "border:1px solid rgba(25,84,74,0.12);" +
+      "background:#ffffff;" +
+      "box-shadow:0 12px 24px rgba(15,23,42,0.07);" +
+      "font-size:1.45rem;" +
+      "color:rgba(71,85,105,0.88);" +
+      "}" +
+      ".pc-topic-body{" +
+      "padding:2rem 2.2rem 2.3rem;" +
+      "display:grid;" +
+      "grid-template-columns:minmax(0, 1fr);" +
+      "gap:1.4rem;" +
+      "}" +
+      ".pc-topic-copy-section h3{" +
+      "margin:0 0 0.7rem;" +
+      "font-family:var(--font-display);" +
+      "font-size:clamp(1.45rem, 2vw, 1.95rem);" +
+      "line-height:1.08;" +
+      "letter-spacing:-0.03em;" +
+      "color:hsl(var(--foreground));" +
+      "}" +
+      ".pc-topic-copy-section p{" +
+      "margin:0 0 1rem;" +
+      "font-size:1rem;" +
+      "line-height:1.85;" +
+      "color:rgba(71,85,105,0.92);" +
+      "}" +
+      ".pc-topic-copy-section ul{" +
+      "margin:0;" +
+      "padding-left:1.2rem;" +
+      "color:rgba(71,85,105,0.92);" +
+      "}" +
+      ".pc-topic-copy-section li{" +
+      "margin:0.5rem 0;" +
+      "line-height:1.75;" +
+      "}" +
+      ".pc-topic-related-pills{" +
+      "display:flex;" +
+      "flex-wrap:wrap;" +
+      "gap:0.8rem;" +
+      "}" +
+      ".pc-topic-related-pill{" +
+      "display:inline-flex;" +
+      "align-items:center;" +
+      "min-height:2.7rem;" +
+      "padding:0.72rem 1rem;" +
+      "border-radius:999px;" +
+      "border:1px solid rgba(25,84,74,0.14);" +
+      "background:#ffffff;" +
+      "color:hsl(var(--foreground));" +
+      "text-decoration:none;" +
+      "font-weight:600;" +
+      "box-shadow:0 10px 20px rgba(15,23,42,0.05);" +
+      "}" +
+      ".pc-topic-related-grid{" +
+      "display:grid;" +
+      "grid-template-columns:repeat(3, minmax(0, 1fr));" +
+      "gap:1rem;" +
+      "}" +
+      ".pc-topic-related-group{" +
+      "padding:1.2rem;" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "border-radius:1.3rem;" +
+      "background:linear-gradient(180deg, rgba(250,253,252,1) 0%, rgba(255,255,255,1) 100%);" +
+      "box-shadow:0 14px 28px rgba(15,23,42,0.05);" +
+      "}" +
+      ".pc-topic-related-kicker{" +
+      "margin:0 0 0.8rem;" +
+      "font-size:0.78rem;" +
+      "font-weight:700;" +
+      "letter-spacing:0.14em;" +
+      "text-transform:uppercase;" +
+      "color:hsl(var(--primary));" +
+      "}" +
+      ".pc-topic-related-group ul{" +
+      "margin:0;" +
+      "padding-left:1rem;" +
+      "}" +
+      ".pc-topic-related-group li{" +
+      "margin:0.45rem 0;" +
+      "}" +
+      ".pc-topic-related-group a{" +
+      "color:hsl(var(--foreground));" +
+      "text-decoration:none;" +
+      "}" +
+      ".pc-blog-preview-grid{" +
+      "display:grid;" +
+      "grid-template-columns:repeat(3, minmax(0, 1fr));" +
+      "gap:1rem;" +
+      "margin-top:1.4rem;" +
+      "}" +
+      ".pc-blog-preview-card{" +
+      "display:block;" +
+      "overflow:hidden;" +
+      "border-radius:1.5rem;" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "background:#ffffff;" +
+      "box-shadow:0 18px 40px rgba(15,23,42,0.08);" +
+      "text-decoration:none;" +
+      "}" +
+      ".pc-blog-preview-media{" +
+      "height:12rem;" +
+      "background:linear-gradient(180deg, rgba(10,19,29,0.06), rgba(7,18,26,0.28)), var(--pc-blog-card-image) var(--pc-blog-card-position, center center) / cover no-repeat;" +
+      "}" +
+      ".pc-blog-preview-body{" +
+      "padding:1.25rem;" +
+      "}" +
+      ".pc-blog-preview-body h3{" +
+      "margin:0;" +
+      "font-family:var(--font-display);" +
+      "font-size:1.45rem;" +
+      "line-height:1.12;" +
+      "letter-spacing:-0.03em;" +
+      "color:hsl(var(--foreground));" +
+      "}" +
+      ".pc-blog-preview-body p{" +
+      "margin:0.8rem 0 0;" +
+      "font-size:0.95rem;" +
+      "line-height:1.7;" +
+      "color:rgba(71,85,105,0.88);" +
+      "}" +
+      ".pc-blog-hero{" +
+      "padding:5.25rem 1.5rem 2rem;" +
+      "background:linear-gradient(180deg, #10212b 0%, #17363a 50%, #f8fcfb 50%, #f8fcfb 100%);" +
+      "}" +
+      ".pc-blog-hero-card{" +
+      "max-width:76rem;" +
+      "margin:0 auto;" +
+      "padding:2.1rem;" +
+      "border-radius:2rem;" +
+      "background:linear-gradient(135deg, rgba(13,29,36,0.88) 0%, rgba(16,42,46,0.78) 44%, rgba(17,46,50,0.72) 100%), url('https://www.poulinchiro.com/data/uploads/Doctor-Cox-with-Doctor-Poulin.jpg') center 30% / cover no-repeat;" +
+      "box-shadow:0 28px 70px rgba(7,18,26,0.22);" +
+      "}" +
+      ".pc-blog-hero-card .pc-blog-eyebrow{" +
+      "background:rgba(255,255,255,0.12);" +
+      "color:#d8f4ee;" +
+      "}" +
+      ".pc-blog-hero-card .pc-blog-heading,.pc-blog-hero-card .pc-blog-copy{" +
+      "color:#ffffff;" +
+      "}" +
+      ".pc-blog-hero-card .pc-blog-copy{" +
+      "max-width:42rem;" +
+      "color:rgba(255,255,255,0.84);" +
+      "}" +
       "@media (max-width: 768px){" +
       "[data-inline-condition-filters='true']{" +
       "padding-top:1.2rem !important;" +
@@ -596,6 +1339,39 @@
       "}" +
       ".pc-video-title{" +
       "font-size:1.9rem;" +
+      "}" +
+      ".pc-topic-section,.pc-blog-section{" +
+      "padding:4rem 1rem;" +
+      "}" +
+      ".pc-topic-intro,.pc-blog-intro{" +
+      "flex-direction:column;" +
+      "align-items:flex-start;" +
+      "}" +
+      ".pc-topic-grid,.pc-blog-preview-grid,.pc-topic-related-grid{" +
+      "grid-template-columns:minmax(0, 1fr);" +
+      "}" +
+      ".pc-topic-card{" +
+      "min-height:14.5rem;" +
+      "padding:1.2rem;" +
+      "}" +
+      ".pc-topic-hero{" +
+      "grid-template-columns:minmax(0, 1fr);" +
+      "}" +
+      ".pc-topic-hero-media{" +
+      "min-height:14rem;" +
+      "}" +
+      ".pc-topic-hero-copy,.pc-topic-body{" +
+      "padding:1.4rem;" +
+      "}" +
+      ".pc-topic-hero-title,.pc-topic-heading,.pc-blog-heading{" +
+      "font-size:1.95rem;" +
+      "}" +
+      ".pc-blog-hero{" +
+      "padding:4.6rem 1rem 1.6rem;" +
+      "}" +
+      ".pc-blog-hero-card{" +
+      "padding:1.4rem;" +
+      "border-radius:1.5rem;" +
       "}" +
       "}";
     document.head.appendChild(style);
@@ -695,6 +1471,65 @@
 
     markActiveCard(anchor);
     panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function clearActiveTopicCards() {
+    document.querySelectorAll("[data-inline-topic][data-inline-active='true']").forEach(function (node) {
+      node.dataset.inlineActive = "false";
+    });
+  }
+
+  function markActiveTopicCardBySlug(slug) {
+    clearActiveTopicCards();
+
+    document.querySelectorAll("[data-inline-topic]").forEach(function (node) {
+      if (node.getAttribute("data-inline-topic") === slug) {
+        node.dataset.inlineActive = "true";
+      }
+    });
+  }
+
+  function closeTopicPanel() {
+    clearActiveTopicCards();
+    ACTIVE_TOPIC = null;
+
+    if (!ACTIVE_TOPIC_PANEL) {
+      return;
+    }
+
+    ACTIVE_TOPIC_PANEL.innerHTML = "";
+    ACTIVE_TOPIC_PANEL = null;
+  }
+
+  function showTopicPanel(trigger, slug, slot, options) {
+    var topic = getPainTopicBySlug(slug);
+    var shouldScroll = !options || options.scroll !== false;
+
+    if (!topic || !slot) {
+      return;
+    }
+
+    if (ACTIVE_TOPIC === slug && ACTIVE_TOPIC_PANEL === slot) {
+      closeTopicPanel();
+      return;
+    }
+
+    closeTopicPanel();
+
+    slot.innerHTML = buildTopicDetailMarkup(topic);
+    ACTIVE_TOPIC = slug;
+    ACTIVE_TOPIC_PANEL = slot;
+    markActiveTopicCardBySlug(slug);
+
+    if (window.location.pathname.indexOf("/Blog") === 0) {
+      try {
+        window.history.replaceState({}, "", window.location.pathname + "#" + slug);
+      } catch (error) {}
+    }
+
+    if (shouldScroll) {
+      slot.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function enhanceConditionLinks() {
@@ -824,7 +1659,7 @@
     var imagePosition = HERO_POSITIONS[routeKey] || "center";
     var hero = document.querySelector("main > div > section");
 
-    if (!hero || !imageUrl) {
+    if (routeKey === "Blog" || !hero || !imageUrl) {
       return;
     }
 
@@ -965,6 +1800,252 @@
     }
   }
 
+  function buildTopicCardMarkup(topic, isLink) {
+    var tagName = isLink ? "a" : "button";
+    var href = isLink ? ' href="/Blog/#' + escapeHtml(topic.slug) + '"' : ' type="button"';
+    var attrs =
+      ' class="pc-topic-card" data-inline-topic="' +
+      escapeHtml(topic.slug) +
+      '" style="--pc-topic-card-image:url(\'' +
+      escapeHtml(topic.imageUrl) +
+      "');--pc-topic-card-position:" +
+      escapeHtml(topic.imagePosition || "center center") +
+      ';"';
+
+    return (
+      "<" +
+      tagName +
+      href +
+      attrs +
+      '>' +
+      '<span class="pc-topic-card-content">' +
+      '<span class="pc-topic-card-label">' +
+      escapeHtml(topic.category) +
+      "</span>" +
+      '<h3 class="pc-topic-card-title">' +
+      escapeHtml(topic.title) +
+      "</h3>" +
+      '<span class="pc-topic-card-meta">Read topic guide</span>' +
+      "</span>" +
+      "</" +
+      tagName +
+      ">"
+    );
+  }
+
+  function buildTopicDetailMarkup(topic) {
+    if (!topic) {
+      return "";
+    }
+
+    return (
+      '<article class="pc-topic-article">' +
+      '<div class="pc-topic-hero">' +
+      '<div class="pc-topic-hero-media" style="--pc-topic-hero-image:url(\'' +
+      escapeHtml(topic.imageUrl) +
+      "');--pc-topic-hero-position:" +
+      escapeHtml(topic.imagePosition || "center center") +
+      ';"></div>' +
+      '<div class="pc-topic-hero-copy">' +
+      '<div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;">' +
+      '<div>' +
+      '<p class="pc-topic-hero-kicker">' +
+      escapeHtml(topic.category) +
+      "</p>" +
+      '<h2 class="pc-topic-hero-title">' +
+      escapeHtml(topic.title) +
+      "</h2>" +
+      "</div>" +
+      '<button type="button" class="pc-topic-close" data-inline-topic-close="true" aria-label="Close article">×</button>' +
+      "</div>" +
+      "<p>" +
+      escapeHtml(topic.excerpt) +
+      "</p>" +
+      '<div class="pc-topic-hero-actions">' +
+      '<a class="pc-topic-badge" href="/Conditions/">Browse all conditions</a>' +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<div class="pc-topic-body">' +
+      buildTopicBodyHtml(topic) +
+      buildTopicRelatedHtml(topic) +
+      "</div>" +
+      "</article>"
+    );
+  }
+
+  function buildPainTopicsSectionMarkup() {
+    var cards = PAIN_TOPIC_LIBRARY.map(function (topic) {
+      return buildTopicCardMarkup(topic, false);
+    }).join("");
+
+    return (
+      '<section class="pc-topic-section" data-inline-pain-topics="true">' +
+      '<div class="pc-topic-shell">' +
+      '<div class="pc-topic-intro">' +
+      "<div>" +
+      '<p class="pc-topic-eyebrow">Pain Topics</p>' +
+      '<h2 class="pc-topic-heading">Conditions We Treat, organized the way patients actually search.</h2>' +
+      '<p class="pc-topic-copy">This section turns the main symptom areas into visual topic guides. Click any card and the article opens right here on the page, with better structure and without pushing people off-site.</p>' +
+      "</div>" +
+      '<a class="pc-topic-badge" href="/Blog/">Open the full blog</a>' +
+      "</div>" +
+      '<div class="pc-topic-grid">' +
+      cards +
+      "</div>" +
+      '<div class="pc-topic-panel" data-inline-topic-panel-slot="home-topics"></div>' +
+      "</div>" +
+      "</section>"
+    );
+  }
+
+  function insertPainTopicsSection() {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/Home/") {
+      return;
+    }
+
+    if (document.querySelector("[data-inline-pain-topics='true']")) {
+      return;
+    }
+
+    var anchorSection = findSectionByText("Dedicated to Your Spinal Health");
+    var main = document.querySelector("main");
+
+    if (anchorSection && anchorSection.parentNode) {
+      anchorSection.insertAdjacentHTML("beforebegin", buildPainTopicsSectionMarkup());
+      return;
+    }
+
+    if (main) {
+      main.insertAdjacentHTML("beforeend", buildPainTopicsSectionMarkup());
+    }
+  }
+
+  function buildBlogPreviewMarkup() {
+    var previewTopics = PAIN_TOPIC_LIBRARY.slice(0, 3)
+      .map(function (topic) {
+        return (
+          '<a class="pc-blog-preview-card" href="/Blog/#' +
+          escapeHtml(topic.slug) +
+          '">' +
+          '<div class="pc-blog-preview-media" style="--pc-blog-card-image:url(\'' +
+          escapeHtml(topic.imageUrl) +
+          "');--pc-blog-card-position:" +
+          escapeHtml(topic.imagePosition || "center center") +
+          ';"></div>' +
+          '<div class="pc-blog-preview-body">' +
+          "<h3>" +
+          escapeHtml(topic.title) +
+          "</h3>" +
+          "<p>" +
+          escapeHtml(topic.excerpt) +
+          "</p>" +
+          "</div>" +
+          "</a>"
+        );
+      })
+      .join("");
+
+    return (
+      '<section class="pc-blog-section" data-inline-blog-preview="true">' +
+      '<div class="pc-blog-shell">' +
+      '<div class="pc-blog-intro">' +
+      "<div>" +
+      '<p class="pc-blog-eyebrow">Clinic Journal</p>' +
+      '<h2 class="pc-blog-heading">A blog-style resource area gives the site depth and SEO reach.</h2>' +
+      '<p class="pc-blog-copy">Instead of leaving educational pages scattered across the old site, this preview funnels visitors into a local blog hub built around the questions they actually have about pain, recovery, and conservative care.</p>' +
+      "</div>" +
+      '<a class="pc-topic-badge" href="/Blog/">See all articles</a>' +
+      "</div>" +
+      '<div class="pc-blog-preview-grid">' +
+      previewTopics +
+      "</div>" +
+      "</div>" +
+      "</section>"
+    );
+  }
+
+  function insertBlogPreviewSection() {
+    if (window.location.pathname !== "/" && window.location.pathname !== "/Home/") {
+      return;
+    }
+
+    if (document.querySelector("[data-inline-blog-preview='true']")) {
+      return;
+    }
+
+    var videoSection = document.querySelector("[data-inline-video-section='true']");
+    var main = document.querySelector("main");
+
+    if (videoSection && videoSection.parentNode) {
+      videoSection.insertAdjacentHTML("afterend", buildBlogPreviewMarkup());
+      return;
+    }
+
+    if (main) {
+      main.insertAdjacentHTML("beforeend", buildBlogPreviewMarkup());
+    }
+  }
+
+  function getRequestedTopicSlug() {
+    var hash = String(window.location.hash || "").replace(/^#/, "").trim();
+    return getPainTopicBySlug(hash) ? hash : PAIN_TOPIC_LIBRARY[0].slug;
+  }
+
+  function buildBlogPageMarkup(topic) {
+    var cards = PAIN_TOPIC_LIBRARY.map(function (entry) {
+      return buildTopicCardMarkup(entry, false);
+    }).join("");
+
+    return (
+      '<section class="pc-blog-hero">' +
+      '<div class="pc-blog-hero-card">' +
+      '<p class="pc-blog-eyebrow">Poulin Blog</p>' +
+      '<h1 class="pc-blog-heading">Educational articles that stay inside your site and support the conditions library.</h1>' +
+      '<p class="pc-blog-copy">This blog layer gives the site a cleaner editorial structure: topic-based articles for search intent, condition pages for diagnosis depth, and a smoother path between the two.</p>' +
+      '<div class="pc-topic-hero-actions" style="margin-top:1.25rem;">' +
+      '<a class="pc-topic-badge" href="/Home/">Back to Home</a>' +
+      '<a class="pc-topic-badge" href="/Conditions/">Open conditions library</a>' +
+      "</div>" +
+      "</div>" +
+      "</section>" +
+      '<section class="pc-blog-section" data-inline-blog-route="true">' +
+      '<div class="pc-blog-shell">' +
+      '<div class="pc-blog-intro">' +
+      "<div>" +
+      '<p class="pc-blog-eyebrow">Featured Topic</p>' +
+      '<h2 class="pc-blog-heading">Open a topic and read it without leaving the page.</h2>' +
+      '<p class="pc-blog-copy">This is the first version of the blog hub. We can keep growing it with more articles, videos, FAQs, and condition explainers, but the structure is already in place.</p>' +
+      "</div>" +
+      "</div>" +
+      '<div class="pc-topic-panel" data-inline-topic-panel-slot="blog-topics">' +
+      buildTopicDetailMarkup(topic) +
+      "</div>" +
+      '<div class="pc-topic-grid" style="margin-top:1.4rem;">' +
+      cards +
+      "</div>" +
+      "</div>" +
+      "</section>"
+    );
+  }
+
+  function renderBlogRoute() {
+    if (window.location.pathname.indexOf("/Blog") !== 0) {
+      return;
+    }
+
+    var main = document.querySelector("main");
+    var topic = getPainTopicBySlug(getRequestedTopicSlug());
+
+    if (!main || !topic || main.dataset.inlineBlogHydrated === "true") {
+      return;
+    }
+
+    main.dataset.inlineBlogHydrated = "true";
+    main.innerHTML = buildBlogPageMarkup(topic);
+    markActiveTopicCardBySlug(topic.slug);
+  }
+
   function isLightColor(color) {
     var match = String(color || "").match(/rgba?\(([^)]+)\)/i);
     if (!match) {
@@ -1005,7 +2086,7 @@
     var routeKey = getRouteKey();
     var hero = document.querySelector("main > div > section");
 
-    if (!hero) {
+    if (routeKey === "Blog" || !hero) {
       return;
     }
 
@@ -1017,6 +2098,40 @@
     if (routeKey === "About") {
       replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center center", "contain");
     }
+  }
+
+  function ensureBlogNavLink() {
+    if (document.querySelector("a[href='/Blog/'], a[href='/Blog']")) {
+      return;
+    }
+
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll("header a"));
+    var referenceLink = null;
+
+    navLinks.some(function (link) {
+      var text = normalizeHeadingText(link.textContent).toLowerCase();
+      if (text === "testimonials" || text === "contact") {
+        referenceLink = link;
+        return true;
+      }
+      return false;
+    });
+
+    if (!referenceLink || !referenceLink.parentElement) {
+      return;
+    }
+
+    var item = referenceLink.parentElement.cloneNode(true);
+    var anchor = item.querySelector("a");
+
+    if (!anchor) {
+      return;
+    }
+
+    anchor.href = "/Blog/";
+    anchor.textContent = "Blog";
+    anchor.removeAttribute("aria-current");
+    referenceLink.parentElement.insertAdjacentElement("beforebegin", item);
   }
 
   function buildStandaloneDetailPage(conditionName) {
@@ -1062,9 +2177,13 @@
     enhanceConditionLinks();
     enhanceConditionsLayout();
     renderConditionDetailRoute();
+    renderBlogRoute();
     applyHeroImages();
     applyRouteHeroEnhancements();
     insertVideoSection();
+    insertPainTopicsSection();
+    insertBlogPreviewSection();
+    ensureBlogNavLink();
   }
 
   function scheduleApply() {
@@ -1097,11 +2216,31 @@
       function (event) {
         var anchor = event.target && event.target.closest ? event.target.closest("a[data-inline-condition]") : null;
         var closeButton = event.target && event.target.closest ? event.target.closest("[data-inline-condition-close]") : null;
+        var topicTrigger = event.target && event.target.closest ? event.target.closest("[data-inline-topic]") : null;
+        var topicCloseButton = event.target && event.target.closest ? event.target.closest("[data-inline-topic-close]") : null;
+
+        if (topicCloseButton) {
+          event.preventDefault();
+          closeTopicPanel();
+          return;
+        }
 
         if (closeButton) {
           event.preventDefault();
           closeInlinePanel();
           return;
+        }
+
+        if (topicTrigger) {
+          var topicSlug = topicTrigger.getAttribute("data-inline-topic");
+          var topicSection = topicTrigger.closest("[data-inline-pain-topics='true'], [data-inline-blog-route='true']");
+          var topicSlot = topicSection ? topicSection.querySelector("[data-inline-topic-panel-slot]") : null;
+
+          if (topicSlot && getPainTopicBySlug(topicSlug)) {
+            event.preventDefault();
+            showTopicPanel(topicTrigger, topicSlug, topicSlot, { scroll: true });
+            return;
+          }
         }
 
         if (!anchor) {
