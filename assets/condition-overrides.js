@@ -844,12 +844,13 @@
     return area;
   }
 
-  function replaceHeroCardMedia(hero, routeKey, positionOverride) {
+  function replaceHeroCardMedia(hero, routeKey, positionOverride, fitMode) {
     var replacementUrl = HERO_CARD_IMAGES[routeKey];
     if (!replacementUrl) {
       return;
     }
     var imagePosition = positionOverride || "center 20%";
+    var imageFit = fitMode || "cover";
 
     var visuals = Array.prototype.slice.call(hero.querySelectorAll("img, [style*='background-image']"));
     var candidate = null;
@@ -871,14 +872,17 @@
       candidate.src = replacementUrl;
       candidate.srcset = "";
       candidate.alt = "Poulin Chiropractic care";
-      candidate.style.objectFit = "cover";
+      candidate.style.objectFit = imageFit;
       candidate.style.objectPosition = imagePosition;
       candidate.style.width = "100%";
       candidate.style.height = "100%";
+      if (imageFit === "contain" && candidate.parentElement) {
+        candidate.parentElement.style.background = "linear-gradient(180deg, #e8e1d8 0%, #f5f1eb 100%)";
+      }
     } else {
       candidate.style.backgroundImage = "url('" + replacementUrl + "')";
       candidate.style.backgroundPosition = imagePosition;
-      candidate.style.backgroundSize = "cover";
+      candidate.style.backgroundSize = imageFit;
       candidate.style.backgroundRepeat = "no-repeat";
     }
   }
@@ -1011,7 +1015,7 @@
     }
 
     if (routeKey === "About") {
-      replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center 12%");
+      replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center center", "contain");
     }
   }
 
