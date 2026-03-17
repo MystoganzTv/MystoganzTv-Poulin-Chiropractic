@@ -14,14 +14,17 @@
     Contact: "https://www.poulinchiro.com/data/uploads/ashburnoffice20130523.jpg",
     ConditionDetail: "https://www.poulinchiro.com/data/uploads/doctor_cox_with_doctor_poulin.jpg",
   };
+  var HERO_CARD_IMAGES = {
+    Home: "https://www.poulinchiro.com/data/uploads/Poulin-Cox-9-2021.jpg",
+  };
   var HERO_POSITIONS = {
-    Home: "center 28%",
-    About: "center 24%",
-    Services: "center 42%",
+    Home: "center 22%",
+    About: "center 18%",
+    Services: "center 28%",
     Conditions: "center 36%",
-    Testimonials: "center 32%",
+    Testimonials: "center 24%",
     Contact: "center 44%",
-    ConditionDetail: "center 34%",
+    ConditionDetail: "center 24%",
   };
 
   if (!dataset || !dataset.articles || !dataset.aliases) {
@@ -40,6 +43,18 @@
   function normalizeConditionName(name) {
     var key = dataset.aliases[(name || "").trim()];
     return key || null;
+  }
+
+  function cleanConditionTitle(name, condition) {
+    var display = String(name || "").trim();
+    if (display) {
+      return display;
+    }
+
+    return String((condition && condition.title) || "")
+      .replace(/^About\s+Ashburn\s+and\s+Herndon\s+Chiropractic\s+and\s+Ashburn\s+and\s+Herndon\s+/i, "")
+      .replace(/^About\s+Ashburn\s+and\s+Herndon\s+/i, "")
+      .trim();
   }
 
   function slugifyConditionName(name) {
@@ -77,6 +92,15 @@
     }
 
     return beautifyArticleHtml(condition.contentHtml);
+  }
+
+  function stripLeadingHeadingLabel(text) {
+    return String(text || "")
+      .replace(
+        /^(Introduction|Definition|Description|Examination|Treatment|At Home Care|At-Home Care|At Home Focus|At-Home Focus|Summary|Clinical Case Reports?|Clinical Focus|Common Symptoms|What Patients May Notice|Where It Can Occur|Treatment Approach|Typical Complaints|At-Home Considerations|Why this matters|Why this approach matters|What patients may experience|What symptoms can feel like)\s+/i,
+        ""
+      )
+      .trim();
   }
 
   function normalizeHeadingText(text) {
@@ -246,7 +270,7 @@
       "content:'';" +
       "position:absolute;" +
       "top:0;left:0;right:0;" +
-      "height:12rem;" +
+      "height:16rem;" +
       "background:radial-gradient(circle at top left, rgba(46,139,120,0.14), transparent 58%), linear-gradient(135deg, rgba(223,243,239,0.75), rgba(255,255,255,0));" +
       "pointer-events:none;" +
       "}" +
@@ -260,7 +284,7 @@
       "border-bottom:1px solid rgba(148,163,184,0.18);" +
       "}" +
       ".pc-condition-header-main{" +
-      "max-width:48rem;" +
+      "max-width:40rem;" +
       "}" +
       ".pc-condition-kicker{" +
       "display:inline-flex;" +
@@ -278,18 +302,11 @@
       ".pc-condition-title{" +
       "margin:1rem 0 0;" +
       "font-family:var(--font-display);" +
-      "font-size:clamp(2rem, 3.6vw, 3rem);" +
-      "line-height:1.04;" +
+      "font-size:clamp(1.9rem, 3vw, 2.6rem);" +
+      "line-height:1.02;" +
       "letter-spacing:-0.03em;" +
       "color:hsl(var(--foreground));" +
       "text-wrap:balance;" +
-      "}" +
-      ".pc-condition-subtitle{" +
-      "margin:1rem 0 0;" +
-      "max-width:42rem;" +
-      "font-size:1rem;" +
-      "line-height:1.75;" +
-      "color:hsl(var(--muted-foreground));" +
       "}" +
       ".pc-condition-close{" +
       "position:relative;" +
@@ -408,6 +425,20 @@
       ".pc-condition-page-card{" +
       "margin-top:2rem;" +
       "}" +
+      "[data-inline-home-hero='true'] a,[data-inline-home-hero='true'] button{" +
+      "position:relative;" +
+      "z-index:1;" +
+      "}" +
+      ".pc-home-hero-card-float{" +
+      "background:rgba(255,255,255,0.95) !important;" +
+      "color:#10212b !important;" +
+      "border:1px solid rgba(15,23,42,0.08) !important;" +
+      "box-shadow:0 20px 45px rgba(15,23,42,0.14) !important;" +
+      "backdrop-filter:blur(10px);" +
+      "}" +
+      ".pc-home-hero-card-float *{" +
+      "color:inherit !important;" +
+      "}" +
       "@media (max-width: 768px){" +
       "[data-inline-condition-filters='true']{" +
       "padding-top:1.2rem !important;" +
@@ -423,7 +454,7 @@
       "padding-bottom:1.15rem;" +
       "}" +
       ".pc-condition-title{" +
-      "font-size:2rem;" +
+      "font-size:1.85rem;" +
       "}" +
       ".pc-condition-body{" +
       "font-size:0.98rem;" +
@@ -435,6 +466,7 @@
 
   function getConditionSummary(condition, conditionName) {
     var source = getArticleBodyHtml(condition).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    source = stripLeadingHeadingLabel(source);
     if (!source) {
       return "Explore a complete local article for this condition with Poulin Chiropractic treatment context and educational detail.";
     }
@@ -449,8 +481,7 @@
     }
 
     var wrapperClass = compact ? "pc-condition-shell" : "pc-condition-shell pc-condition-shell--page";
-    var title = escapeHtml(condition.title || conditionName);
-    var summary = escapeHtml(getConditionSummary(condition, conditionName));
+    var title = escapeHtml(cleanConditionTitle(conditionName, condition));
     var closeButton = compact
       ? '<button type="button" class="pc-condition-close" data-inline-condition-close="true" aria-label="Close article">×</button>'
       : "";
@@ -465,9 +496,6 @@
       '<h2 class="pc-condition-title">' +
       title +
       "</h2>" +
-      '<p class="pc-condition-subtitle">' +
-      summary +
-      "</p>" +
       "</div>" +
       closeButton +
       "</div>" +
@@ -668,6 +696,104 @@
     hero.style.background = "transparent";
   }
 
+  function scoreVisualCandidate(node) {
+    if (!node) {
+      return 0;
+    }
+
+    var rect = node.getBoundingClientRect();
+    var area = Math.max(rect.width, 0) * Math.max(rect.height, 0);
+    return area;
+  }
+
+  function replaceHeroCardMedia(hero, routeKey) {
+    var replacementUrl = HERO_CARD_IMAGES[routeKey];
+    if (!replacementUrl) {
+      return;
+    }
+
+    var visuals = Array.prototype.slice.call(hero.querySelectorAll("img, [style*='background-image']"));
+    var candidate = null;
+    var candidateScore = 0;
+
+    visuals.forEach(function (node) {
+      var score = scoreVisualCandidate(node);
+      if (score > candidateScore) {
+        candidate = node;
+        candidateScore = score;
+      }
+    });
+
+    if (!candidate) {
+      return;
+    }
+
+    if (candidate.tagName === "IMG") {
+      candidate.src = replacementUrl;
+      candidate.srcset = "";
+      candidate.alt = "Poulin Chiropractic care";
+      candidate.style.objectFit = "cover";
+      candidate.style.objectPosition = "center 20%";
+      candidate.style.width = "100%";
+      candidate.style.height = "100%";
+    } else {
+      candidate.style.backgroundImage = "url('" + replacementUrl + "')";
+      candidate.style.backgroundPosition = "center 20%";
+      candidate.style.backgroundSize = "cover";
+      candidate.style.backgroundRepeat = "no-repeat";
+    }
+  }
+
+  function isLightColor(color) {
+    var match = String(color || "").match(/rgba?\(([^)]+)\)/i);
+    if (!match) {
+      return false;
+    }
+
+    var parts = match[1].split(",").map(function (part) {
+      return Number(part.trim());
+    });
+    var red = parts[0] || 0;
+    var green = parts[1] || 0;
+    var blue = parts[2] || 0;
+    var alpha = parts.length > 3 ? parts[3] : 1;
+    var luminance = (red * 299 + green * 587 + blue * 114) / 1000;
+
+    return alpha > 0.75 && luminance > 180;
+  }
+
+  function polishHomeHeroCards(hero) {
+    hero.dataset.inlineHomeHero = "true";
+
+    Array.prototype.slice.call(hero.querySelectorAll("a, button, div")).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width < 120 || rect.height < 44) {
+        return;
+      }
+
+      var styles = window.getComputedStyle(node);
+      if (!isLightColor(styles.backgroundColor)) {
+        return;
+      }
+
+      node.classList.add("pc-home-hero-card-float");
+    });
+  }
+
+  function applyRouteHeroEnhancements() {
+    var routeKey = getRouteKey();
+    var hero = document.querySelector("main > div > section");
+
+    if (!hero) {
+      return;
+    }
+
+    if (routeKey === "Home") {
+      replaceHeroCardMedia(hero, routeKey);
+      polishHomeHeroCards(hero);
+    }
+  }
+
   function buildStandaloneDetailPage(conditionName) {
     var condition = getConditionByName(conditionName);
     if (!condition) {
@@ -712,6 +838,7 @@
     enhanceConditionsLayout();
     renderConditionDetailRoute();
     applyHeroImages();
+    applyRouteHeroEnhancements();
   }
 
   function scheduleApply() {
