@@ -16,6 +16,7 @@
   };
   var HERO_CARD_IMAGES = {
     Home: "https://www.poulinchiro.com/data/uploads/Poulin-Cox-9-2021.jpg",
+    About: "https://www.poulinchiro.com/data/images/mikepoulin--1--1.jpg",
   };
   var HERO_POSITIONS = {
     Home: "center 22%",
@@ -706,11 +707,12 @@
     return area;
   }
 
-  function replaceHeroCardMedia(hero, routeKey) {
+  function replaceHeroCardMedia(hero, routeKey, positionOverride) {
     var replacementUrl = HERO_CARD_IMAGES[routeKey];
     if (!replacementUrl) {
       return;
     }
+    var imagePosition = positionOverride || "center 20%";
 
     var visuals = Array.prototype.slice.call(hero.querySelectorAll("img, [style*='background-image']"));
     var candidate = null;
@@ -733,15 +735,32 @@
       candidate.srcset = "";
       candidate.alt = "Poulin Chiropractic care";
       candidate.style.objectFit = "cover";
-      candidate.style.objectPosition = "center 20%";
+      candidate.style.objectPosition = imagePosition;
       candidate.style.width = "100%";
       candidate.style.height = "100%";
     } else {
       candidate.style.backgroundImage = "url('" + replacementUrl + "')";
-      candidate.style.backgroundPosition = "center 20%";
+      candidate.style.backgroundPosition = imagePosition;
       candidate.style.backgroundSize = "cover";
       candidate.style.backgroundRepeat = "no-repeat";
     }
+  }
+
+  function findSectionByText(snippet) {
+    var normalizedSnippet = normalizeHeadingText(snippet).toLowerCase();
+    var sections = Array.prototype.slice.call(document.querySelectorAll("main section"));
+    var match = null;
+
+    sections.some(function (section) {
+      if (normalizeHeadingText(section.textContent).toLowerCase().indexOf(normalizedSnippet) === -1) {
+        return false;
+      }
+
+      match = section;
+      return true;
+    });
+
+    return match;
   }
 
   function isLightColor(color) {
@@ -791,6 +810,10 @@
     if (routeKey === "Home") {
       replaceHeroCardMedia(hero, routeKey);
       polishHomeHeroCards(hero);
+    }
+
+    if (routeKey === "About") {
+      replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center 12%");
     }
   }
 
