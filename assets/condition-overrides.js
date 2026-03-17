@@ -1069,6 +1069,13 @@
       "color:#ffffff;" +
       "text-wrap:balance;" +
       "}" +
+      ".pc-topic-card-excerpt{" +
+      "margin:0;" +
+      "max-width:26rem;" +
+      "font-size:0.95rem;" +
+      "line-height:1.5;" +
+      "color:rgba(255,255,255,0.92);" +
+      "}" +
       ".pc-topic-card-meta{" +
       "display:flex;" +
       "align-items:center;" +
@@ -1300,6 +1307,42 @@
       "max-width:42rem;" +
       "color:rgba(255,255,255,0.84);" +
       "}" +
+      ".pc-alone-section{" +
+      "padding:5rem 1.5rem 5.5rem;" +
+      "background:linear-gradient(180deg, #f4f6f7 0%, #eef2f3 100%);" +
+      "}" +
+      ".pc-alone-shell{" +
+      "max-width:76rem;" +
+      "margin:0 auto;" +
+      "display:grid;" +
+      "grid-template-columns:minmax(0, 1.1fr) minmax(320px, 0.8fr);" +
+      "gap:2.5rem;" +
+      "align-items:center;" +
+      "}" +
+      ".pc-alone-copy{" +
+      "max-width:42rem;" +
+      "margin:0 auto;" +
+      "}" +
+      ".pc-alone-copy h2{" +
+      "margin:0 0 1.5rem;" +
+      "font-size:clamp(2.3rem, 3vw, 3.4rem);" +
+      "line-height:1.02;" +
+      "letter-spacing:-0.04em;" +
+      "font-family:var(--font-display);" +
+      "color:hsl(var(--foreground));" +
+      "}" +
+      ".pc-alone-copy p{" +
+      "margin:0 0 1.3rem;" +
+      "font-size:1.06rem;" +
+      "line-height:1.78;" +
+      "color:rgba(31,41,55,0.92);" +
+      "}" +
+      ".pc-alone-media{" +
+      "min-height:31rem;" +
+      "border-radius:0;" +
+      "background:url('https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=80') center center / cover no-repeat;" +
+      "box-shadow:0 18px 40px rgba(15,23,42,0.08);" +
+      "}" +
       "@media (max-width: 768px){" +
       "[data-inline-condition-filters='true']{" +
       "padding-top:1.2rem !important;" +
@@ -1372,6 +1415,16 @@
       ".pc-blog-hero-card{" +
       "padding:1.4rem;" +
       "border-radius:1.5rem;" +
+      "}" +
+      ".pc-alone-section{" +
+      "padding:4rem 1rem;" +
+      "}" +
+      ".pc-alone-shell{" +
+      "grid-template-columns:minmax(0, 1fr);" +
+      "gap:1.4rem;" +
+      "}" +
+      ".pc-alone-media{" +
+      "min-height:18rem;" +
       "}" +
       "}";
     document.head.appendChild(style);
@@ -1800,9 +1853,16 @@
     }
   }
 
-  function buildTopicCardMarkup(topic, isLink) {
+  function getTopicPath(topic) {
+    return "/Blog/" + topic.slug + "/";
+  }
+
+  function buildTopicCardMarkup(topic, options) {
+    var settings = options || {};
+    var isLink = settings.isLink !== false;
+    var showExcerpt = !!settings.showExcerpt;
     var tagName = isLink ? "a" : "button";
-    var href = isLink ? ' href="/Blog/#' + escapeHtml(topic.slug) + '"' : ' type="button"';
+    var href = isLink ? ' href="' + escapeHtml(getTopicPath(topic)) + '"' : ' type="button"';
     var attrs =
       ' class="pc-topic-card" data-inline-topic="' +
       escapeHtml(topic.slug) +
@@ -1825,6 +1885,9 @@
       '<h3 class="pc-topic-card-title">' +
       escapeHtml(topic.title) +
       "</h3>" +
+      (showExcerpt
+        ? '<p class="pc-topic-card-excerpt">' + escapeHtml(topic.excerpt) + "</p>"
+        : "") +
       '<span class="pc-topic-card-meta">Read topic guide</span>' +
       "</span>" +
       "</" +
@@ -1833,10 +1896,17 @@
     );
   }
 
-  function buildTopicDetailMarkup(topic) {
+  function buildTopicDetailMarkup(topic, standalone) {
     if (!topic) {
       return "";
     }
+
+    var closeButton = standalone
+      ? ""
+      : '<button type="button" class="pc-topic-close" data-inline-topic-close="true" aria-label="Close article">×</button>';
+    var topActions = standalone
+      ? '<a class="pc-topic-badge" href="/Blog/">Back to Blog</a><a class="pc-topic-badge" href="/Conditions/">Browse all conditions</a>'
+      : '<a class="pc-topic-badge" href="/Conditions/">Browse all conditions</a>';
 
     return (
       '<article class="pc-topic-article">' +
@@ -1856,13 +1926,13 @@
       escapeHtml(topic.title) +
       "</h2>" +
       "</div>" +
-      '<button type="button" class="pc-topic-close" data-inline-topic-close="true" aria-label="Close article">×</button>' +
+      closeButton +
       "</div>" +
       "<p>" +
       escapeHtml(topic.excerpt) +
       "</p>" +
       '<div class="pc-topic-hero-actions">' +
-      '<a class="pc-topic-badge" href="/Conditions/">Browse all conditions</a>' +
+      topActions +
       "</div>" +
       "</div>" +
       "</div>" +
@@ -1876,7 +1946,10 @@
 
   function buildPainTopicsSectionMarkup() {
     var cards = PAIN_TOPIC_LIBRARY.map(function (topic) {
-      return buildTopicCardMarkup(topic, false);
+      return buildTopicCardMarkup(topic, {
+        isLink: true,
+        showExcerpt: topic.slug === "back-pain",
+      });
     }).join("");
 
     return (
@@ -1886,15 +1959,11 @@
       "<div>" +
       '<p class="pc-topic-eyebrow">Pain Topics</p>' +
       '<h2 class="pc-topic-heading">Conditions We Treat, organized the way patients actually search.</h2>' +
-      '<p class="pc-topic-copy">This section turns the main symptom areas into visual topic guides. Click any card and the article opens right here on the page, with better structure and without pushing people off-site.</p>' +
+      '<p class="pc-topic-copy">Choose the area that feels closest to what you are dealing with. Each card opens its own page with a cleaner explanation, related conditions, and a more focused reading experience.</p>' +
       "</div>" +
-      '<a class="pc-topic-badge" href="/Blog/">Open the full blog</a>' +
+      '<a class="pc-topic-badge" href="/Blog/">Open Blog</a>' +
       "</div>" +
-      '<div class="pc-topic-grid">' +
-      cards +
-      "</div>" +
-      '<div class="pc-topic-panel" data-inline-topic-panel-slot="home-topics"></div>' +
-      "</div>" +
+      '<div class="pc-topic-grid">' + cards + "</div>" +
       "</section>"
     );
   }
@@ -1921,109 +1990,107 @@
     }
   }
 
-  function buildBlogPreviewMarkup() {
-    var previewTopics = PAIN_TOPIC_LIBRARY.slice(0, 3)
-      .map(function (topic) {
-        return (
-          '<a class="pc-blog-preview-card" href="/Blog/#' +
-          escapeHtml(topic.slug) +
-          '">' +
-          '<div class="pc-blog-preview-media" style="--pc-blog-card-image:url(\'' +
-          escapeHtml(topic.imageUrl) +
-          "');--pc-blog-card-position:" +
-          escapeHtml(topic.imagePosition || "center center") +
-          ';"></div>' +
-          '<div class="pc-blog-preview-body">' +
-          "<h3>" +
-          escapeHtml(topic.title) +
-          "</h3>" +
-          "<p>" +
-          escapeHtml(topic.excerpt) +
-          "</p>" +
-          "</div>" +
-          "</a>"
-        );
-      })
-      .join("");
-
+  function buildYouAreNotAloneSectionMarkup() {
     return (
-      '<section class="pc-blog-section" data-inline-blog-preview="true">' +
-      '<div class="pc-blog-shell">' +
-      '<div class="pc-blog-intro">' +
-      "<div>" +
-      '<p class="pc-blog-eyebrow">Clinic Journal</p>' +
-      '<h2 class="pc-blog-heading">A blog-style resource area gives the site depth and SEO reach.</h2>' +
-      '<p class="pc-blog-copy">Instead of leaving educational pages scattered across the old site, this preview funnels visitors into a local blog hub built around the questions they actually have about pain, recovery, and conservative care.</p>' +
+      '<section class="pc-alone-section" data-inline-you-are-not-alone="true">' +
+      '<div class="pc-alone-shell">' +
+      '<div class="pc-alone-copy">' +
+      "<h2>You Are Not Alone</h2>" +
+      "<p>If you suffer with spine pain or spine-related pain, neck pain, arm pain, leg pain or low back pain, you are not alone.</p>" +
+      "<p><strong>One in 3 people in the U.S.</strong> suffers back pain at any given time, and studies show that 80% of Ashburn and Herndon residents will suffer back pain at some time in their lives. Spine pain robs you of your quality of life, and when it does, you want and deserve your pain-free life back as gently, effectively, and swiftly as possible.</p>" +
+      "<p>At Poulin Chiropractic of Herndon and Ashburn, we have educational resources, research, and treatment options to get you back on your feet.</p>" +
       "</div>" +
-      '<a class="pc-topic-badge" href="/Blog/">See all articles</a>' +
-      "</div>" +
-      '<div class="pc-blog-preview-grid">' +
-      previewTopics +
-      "</div>" +
+      '<div class="pc-alone-media" aria-hidden="true"></div>' +
       "</div>" +
       "</section>"
     );
   }
 
-  function insertBlogPreviewSection() {
+  function insertYouAreNotAloneSection() {
     if (window.location.pathname !== "/" && window.location.pathname !== "/Home/") {
       return;
     }
 
-    if (document.querySelector("[data-inline-blog-preview='true']")) {
+    if (document.querySelector("[data-inline-you-are-not-alone='true']")) {
       return;
     }
 
-    var videoSection = document.querySelector("[data-inline-video-section='true']");
     var main = document.querySelector("main");
-
-    if (videoSection && videoSection.parentNode) {
-      videoSection.insertAdjacentHTML("afterend", buildBlogPreviewMarkup());
-      return;
-    }
-
     if (main) {
-      main.insertAdjacentHTML("beforeend", buildBlogPreviewMarkup());
+      main.insertAdjacentHTML("beforeend", buildYouAreNotAloneSectionMarkup());
     }
   }
 
-  function getRequestedTopicSlug() {
-    var hash = String(window.location.hash || "").replace(/^#/, "").trim();
-    return getPainTopicBySlug(hash) ? hash : PAIN_TOPIC_LIBRARY[0].slug;
+  function getBlogPathParts() {
+    var segments = window.location.pathname.split("/").filter(Boolean);
+    if (!segments.length || segments[0] !== "Blog") {
+      return [];
+    }
+
+    return segments.slice(1);
   }
 
-  function buildBlogPageMarkup(topic) {
-    var cards = PAIN_TOPIC_LIBRARY.map(function (entry) {
-      return buildTopicCardMarkup(entry, false);
+  function buildBlogLandingMarkup() {
+    var cards = PAIN_TOPIC_LIBRARY.map(function (topic) {
+      return buildTopicCardMarkup(topic, {
+        isLink: true,
+        showExcerpt: topic.slug === "back-pain",
+      });
     }).join("");
 
     return (
       '<section class="pc-blog-hero">' +
       '<div class="pc-blog-hero-card">' +
       '<p class="pc-blog-eyebrow">Poulin Blog</p>' +
-      '<h1 class="pc-blog-heading">Educational articles that stay inside your site and support the conditions library.</h1>' +
-      '<p class="pc-blog-copy">This blog layer gives the site a cleaner editorial structure: topic-based articles for search intent, condition pages for diagnosis depth, and a smoother path between the two.</p>' +
+      '<h1 class="pc-blog-heading">Clear, dedicated blog pages for the questions patients ask most.</h1>' +
+      '<p class="pc-blog-copy">This tab is now its own space. Browse the major pain topics here, then open the full page for the one that matches your symptoms best.</p>' +
       '<div class="pc-topic-hero-actions" style="margin-top:1.25rem;">' +
       '<a class="pc-topic-badge" href="/Home/">Back to Home</a>' +
       '<a class="pc-topic-badge" href="/Conditions/">Open conditions library</a>' +
       "</div>" +
       "</div>" +
       "</section>" +
-      '<section class="pc-blog-section" data-inline-blog-route="true">' +
+      '<section class="pc-blog-section" data-inline-blog-route="landing">' +
       '<div class="pc-blog-shell">' +
       '<div class="pc-blog-intro">' +
       "<div>" +
-      '<p class="pc-blog-eyebrow">Featured Topic</p>' +
-      '<h2 class="pc-blog-heading">Open a topic and read it without leaving the page.</h2>' +
-      '<p class="pc-blog-copy">This is the first version of the blog hub. We can keep growing it with more articles, videos, FAQs, and condition explainers, but the structure is already in place.</p>' +
+      '<p class="pc-blog-eyebrow">Pain Library</p>' +
+      '<h2 class="pc-blog-heading">Choose a topic and open its full page.</h2>' +
+      '<p class="pc-blog-copy">Each card now opens a dedicated page instead of expanding in the home page. That keeps the landing cleaner and makes the reading experience much more focused.</p>' +
       "</div>" +
       "</div>" +
-      '<div class="pc-topic-panel" data-inline-topic-panel-slot="blog-topics">' +
-      buildTopicDetailMarkup(topic) +
-      "</div>" +
-      '<div class="pc-topic-grid" style="margin-top:1.4rem;">' +
+      '<div class="pc-topic-grid">' +
       cards +
       "</div>" +
+      "</div>" +
+      "</section>"
+    );
+  }
+
+  function buildBlogDetailPageMarkup(topic) {
+    if (!topic) {
+      return "";
+    }
+
+    return (
+      '<section class="pc-blog-hero">' +
+      '<div class="pc-blog-hero-card">' +
+      '<p class="pc-blog-eyebrow">Topic Page</p>' +
+      '<h1 class="pc-blog-heading">' +
+      escapeHtml(topic.title) +
+      "</h1>" +
+      '<p class="pc-blog-copy">' +
+      escapeHtml(topic.excerpt) +
+      "</p>" +
+      '<div class="pc-topic-hero-actions" style="margin-top:1.25rem;">' +
+      '<a class="pc-topic-badge" href="/Blog/">Back to Blog</a>' +
+      '<a class="pc-topic-badge" href="/Conditions/">Conditions</a>' +
+      "</div>" +
+      "</div>" +
+      "</section>" +
+      '<section class="pc-blog-section" data-inline-blog-route="detail">' +
+      '<div class="pc-blog-shell">' +
+      buildTopicDetailMarkup(topic, true) +
       "</div>" +
       "</section>"
     );
@@ -2035,15 +2102,15 @@
     }
 
     var main = document.querySelector("main");
-    var topic = getPainTopicBySlug(getRequestedTopicSlug());
+    var parts = getBlogPathParts();
+    var topic = parts.length ? getPainTopicBySlug(parts[0]) : null;
 
-    if (!main || !topic || main.dataset.inlineBlogHydrated === "true") {
+    if (!main || main.dataset.inlineBlogHydrated === "true") {
       return;
     }
 
     main.dataset.inlineBlogHydrated = "true";
-    main.innerHTML = buildBlogPageMarkup(topic);
-    markActiveTopicCardBySlug(topic.slug);
+    main.innerHTML = topic ? buildBlogDetailPageMarkup(topic) : buildBlogLandingMarkup();
   }
 
   function isLightColor(color) {
@@ -2180,9 +2247,8 @@
     renderBlogRoute();
     applyHeroImages();
     applyRouteHeroEnhancements();
-    insertVideoSection();
     insertPainTopicsSection();
-    insertBlogPreviewSection();
+    insertYouAreNotAloneSection();
     ensureBlogNavLink();
   }
 
