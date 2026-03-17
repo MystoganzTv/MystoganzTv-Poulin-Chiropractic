@@ -256,71 +256,68 @@
       "margin:1rem 0 2rem;" +
       "}" +
       ".pc-condition-shell{" +
-      "position:relative;" +
       "overflow:hidden;" +
-      "border:1px solid rgba(25,84,74,0.12);" +
+      "border:1px solid rgba(25,84,74,0.1);" +
       "border-radius:2rem;" +
-      "background:linear-gradient(180deg, #ffffff 0%, #fcfefd 100%);" +
-      "box-shadow:0 28px 70px rgba(15,23,42,0.08);" +
-      "padding:2rem;" +
+      "background:#ffffff;" +
+      "box-shadow:0 24px 64px rgba(15,23,42,0.08);" +
       "}" +
       ".pc-condition-shell--page{" +
-      "padding:2.5rem;" +
-      "}" +
-      ".pc-condition-shell::before{" +
-      "content:'';" +
-      "position:absolute;" +
-      "top:0;left:0;right:0;" +
-      "height:16rem;" +
-      "background:radial-gradient(circle at top left, rgba(46,139,120,0.14), transparent 58%), linear-gradient(135deg, rgba(223,243,239,0.75), rgba(255,255,255,0));" +
-      "pointer-events:none;" +
+      "box-shadow:0 32px 76px rgba(15,23,42,0.1);" +
       "}" +
       ".pc-condition-header{" +
-      "position:relative;" +
       "display:flex;" +
       "justify-content:space-between;" +
       "gap:1.5rem;" +
-      "padding-bottom:1.5rem;" +
-      "margin-bottom:1.75rem;" +
+      "padding:2rem 2rem 1.7rem;" +
+      "background:linear-gradient(135deg, rgba(225,245,240,0.88), rgba(245,251,249,0.92) 48%, rgba(255,255,255,0.98) 100%);" +
       "border-bottom:1px solid rgba(148,163,184,0.18);" +
       "}" +
+      ".pc-condition-shell--page .pc-condition-header{" +
+      "padding:2.35rem 2.35rem 1.9rem;" +
+      "}" +
       ".pc-condition-header-main{" +
-      "max-width:40rem;" +
+      "max-width:46rem;" +
       "}" +
       ".pc-condition-kicker{" +
       "display:inline-flex;" +
       "align-items:center;" +
       "gap:0.55rem;" +
-      "padding:0;" +
-      "border-radius:0;" +
-      "background:transparent;" +
+      "padding:0.42rem 0.7rem;" +
+      "border-radius:999px;" +
+      "background:rgba(255,255,255,0.62);" +
       "color:hsl(var(--primary));" +
-      "font-size:0.76rem;" +
+      "font-size:0.72rem;" +
       "font-weight:700;" +
-      "letter-spacing:0.18em;" +
+      "letter-spacing:0.16em;" +
       "text-transform:uppercase;" +
       "}" +
       ".pc-condition-title{" +
       "margin:1rem 0 0;" +
       "font-family:var(--font-display);" +
-      "font-size:clamp(1.9rem, 3vw, 2.6rem);" +
+      "font-size:clamp(2rem, 3vw, 2.85rem);" +
       "line-height:1.02;" +
       "letter-spacing:-0.03em;" +
       "color:hsl(var(--foreground));" +
       "text-wrap:balance;" +
       "}" +
+      ".pc-condition-deck{" +
+      "max-width:38rem;" +
+      "margin:0.9rem 0 0;" +
+      "font-size:0.98rem;" +
+      "line-height:1.7;" +
+      "color:rgba(71,85,105,0.88);" +
+      "}" +
       ".pc-condition-close{" +
-      "position:relative;" +
-      "z-index:2;" +
       "display:inline-flex;" +
       "align-items:center;" +
       "justify-content:center;" +
       "width:2.75rem;height:2.75rem;" +
       "border-radius:999px;" +
-      "border:1px solid rgba(25,84,74,0.12);" +
-      "background:rgba(255,255,255,0.86);" +
-      "color:hsl(var(--muted-foreground));" +
-      "box-shadow:0 12px 24px rgba(15,23,42,0.05);" +
+      "border:1px solid rgba(25,84,74,0.1);" +
+      "background:rgba(255,255,255,0.92);" +
+      "color:rgba(71,85,105,0.88);" +
+      "box-shadow:0 10px 24px rgba(15,23,42,0.06);" +
       "transition:all 180ms ease;" +
       "}" +
       ".pc-condition-close:hover{" +
@@ -328,12 +325,18 @@
       "color:hsl(var(--foreground));" +
       "border-color:rgba(25,84,74,0.22);" +
       "}" +
+      ".pc-condition-body-wrap{" +
+      "padding:1.9rem 2rem 2.35rem;" +
+      "}" +
+      ".pc-condition-shell--page .pc-condition-body-wrap{" +
+      "padding:2.1rem 2.35rem 2.7rem;" +
+      "}" +
       ".pc-condition-body{" +
-      "position:relative;" +
-      "max-width:none;" +
+      "max-width:56rem;" +
+      "margin:0 auto;" +
       "color:hsl(var(--muted-foreground));" +
-      "font-size:1.03rem;" +
-      "line-height:1.88;" +
+      "font-size:1.02rem;" +
+      "line-height:1.84;" +
       "}" +
       ".pc-condition-body h2,.pc-condition-body h3{" +
       "font-family:var(--font-display);" +
@@ -342,18 +345,21 @@
       "letter-spacing:-0.025em;" +
       "}" +
       ".pc-condition-body h2{" +
-      "font-size:clamp(1.7rem, 2vw, 2.2rem);" +
-      "margin:2.4rem 0 0.9rem;" +
+      "font-size:clamp(1.55rem, 2vw, 2rem);" +
+      "margin:2.25rem 0 0.8rem;" +
       "}" +
       ".pc-condition-body h3{" +
-      "font-size:1.35rem;" +
-      "margin:2rem 0 0.75rem;" +
+      "font-size:1.22rem;" +
+      "margin:1.75rem 0 0.7rem;" +
+      "}" +
+      ".pc-condition-body > h2:first-child{" +
+      "margin-top:0;" +
       "}" +
       ".pc-condition-body p{" +
-      "margin:0 0 1rem;" +
+      "margin:0 0 1.05rem;" +
       "}" +
       ".pc-condition-body p:first-of-type{" +
-      "font-size:1.08rem;" +
+      "font-size:1.04rem;" +
       "color:hsl(var(--foreground) / 0.86);" +
       "}" +
       ".pc-condition-body ul,.pc-condition-body ol{" +
@@ -446,16 +452,21 @@
       "padding-bottom:1.75rem !important;" +
       "}" +
       ".pc-condition-shell,.pc-condition-shell--page{" +
-      "padding:1.3rem;" +
       "border-radius:1.4rem;" +
       "}" +
       ".pc-condition-header{" +
       "flex-direction:column;" +
-      "margin-bottom:1.2rem;" +
-      "padding-bottom:1.15rem;" +
+      "padding:1.4rem 1.4rem 1.2rem;" +
+      "gap:1rem;" +
+      "}" +
+      ".pc-condition-shell--page .pc-condition-header{" +
+      "padding:1.55rem 1.55rem 1.25rem;" +
       "}" +
       ".pc-condition-title{" +
       "font-size:1.85rem;" +
+      "}" +
+      ".pc-condition-body-wrap,.pc-condition-shell--page .pc-condition-body-wrap{" +
+      "padding:1.35rem 1.4rem 1.65rem;" +
       "}" +
       ".pc-condition-body{" +
       "font-size:0.98rem;" +
@@ -466,13 +477,8 @@
   }
 
   function getConditionSummary(condition, conditionName) {
-    var source = getArticleBodyHtml(condition).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-    source = stripLeadingHeadingLabel(source);
-    if (!source) {
-      return "Explore a complete local article for this condition with Poulin Chiropractic treatment context and educational detail.";
-    }
-
-    return source.slice(0, 220).trim() + (source.length > 220 ? "..." : "");
+    var label = cleanConditionTitle(conditionName, condition) || "this condition";
+    return "A focused guide to symptoms, spinal mechanics, examination findings, and conservative care for " + label + ".";
   }
 
   function buildDetailMarkup(conditionName, compact) {
@@ -483,6 +489,7 @@
 
     var wrapperClass = compact ? "pc-condition-shell" : "pc-condition-shell pc-condition-shell--page";
     var title = escapeHtml(cleanConditionTitle(conditionName, condition));
+    var deck = escapeHtml(getConditionSummary(condition, conditionName));
     var closeButton = compact
       ? '<button type="button" class="pc-condition-close" data-inline-condition-close="true" aria-label="Close article">×</button>'
       : "";
@@ -497,11 +504,16 @@
       '<h2 class="pc-condition-title">' +
       title +
       "</h2>" +
+      '<p class="pc-condition-deck">' +
+      deck +
+      "</p>" +
       "</div>" +
       closeButton +
       "</div>" +
+      '<div class="pc-condition-body-wrap">' +
       '<div class="pc-condition-body">' +
       getArticleBodyHtml(condition) +
+      "</div>" +
       "</div>" +
       "</article>"
     );
