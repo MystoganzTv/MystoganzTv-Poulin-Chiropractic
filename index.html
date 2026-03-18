@@ -36,7 +36,7 @@
     radial-gradient(circle at 78% 18%, rgba(201,162,74,0.18), transparent 24%),
     linear-gradient(180deg, rgba(7,16,28,0.08) 0%, rgba(7,16,28,0.32) 100%); }
   .hero-grid { position: absolute; inset: 0; z-index: 2; opacity: 0.025; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 72px 72px; }
-  .hero-shell { position: relative; z-index: 3; width: 100%; display: grid; grid-template-columns: minmax(0, 680px) minmax(260px, 340px); gap: 3rem; align-items: end; }
+  .hero-shell { position: relative; z-index: 3; width: 100%; display: block; }
   .hero-content { max-width: 680px; }
   .hero-kicker { display: inline-flex; align-items: center; gap: 0.9rem; color: rgba(255,255,255,0.82); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.4rem; animation: fadeUp 0.8s ease both; }
   .hero-kicker::before { content: ''; width: 42px; height: 1px; background: rgba(255,255,255,0.5); }
@@ -51,14 +51,6 @@
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,162,74,0.4); }
   .btn-outline { background: transparent; color: #fff; padding: 0.85rem 2rem; border-radius: 4px; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s; border: 2px solid rgba(255,255,255,0.35); }
   .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
-  .hero-sidecard { justify-self: end; width: min(100%, 330px); background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(18px); border-radius: 24px; padding: 1.45rem; color: #fff; box-shadow: 0 24px 50px rgba(7,16,28,0.22); animation: fadeUp 0.8s 0.5s ease both; }
-  .hero-sidecard-label { font-size: 0.76rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin-bottom: 0.9rem; }
-  .hero-sidecard h3 { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; margin-bottom: 1rem; }
-  .hero-sidecard p { margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.74); }
-  .hero-sidecard-meta { display: grid; gap: 0.8rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.16); }
-  .hero-sidecard-meta div { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); }
-  .hero-sidecard-meta span { color: rgba(255,255,255,0.56); }
-
   /* TRUST BAR */
   .trust-bar { background: var(--navy); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 1.2rem 5%; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
   .trust-item { display: flex; align-items: center; gap: 0.6rem; color: rgba(255,255,255,0.7); font-size: 0.85rem; font-weight: 500; }
@@ -195,8 +187,6 @@
     .nav-links { display: none; }
     .about, .treatment-inner { grid-template-columns: 1fr; gap: 3rem; }
     .hours-grid { grid-template-columns: 1fr; }
-    .hero-shell { grid-template-columns: 1fr; gap: 2rem; }
-    .hero-sidecard { justify-self: start; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 600px) {
@@ -252,16 +242,6 @@
         <li>Referred by physicians and surgeons</li>
       </ul>
     </div>
-    <aside class="hero-sidecard">
-      <div class="hero-sidecard-label">Why Patients Come Here</div>
-      <h3>Gentle, precise, research-based spine care.</h3>
-      <p>Designed for patients looking for a non-surgical path forward for disc problems, sciatica, neck pain, and persistent spinal discomfort.</p>
-      <div class="hero-sidecard-meta">
-        <div><span>Method</span><strong>Cox Technic</strong></div>
-        <div><span>Approach</span><strong>No drugs. No surgery.</strong></div>
-        <div><span>Call</span><strong>(703) 723-4040</strong></div>
-      </div>
-    </aside>
   </div>
 </section>
 
