@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | Poulin Chiropractic</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1f35;
+    --teal: #1a8a8a;
+    --gold: #c9a24a;
+    --warm-white: #fdfaf7;
+    --paper: #f7faf9;
+    --text-dark: #1f2937;
+    --text-mid: #64748b;
+    --border: #dbe4ea;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--warm-white); color: var(--text-dark); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 247, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+  .nav-inner {
+    max-width: 1240px; margin: 0 auto; padding: 0 2rem;
+    min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .nav-logo { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 700; color: var(--navy); }
+  .nav-logo span { display: block; font-family: var(--font-sans); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--teal); margin-top: 0.2rem; }
+  .nav-links { list-style: none; display: flex; gap: 1.4rem; color: #556274; font-size: 0.92rem; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta {
+    background: var(--teal); color: #fff; padding: 0.8rem 1.3rem; border-radius: 999px;
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  .page-hero {
+    max-width: 1240px; margin: 0 auto; padding: 4.5rem 2rem 2.5rem;
+    display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 4rem; align-items: start;
+  }
+  .portrait-wrap { display: flex; flex-direction: column; gap: 1.4rem; }
+  .portrait-card {
+    background: #fff; border: 1px solid #edf1f4; border-radius: 30px;
+    padding: 1.2rem; box-shadow: 0 28px 60px rgba(15, 23, 42, 0.08);
+  }
+  .portrait-frame {
+    background: linear-gradient(180deg, #f5fafb 0%, #eef5f6 100%);
+    border-radius: 24px; padding: 1.1rem;
+  }
+  .portrait-image {
+    border-radius: 999px; aspect-ratio: 1 / 1.32; width: min(100%, 520px);
+    object-fit: cover; object-position: top center; margin: 0 auto;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  }
+  .portrait-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  .portrait-badge {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: #eef6f5; border: 1px solid rgba(26,138,138,0.14);
+    border-radius: 999px; padding: 0.7rem 1rem; color: #236c6c; font-weight: 700; font-size: 0.9rem;
+  }
+
+  .about-copy { padding-top: 0.4rem; }
+  .eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; font-weight: 700; margin-bottom: 1rem; }
+  h1, h2 { font-family: var(--font-serif); color: var(--navy); line-height: 1.08; }
+  h1 { font-size: clamp(2.5rem, 4.6vw, 4rem); margin-bottom: 1.25rem; }
+  .intro {
+    font-size: 1.06rem; line-height: 1.85; color: var(--text-mid);
+    max-width: 58ch; margin-bottom: 1.8rem;
+  }
+  .credentials-list { list-style: none; display: grid; gap: 1rem; margin-top: 1.9rem; }
+  .credentials-list li {
+    display: grid; grid-template-columns: 24px 1fr; gap: 0.9rem; align-items: start;
+    font-size: 0.98rem; line-height: 1.6; color: #1f2937;
+  }
+  .check {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1.5px solid rgba(26,138,138,0.55); color: var(--teal);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; margin-top: 0.1rem;
+  }
+
+  .story {
+    max-width: 1240px; margin: 0 auto; padding: 1.2rem 2rem 5rem;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem;
+  }
+  .story-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 28px;
+    padding: 2rem 2rem 2.1rem; box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+  }
+  .story-card h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
+  .story-card p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+  .story-card p:last-child { margin-bottom: 0; }
+  .quote-card {
+    background: linear-gradient(180deg, #f3fbfa 0%, #edf7f6 100%);
+    border: 1px solid rgba(26,138,138,0.16);
+  }
+  .cta-strip {
+    max-width: 1240px; margin: 0 auto; padding: 0 2rem 5rem;
+  }
+  .cta-box {
+    background: var(--navy); color: #fff; border-radius: 30px;
+    padding: 2rem; display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; flex-wrap: wrap;
+  }
+  .cta-box h3 { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; }
+  .cta-box p { color: rgba(255,255,255,0.72); line-height: 1.7; max-width: 52ch; }
+  .cta-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.9rem 1.35rem; border-radius: 999px; font-weight: 700;
+  }
+  .btn-primary { background: var(--gold); color: var(--navy); }
+  .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.18); }
+
+  footer {
+    background: #0f1c2e; color: rgba(255,255,255,0.68);
+    padding: 2.4rem 2rem 3rem;
+  }
+  .footer-inner { max-width: 1240px; margin: 0 auto; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-inner p { font-size: 0.9rem; }
+
+  @media (max-width: 980px) {
+    .page-hero, .story { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 720px) {
+    .nav-inner { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .page-hero, .story, .cta-strip { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .page-hero { padding-top: 3rem; }
+    .story-card, .cta-box { padding: 1.5rem; }
+    .portrait-image { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      Poulin Chiropractic
+      <span>Herndon &amp; Ashburn, VA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#conditions">Conditions</a></li>
+      <li><a href="/#treatment">Cox Technic</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/About/" class="active">About</a></li>
+      <li><a href="/#hours">Locations</a></li>
+    </ul>
+    <a href="tel:7037234040" class="nav-cta">Call Now</a>
+  </div>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="portrait-wrap">
+      <div class="portrait-card">
+        <div class="portrait-frame">
+          <img src="/assets/local/dr-poulin-portrait.jpg" alt="Dr. Mike Poulin" class="portrait-image">
+        </div>
+      </div>
+      <div class="portrait-badges">
+        <div class="portrait-badge">⟡ Cox® Part 3 Certified</div>
+        <div class="portrait-badge">◎ Fluent in French</div>
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <div class="eyebrow">About Us</div>
+      <h1>Background &amp; Credentials</h1>
+      <p class="intro">Dr. Poulin has dedicated his career to thoughtful, high-quality chiropractic care, with extensive training in Cox® Technic Flexion-Distraction and Decompression for patients seeking a more conservative path for complex spinal conditions.</p>
+      <p class="intro">The practice receives frequent referrals from neurosurgeons, pain management physicians, orthopedic surgeons, general practitioners, dentists, and physiatrists who value a careful, non-surgical approach.</p>
+
+      <ul class="credentials-list">
+        <li><span class="check">✓</span><span>Part 3 Certified in Cox® Disc Decompression, a distinction held by a small percentage of chiropractors.</span></li>
+        <li><span class="check">✓</span><span>Providing chiropractic care in Herndon since 1993, with a second location in Ashburn added in 2006.</span></li>
+        <li><span class="check">✓</span><span>Graduate of Parker Chiropractic College, completing an accelerated doctoral program with a strong focus on clinical discipline.</span></li>
+        <li><span class="check">✓</span><span>Former President of the Sports Council on Chiropractic at Parker.</span></li>
+        <li><span class="check">✓</span><span>Equipped with advanced chiropractic technology, including Cox® treatment tables for decompression-focused care.</span></li>
+        <li><span class="check">✓</span><span>Fluent in French and knowledgeable in Spanish, helping patients feel more comfortable and understood.</span></li>
+        <li><span class="check">✓</span><span>Long-standing involvement in the Herndon and Ashburn community through local business and civic relationships.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="story">
+    <article class="story-card quote-card">
+      <h2>In Memory of Dr. James Cox</h2>
+      <p>Dr. James Cox was the founder of Cox® Technic and an important mentor to Dr. Poulin. His passing in March 2025 marked the loss of one of chiropractic’s most influential innovators, but his work continues through the patients and practitioners shaped by his method.</p>
+      <p>Dr. Poulin’s direct training relationship with Dr. Cox remains one of the defining strengths of this practice, reinforcing a standard of care rooted in technique, precision, and fidelity to the original clinical intent.</p>
+    </article>
+
+    <article class="story-card">
+      <h2>A Practice Built on Trust</h2>
+      <p>Poulin Chiropractic has grown through long-term patient relationships, specialist referrals, and a consistent reputation for conservative care that is calm, clear, and clinically grounded.</p>
+      <p>For many patients, the experience here is not only about relief, but about finally understanding what is happening in the spine and having a measured plan that feels responsible and realistic.</p>
+      <p>That combination of clinical experience, communication, and continuity is what continues to bring families back across Herndon, Ashburn, and the surrounding Northern Virginia communities.</p>
+    </article>
+  </section>
+
+  <section class="cta-strip">
+    <div class="cta-box">
+      <div>
+        <h3>Meet the practice in person.</h3>
+        <p>Explore office hours, locations, and the treatment approach that has made Poulin Chiropractic a trusted name in conservative spine care for decades.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="/#hours" class="btn-primary">View Locations</a>
+        <a href="/#treatment" class="btn-secondary">See Cox Technic</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p>Poulin Chiropractic of Herndon and Ashburn</p>
+    <p>© 2026 All rights reserved.</p>
+  </div>
+</footer>
+</body>
+</html>
