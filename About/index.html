@@ -48,18 +48,48 @@
     display: grid; grid-template-columns: minmax(420px, 0.88fr) minmax(0, 1.12fr); gap: 3.2rem; align-items: start;
   }
   .page-header {
-    max-width: 1360px; margin: 0 auto; padding: 4.4rem 2.4rem 1.2rem;
+    max-width: 1360px; margin: 0 auto; padding: 2rem 2.4rem 1.6rem;
+  }
+  .page-header-banner {
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+    border-radius: 32px;
+    padding: 5.4rem 2.4rem 4.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    background:
+      linear-gradient(180deg, rgba(7, 20, 36, 0.48) 0%, rgba(7, 20, 36, 0.7) 100%),
+      linear-gradient(90deg, rgba(8, 27, 45, 0.78) 0%, rgba(10, 29, 48, 0.5) 42%, rgba(10, 29, 48, 0.64) 100%),
+      url("/assets/local/hero-bg.jpg") center 34% / cover no-repeat;
+    box-shadow: 0 24px 52px rgba(15, 23, 42, 0.14);
+  }
+  .page-header-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+    pointer-events: none;
+  }
+  .page-header-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
   }
   .page-header .eyebrow {
     margin-bottom: 0.95rem;
+    color: rgba(230, 244, 242, 0.88);
   }
   .page-header h1 {
     margin-bottom: 1rem;
+    color: #ffffff;
+    font-size: clamp(2.8rem, 4.6vw, 4.7rem);
   }
   .page-subtitle {
     max-width: 34ch; margin: 0 auto;
-    font-size: 1.08rem; line-height: 1.72; color: #6b7a8c;
+    font-size: 1.12rem; line-height: 1.72; color: rgba(241, 247, 246, 0.9);
   }
   .portrait-wrap { display: flex; flex-direction: column; gap: 1.55rem; }
   .portrait-card {
@@ -171,6 +201,7 @@
     .nav-links { display: none; }
     .page-header, .page-hero, .memory-section, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
     .page-hero { padding-top: 3rem; }
+    .page-header-banner { min-height: 300px; padding: 4.2rem 1.4rem 3.5rem; border-radius: 26px; }
     .values-grid { grid-template-columns: 1fr; }
     .memory-gallery { grid-template-columns: 1fr; }
     .portrait-image { width: 100%; }
@@ -198,9 +229,13 @@
 
 <main>
   <section class="page-header">
-    <div class="eyebrow">About Us</div>
-    <h1>Meet Dr. Mike M. Poulin, D.C.</h1>
-    <p class="page-subtitle">Over 30 years of dedicated chiropractic excellence serving the Herndon and Ashburn communities.</p>
+    <div class="page-header-banner">
+      <div class="page-header-copy">
+        <div class="eyebrow">About Us</div>
+        <h1>Meet Dr. Mike M. Poulin, D.C.</h1>
+        <p class="page-subtitle">Over 30 years of dedicated chiropractic excellence serving the Herndon and Ashburn communities.</p>
+      </div>
+    </div>
   </section>
 
   <section class="page-hero">
