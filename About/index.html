@@ -85,10 +85,14 @@
     display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; margin-top: 0.1rem;
   }
 
-  .story {
+  .memory-section {
     max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem;
   }
+  .memory-spacer { min-height: 1px; }
+  .memory-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
+  .memory-copy p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+  .memory-copy p:last-child { margin-bottom: 0; }
   .values {
     max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
   }
@@ -106,15 +110,20 @@
     color: var(--navy); margin-bottom: 0.75rem;
   }
   .value-card p { color: var(--text-mid); line-height: 1.75; font-size: 0.96rem; }
-  .story-block h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
-  .story-block p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
-  .story-block p:last-child { margin-bottom: 0; }
   .memory-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.8rem; }
   .memory-gallery img {
-    width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+    width: 100%; height: auto; object-fit: contain; object-position: top center;
     border-radius: 22px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
   }
-  .story-block.muted { padding-top: 0.35rem; }
+  .trust-section {
+    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
+  }
+  .trust-copy {
+    max-width: 760px;
+  }
+  .trust-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
+  .trust-copy p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+  .trust-copy p:last-child { margin-bottom: 0; }
   .cta-strip {
     max-width: 1240px; margin: 0 auto; padding: 0 2rem 5rem;
   }
@@ -140,13 +149,14 @@
   .footer-inner p { font-size: 0.9rem; }
 
   @media (max-width: 980px) {
-    .page-hero, .story { grid-template-columns: 1fr; gap: 2.5rem; }
+    .page-hero, .memory-section { grid-template-columns: 1fr; gap: 2.5rem; }
     .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .memory-spacer { display: none; }
   }
   @media (max-width: 720px) {
     .nav-inner { padding: 0 1.2rem; }
     .nav-links { display: none; }
-    .page-hero, .story, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .page-hero, .memory-section, .cta-strip, .values, .trust-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     .page-hero { padding-top: 3rem; }
     .values-grid { grid-template-columns: 1fr; }
     .memory-gallery { grid-template-columns: 1fr; }
@@ -205,15 +215,9 @@
     </div>
   </section>
 
-  <section class="story">
-    <article class="story-block muted">
-      <h2>A Practice Built on Trust</h2>
-      <p>Poulin Chiropractic has grown through long-term patient relationships, specialist referrals, and a consistent reputation for conservative care that is calm, clear, and clinically grounded.</p>
-      <p>For many patients, the experience here is not only about relief, but about finally understanding what is happening in the spine and having a measured plan that feels responsible and realistic.</p>
-      <p>That combination of clinical experience, communication, and continuity is what continues to bring families back across Herndon, Ashburn, and the surrounding Northern Virginia communities.</p>
-    </article>
-
-    <article class="story-block">
+  <section class="memory-section">
+    <div class="memory-spacer"></div>
+    <article class="memory-copy">
       <h2>In Memory of Dr. James Cox</h2>
       <p>Dr. James Cox was the founder of Cox® Technic and an important mentor to Dr. Poulin. His passing in March 2025 marked the loss of one of chiropractic’s most influential innovators, but his work continues through the patients and practitioners shaped by his method.</p>
       <p>Dr. Poulin’s direct training relationship with Dr. Cox remains one of the defining strengths of this practice, reinforcing a standard of care rooted in technique, precision, and fidelity to the original clinical intent.</p>
@@ -222,6 +226,15 @@
         <img src="/assets/local/poulin-cox-2021.jpg" alt="Dr. Poulin with Dr. Cox">
       </div>
     </article>
+  </section>
+
+  <section class="trust-section">
+    <div class="trust-copy">
+      <h2>A Practice Built on Trust</h2>
+      <p>Poulin Chiropractic has grown through long-term patient relationships, specialist referrals, and a consistent reputation for conservative care that is calm, clear, and clinically grounded.</p>
+      <p>For many patients, the experience here is not only about relief, but about finally understanding what is happening in the spine and having a measured plan that feels responsible and realistic.</p>
+      <p>That combination of clinical experience, communication, and continuity is what continues to bring families back across Herndon, Ashburn, and the surrounding Northern Virginia communities.</p>
+    </div>
   </section>
 
   <section class="values">
