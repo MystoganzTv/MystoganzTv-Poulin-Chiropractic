@@ -1,16 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poulin Chiropractic</title>
-  <meta name="description" content="Patient-focused chiropractic website for Poulin Chiropractic in Herndon and Ashburn." />
-  <link rel="icon" type="image/png" href="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png" />
-  <link rel="stylesheet" href="/assets/site.css" />
-</head>
-<body>
-  <div id="app"></div>
-  <script src="/assets/condition-articles.js"></script>
-  <script src="/assets/site.js"></script>
-</body>
+ <head>
+  <meta charset="utf-8"/>
+  <link href="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png" rel="icon" type="image/svg+xml"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://poulin-vitality-hub.base44.app/manifest.json" rel="manifest"/>
+  <title>
+   Poulin Vitality Portal
+  </title>
+  <script crossorigin="" src="/assets/index-BOA5E3cS.js" type="module">
+  </script>
+  <link crossorigin="" href="/assets/index-CbC6RmJK.css" rel="stylesheet"/>
+  <script type="module">
+   if (window.self === window.top) {
+  let lastPath = "";
+  function getPageNameFromPath(path) {
+    const segments = path.split("/").filter(Boolean);
+    return segments[0] || null;
+  }
+  function trackPageView() {
+    const path = window.location.pathname;
+    if (path === lastPath) return;
+    lastPath = path;
+    const pageName = getPageNameFromPath(path) || "home";
+    const appId = "69aea6cd5dc3ca3701a5c0f6";
+    if (!appId) return;
+    fetch(`/app-logs/${appId}/log-user-in-app/${pageName}`, {
+      method: "POST",
+    }).catch(() => {});
+  }
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function (...args) {
+    originalPushState(...args);
+    trackPageView();
+  };
+  const originalReplaceState = history.replaceState.bind(history);
+  history.replaceState = function (...args) {
+    originalReplaceState(...args);
+    trackPageView();
+  };
+  window.addEventListener("popstate", trackPageView);
+  trackPageView();
+}
+  </script>
+  <meta content="Poulin Vitality Portal" property="og:title"/>
+  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." property="og:description"/>
+  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png?width=1200&amp;height=630&amp;resize=contain" property="og:image"/>
+  <meta content="https://poulin-vitality-hub.base44.app" property="og:url"/>
+  <meta content="website" property="og:type"/>
+  <meta content="Poulin Vitality Portal" property="og:site_name"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Poulin Vitality Portal" name="twitter:title"/>
+  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." name="twitter:description"/>
+  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png?width=1200&amp;height=630&amp;resize=contain" name="twitter:image"/>
+  <meta content="https://poulin-vitality-hub.base44.app" name="twitter:url"/>
+  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." name="description"/>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="Poulin Vitality Portal" name="apple-mobile-web-app-title"/>
+  <link href="https://poulin-vitality-hub.base44.app" rel="canonical"/>
+ </head>
+ <body>
+  <div id="root">
+  </div>
+  <script src="/assets/condition-articles.js">
+  </script>
+  <script src="/assets/condition-overrides.js">
+  </script>
+ </body>
 </html>
