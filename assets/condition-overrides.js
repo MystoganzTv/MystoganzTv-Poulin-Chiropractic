@@ -4,7 +4,46 @@
   var ACTIVE_PANEL = null;
   var OBSERVER = null;
   var ROUTE_HOOKED = false;
+  var APPLY_FRAME = null;
+  var APPLY_TIMEOUTS = [];
   var STYLE_ID = "pc-condition-overrides-style";
+  var PAGE_META = {
+    Home: {
+      title: "Poulin Chiropractic | Herndon & Ashburn Back & Neck Pain Relief",
+      description:
+        "Patient-focused chiropractic care in Herndon and Ashburn with Cox Technic Flexion-Distraction, non-surgical spine care, and clear educational resources.",
+    },
+    About: {
+      title: "About Dr. Mike Poulin | Poulin Chiropractic",
+      description:
+        "Meet Dr. Mike Poulin and learn about Poulin Chiropractic's approach to gentle, evidence-based spine care in Herndon and Ashburn.",
+    },
+    Services: {
+      title: "Chiropractic Services | Poulin Chiropractic",
+      description:
+        "Explore non-surgical chiropractic services including Cox Technic, decompression-focused care, and conservative treatment for spinal conditions.",
+    },
+    Conditions: {
+      title: "Conditions We Treat | Poulin Chiropractic",
+      description:
+        "Browse the spinal, nerve, disc, and degenerative conditions treated at Poulin Chiropractic, with full local educational articles for each condition.",
+    },
+    Testimonials: {
+      title: "Patient Testimonials | Poulin Chiropractic",
+      description:
+        "Read patient stories and outcomes from Poulin Chiropractic in Herndon and Ashburn.",
+    },
+    Contact: {
+      title: "Contact Poulin Chiropractic | Herndon & Ashburn",
+      description:
+        "Contact Poulin Chiropractic, view office locations, and schedule an appointment in Herndon or Ashburn.",
+    },
+    ConditionDetail: {
+      title: "Condition Guide | Poulin Chiropractic",
+      description:
+        "A detailed patient-friendly condition guide from Poulin Chiropractic with symptoms, mechanics, examination notes, and conservative care information.",
+    },
+  };
   var HERO_IMAGES = {
     Home: "https://www.poulinchiro.com/img/data/images/Dr%20Pouli%20Herndon%201920x960.jpg?t=1737663495",
     About: "https://www.poulinchiro.com/corporate/images/Our%20Team.png",
@@ -606,6 +645,67 @@
     return "A focused guide to symptoms, spinal mechanics, examination findings, and conservative care for " + label + ".";
   }
 
+  function upsertMetaTag(selector, attributes) {
+    var meta = document.head.querySelector(selector);
+    if (!meta) {
+      meta = document.createElement("meta");
+      document.head.appendChild(meta);
+    }
+
+    Object.keys(attributes).forEach(function (key) {
+      meta.setAttribute(key, attributes[key]);
+    });
+  }
+
+  function upsertLinkTag(selector, rel, href) {
+    var link = document.head.querySelector(selector);
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", rel);
+      document.head.appendChild(link);
+    }
+
+    link.setAttribute("href", href);
+  }
+
+  function updatePageMetadata() {
+    var routeKey = getRouteKey();
+    var meta = PAGE_META[routeKey] || PAGE_META.Home;
+    var conditionName = "";
+    var condition = null;
+
+    if (routeKey === "ConditionDetail") {
+      conditionName = new URLSearchParams(window.location.search).get("name") || "";
+      condition = getConditionByName(conditionName);
+      if (condition) {
+        meta = {
+          title: cleanConditionTitle(conditionName, condition) + " | Poulin Chiropractic",
+          description: getConditionSummary(condition, conditionName),
+        };
+      }
+    }
+
+    var currentUrl = window.location.origin + window.location.pathname + window.location.search;
+    var ogImage = HERO_IMAGES[routeKey] || HERO_IMAGES.Home;
+
+    document.title = meta.title;
+    upsertMetaTag('meta[name="description"]', { name: "description", content: meta.description });
+    upsertMetaTag('meta[property="og:title"]', { property: "og:title", content: meta.title });
+    upsertMetaTag('meta[property="og:description"]', { property: "og:description", content: meta.description });
+    upsertMetaTag('meta[property="og:url"]', { property: "og:url", content: currentUrl });
+    upsertMetaTag('meta[property="og:image"]', { property: "og:image", content: ogImage });
+    upsertMetaTag('meta[property="og:site_name"]', { property: "og:site_name", content: "Poulin Chiropractic" });
+    upsertMetaTag('meta[name="twitter:title"]', { name: "twitter:title", content: meta.title });
+    upsertMetaTag('meta[name="twitter:description"]', { name: "twitter:description", content: meta.description });
+    upsertMetaTag('meta[name="twitter:url"]', { name: "twitter:url", content: currentUrl });
+    upsertMetaTag('meta[name="twitter:image"]', { name: "twitter:image", content: ogImage });
+    upsertMetaTag('meta[name="apple-mobile-web-app-title"]', {
+      name: "apple-mobile-web-app-title",
+      content: "Poulin Chiropractic",
+    });
+    upsertLinkTag('link[rel="canonical"]', "canonical", currentUrl);
+  }
+
   function buildDetailMarkup(conditionName, compact) {
     var condition = getConditionByName(conditionName);
     if (!condition) {
@@ -708,10 +808,6 @@
       anchor.dataset.inlineCondition = conditionName;
       anchor.dataset.inlineConditionCard = "true";
 
-      if (isConditionsRoute()) {
-        anchor.setAttribute("href", "#condition-" + slugifyConditionName(conditionName));
-      }
-
       if (anchor.parentElement) {
         anchor.parentElement.dataset.inlineConditionCardWrap = "true";
       }
@@ -729,14 +825,22 @@
     }
 
     Array.prototype.slice.call(anchor.querySelectorAll("span, div, p")).forEach(function (node) {
-      if (normalizeHeadingText(node.textContent) !== category) {
+      var text = normalizeHeadingText(node.textContent);
+      if (text !== category || text.length > 24) {
+        return;
+      }
+
+      if (node.children && node.children.length > 0 && normalizeHeadingText(node.innerHTML) !== text) {
+        return;
+      }
+
+      var className = String(node.className || "");
+      var isLikelyBadge = /badge|pill|chip|tag|rounded|inline-flex/i.test(className);
+      if (!isLikelyBadge && node.tagName !== "SPAN") {
         return;
       }
 
       node.style.display = "none";
-      if (node.parentElement && normalizeHeadingText(node.parentElement.textContent) === category) {
-        node.parentElement.style.display = "none";
-      }
     });
   }
 
@@ -883,6 +987,61 @@
     }
   }
 
+  function fixAboutFeatureSection() {
+    var section = findSectionByText("Dedicated to Your Spinal Health");
+    if (!section) {
+      return;
+    }
+
+    var image = section.querySelector("img");
+    if (image) {
+      image.src = HERO_CARD_IMAGES.About;
+      image.srcset = "";
+      image.alt = "Dr. Mike Poulin";
+      image.style.objectFit = "contain";
+      image.style.objectPosition = "center top";
+      image.style.width = "100%";
+      image.style.height = "100%";
+      image.style.background = "#f4efe8";
+      return;
+    }
+
+    var backgroundNode = section.querySelector("[style*='background-image']");
+    if (backgroundNode) {
+      backgroundNode.style.backgroundImage = "url('" + HERO_CARD_IMAGES.About + "')";
+      backgroundNode.style.backgroundPosition = "center top";
+      backgroundNode.style.backgroundSize = "contain";
+      backgroundNode.style.backgroundRepeat = "no-repeat";
+      backgroundNode.style.backgroundColor = "#f4efe8";
+    }
+  }
+
+  function isUtilityPortalShell(node) {
+    if (!node || node.tagName !== "DIV") {
+      return false;
+    }
+
+    var className = String(node.className || "");
+    return className.indexOf("z-[100]") !== -1 && className.indexOf("max-h-screen") !== -1 && className.indexOf("flex-col") !== -1;
+  }
+
+  function pruneDuplicatePortalShells() {
+    Array.prototype.slice.call(document.querySelectorAll("div")).forEach(function (node) {
+      if (!isUtilityPortalShell(node)) {
+        return;
+      }
+
+      var parent = node.parentElement;
+      if (!parent || !isUtilityPortalShell(parent)) {
+        return;
+      }
+
+      if (node.children.length === 0 && !normalizeHeadingText(node.textContent)) {
+        node.remove();
+      }
+    });
+  }
+
   function findSectionByText(snippet) {
     var normalizedSnippet = normalizeHeadingText(snippet).toLowerCase();
     var sections = Array.prototype.slice.call(document.querySelectorAll("main section"));
@@ -949,16 +1108,20 @@
       return;
     }
 
-    var anchorSection = findSectionByText("Dedicated to Your Spinal Health");
+    var main = document.querySelector("main");
+    if (!main) {
+      return;
+    }
+
+    var sections = Array.prototype.slice.call(main.querySelectorAll(":scope > div > section, :scope > section"));
+    var anchorSection = sections.length > 1 ? sections[1] : sections[0];
+
     if (anchorSection && anchorSection.parentNode) {
       anchorSection.insertAdjacentHTML("afterend", buildVideoSectionMarkup(video));
       return;
     }
 
-    var main = document.querySelector("main");
-    if (main) {
-      main.insertAdjacentHTML("beforeend", buildVideoSectionMarkup(video));
-    }
+    main.insertAdjacentHTML("beforeend", buildVideoSectionMarkup(video));
   }
 
   function isLightColor(color) {
@@ -1006,12 +1169,11 @@
     }
 
     if (routeKey === "Home") {
-      replaceHeroCardMedia(hero, routeKey);
       polishHomeHeroCards(hero);
     }
 
     if (routeKey === "About") {
-      replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center 12%");
+      fixAboutFeatureSection();
     }
   }
 
@@ -1031,8 +1193,7 @@
       '<div class="pc-condition-page-card">' +
       buildDetailMarkup(conditionName, false) +
       "</div>" +
-      "</section>" +
-      '<section class="px-6 pb-16 bg-background"><div class="max-w-6xl mx-auto"></div></section>'
+      "</section>"
     );
   }
 
@@ -1055,16 +1216,38 @@
 
   function applyOverrides() {
     injectStyles();
+    updatePageMetadata();
     enhanceConditionLinks();
     enhanceConditionsLayout();
     renderConditionDetailRoute();
     applyHeroImages();
     applyRouteHeroEnhancements();
     insertVideoSection();
+    pruneDuplicatePortalShells();
   }
 
   function scheduleApply() {
-    window.requestAnimationFrame(applyOverrides);
+    if (APPLY_FRAME) {
+      window.cancelAnimationFrame(APPLY_FRAME);
+    }
+
+    APPLY_TIMEOUTS.forEach(function (timeoutId) {
+      window.clearTimeout(timeoutId);
+    });
+    APPLY_TIMEOUTS = [];
+
+    APPLY_FRAME = window.requestAnimationFrame(function () {
+      APPLY_FRAME = null;
+      applyOverrides();
+    });
+
+    [180, 650].forEach(function (delay) {
+      APPLY_TIMEOUTS.push(
+        window.setTimeout(function () {
+          applyOverrides();
+        }, delay)
+      );
+    });
   }
 
   function hookRoutes() {
@@ -1121,12 +1304,7 @@
   }
 
   function bootObserver() {
-    if (OBSERVER) {
-      return;
-    }
-
-    OBSERVER = new MutationObserver(scheduleApply);
-    OBSERVER.observe(document.body, { childList: true, subtree: true });
+    return;
   }
 
   hookRoutes();
