@@ -19,17 +19,25 @@
   body { font-family: var(--font-sans); background: var(--warm-white); color: var(--text-dark); overflow-x: hidden; }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,31,53,0.97); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; border-bottom: 1px solid rgba(201,162,74,0.3); }
-  .nav-logo { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--gold); line-height: 1.2; }
-  .nav-logo span { display: block; font-size: 0.68rem; font-family: var(--font-sans); color: var(--teal-light); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta { background: var(--teal); color: #fff; padding: 0.55rem 1.4rem; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; transition: background 0.2s, transform 0.2s; white-space: nowrap; }
-  .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 247, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+  .nav-inner {
+    max-width: 1320px; margin: 0 auto; padding: 0 2rem;
+    min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .nav-logo { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .nav-logo span { display: block; font-size: 0.68rem; font-family: var(--font-sans); color: var(--teal); font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.2rem; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; color: #556274; font-size: 0.92rem; }
+  .nav-links a { color: inherit; text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta { background: var(--teal); color: #fff; padding: 0.8rem 1.3rem; border-radius: 999px; text-decoration: none; font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
 
   /* HERO */
-  .hero { min-height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; padding: 120px 5% 72px; }
+  .hero { min-height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; padding: 84px 5% 72px; }
   .hero-bg { position: absolute; inset: 0; z-index: 0; background-image: url('assets/local/hero-bg.jpg'); background-size: cover; background-position: center top; filter: brightness(0.32); }
   .hero-overlay { position: absolute; inset: 0; z-index: 1; background:
     linear-gradient(90deg, rgba(10,22,38,0.88) 0%, rgba(10,22,38,0.72) 34%, rgba(10,22,38,0.28) 70%, rgba(10,22,38,0.18) 100%),
@@ -180,6 +188,7 @@
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
+    .nav-inner { padding: 0 1.2rem; }
     .nav-links { display: none; }
     .about, .treatment-inner { grid-template-columns: 1fr; gap: 3rem; }
     .hours-grid { grid-template-columns: 1fr; }
@@ -206,18 +215,20 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    Poulin Chiropractic
-    <span>Herndon &amp; Ashburn, VA · Est. 1993</span>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      Poulin Chiropractic
+      <span>Herndon &amp; Ashburn, VA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/Conditions/">Conditions</a></li>
+      <li><a href="/#treatment">Cox Technic</a></li>
+      <li><a href="/Services/">Services</a></li>
+      <li><a href="/About/">About</a></li>
+      <li><a href="/Contact/">Contact</a></li>
+    </ul>
+    <a href="/Contact/#contact-form" class="nav-cta">Book Appointment</a>
   </div>
-  <ul class="nav-links">
-    <li><a href="/Conditions/">Conditions</a></li>
-    <li><a href="#treatment">Cox Technic</a></li>
-    <li><a href="/Services/">Services</a></li>
-    <li><a href="#hours">Hours</a></li>
-    <li><a href="/About/">About</a></li>
-  </ul>
-  <a href="/Contact/#contact-form" class="nav-cta">Book Appointment</a>
 </nav>
 
 <!-- HERO -->
