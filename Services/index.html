@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services | Poulin Chiropractic</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1f35;
+    --navy-soft: #152a45;
+    --teal: #1a8a8a;
+    --teal-soft: #eaf5f3;
+    --gold: #c9a24a;
+    --warm-white: #fdfaf7;
+    --cream: #f7f1ea;
+    --paper: #ffffff;
+    --ink: #1f2937;
+    --muted: #66758a;
+    --line: rgba(18, 35, 58, 0.1);
+    --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--warm-white); color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 247, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+    min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .nav-logo { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 700; color: var(--navy); }
+  .nav-logo span { display: block; font-family: var(--font-sans); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--teal); margin-top: 0.2rem; }
+  .nav-links { list-style: none; display: flex; gap: 1.4rem; color: #556274; font-size: 0.92rem; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta {
+    background: var(--teal); color: #fff; padding: 0.8rem 1.3rem; border-radius: 999px;
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  .services-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    display: flex;
+    align-items: end;
+    background:
+      linear-gradient(180deg, rgba(8, 18, 31, 0.18), rgba(8, 18, 31, 0.72)),
+      linear-gradient(90deg, rgba(8, 18, 31, 0.82) 0%, rgba(8, 18, 31, 0.62) 44%, rgba(8, 18, 31, 0.26) 100%),
+      url("/assets/local/hero-bg.jpg") center 28% / cover no-repeat;
+  }
+  .services-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  }
+  .services-hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1280px; width: 100%; margin: 0 auto;
+    padding: 5.6rem 2rem 4rem;
+  }
+  .eyebrow {
+    color: rgba(230,244,242,0.86); text-transform: uppercase;
+    letter-spacing: 0.2em; font-size: 0.78rem; font-weight: 700; margin-bottom: 1rem;
+  }
+  .services-hero h1 {
+    font-family: var(--font-serif); color: #fff; font-size: clamp(2.6rem, 4.3vw, 4.55rem);
+    line-height: 1.02; letter-spacing: -0.035em; max-width: 12ch; margin-bottom: 1rem;
+  }
+  .services-hero p {
+    max-width: 42ch; color: rgba(240, 246, 245, 0.88); font-size: 1.04rem; line-height: 1.8;
+  }
+
+  .services-intro {
+    max-width: 1280px; margin: 0 auto; padding: 4.4rem 2rem 1.8rem;
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr); gap: 2.4rem;
+    align-items: start;
+  }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal);
+    margin-bottom: 0.85rem;
+  }
+  .section-title {
+    font-family: var(--font-serif); font-size: clamp(2rem, 3.2vw, 3.1rem); line-height: 1.08;
+    letter-spacing: -0.03em; color: var(--navy); margin-bottom: 1rem;
+  }
+  .section-desc {
+    font-size: 1.02rem; line-height: 1.82; color: var(--muted); max-width: 60ch;
+  }
+  .intro-note {
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbfa 100%);
+    border: 1px solid rgba(26,138,138,0.12);
+    border-radius: 24px; padding: 1.6rem 1.55rem;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+  }
+  .intro-note h3 {
+    font-family: var(--font-serif); font-size: 1.35rem; color: var(--navy); margin-bottom: 0.75rem;
+  }
+  .intro-note p {
+    font-size: 0.95rem; line-height: 1.75; color: var(--muted);
+  }
+
+  .featured-service {
+    max-width: 1280px; margin: 0 auto; padding: 1.2rem 2rem 4.4rem;
+  }
+  .featured-shell {
+    display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr); gap: 2rem;
+    background: #fff; border-radius: 34px; overflow: hidden;
+    box-shadow: 0 26px 56px rgba(15, 23, 42, 0.08);
+  }
+  .featured-image {
+    min-height: 100%;
+    background:
+      linear-gradient(180deg, rgba(7, 18, 30, 0.12), rgba(7, 18, 30, 0.3)),
+      url("/assets/local/video-cox-treatment.jpg") center center / cover no-repeat;
+    min-height: 460px;
+  }
+  .featured-copy {
+    padding: 3rem 3rem 2.9rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .featured-label {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    color: var(--teal); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em;
+    margin-bottom: 1rem;
+  }
+  .featured-label::before {
+    content: ""; width: 34px; height: 1px; background: rgba(26,138,138,0.45);
+  }
+  .featured-copy h2 {
+    font-family: var(--font-serif); color: var(--navy); font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1rem;
+  }
+  .featured-copy p {
+    font-size: 1rem; line-height: 1.82; color: var(--muted); margin-bottom: 1rem;
+    max-width: 54ch;
+  }
+  .featured-list {
+    list-style: none; display: grid; gap: 0.95rem; margin: 1rem 0 1.8rem;
+  }
+  .featured-list li {
+    display: grid; grid-template-columns: 22px 1fr; gap: 0.8rem; align-items: start;
+    color: var(--ink); font-size: 0.95rem; line-height: 1.58;
+  }
+  .featured-list li::before {
+    content: "✓";
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid rgba(26,138,138,0.45); color: var(--teal);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.86rem;
+    margin-top: 0.08rem;
+  }
+  .featured-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.9rem 1.35rem; border-radius: 999px; font-weight: 700; font-size: 0.92rem;
+  }
+  .btn-primary { background: var(--gold); color: var(--navy); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1px solid rgba(15,31,53,0.14); }
+
+  .support-services {
+    max-width: 1280px; margin: 0 auto; padding: 0 2rem 4.8rem;
+  }
+  .support-header {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.75fr); gap: 2rem;
+    align-items: end; margin-bottom: 2rem;
+  }
+  .support-header p {
+    font-size: 0.98rem; line-height: 1.78; color: var(--muted); max-width: 46ch;
+  }
+  .service-editorial-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.15rem 1.4rem;
+  }
+  .service-row {
+    border-top: 1px solid rgba(15,31,53,0.1);
+    padding-top: 1.2rem; min-height: 180px;
+  }
+  .service-index {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.2rem; height: 2.2rem; border-radius: 999px;
+    background: var(--teal-soft); color: var(--teal); font-size: 0.82rem; font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .service-row h3 {
+    font-size: 1.24rem; line-height: 1.16; color: var(--navy); margin-bottom: 0.65rem;
+  }
+  .service-row p {
+    color: var(--muted); font-size: 0.95rem; line-height: 1.75; max-width: 28ch;
+  }
+
+  .service-approach {
+    max-width: 1280px; margin: 0 auto; padding: 0 2rem 5rem;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr); gap: 2rem;
+  }
+  .approach-copy {
+    background: var(--cream); border-radius: 30px; padding: 2.3rem 2.2rem;
+  }
+  .approach-copy h2 {
+    font-family: var(--font-serif); font-size: clamp(1.9rem, 2.6vw, 2.6rem); color: var(--navy);
+    margin-bottom: 0.95rem; letter-spacing: -0.03em;
+  }
+  .approach-copy p {
+    color: var(--muted); line-height: 1.82; font-size: 0.98rem; margin-bottom: 0.85rem;
+  }
+  .approach-rail {
+    background: #fff; border: 1px solid var(--line); border-radius: 30px; padding: 2rem 1.8rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  }
+  .approach-rail h3 {
+    font-family: var(--font-serif); font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem;
+  }
+  .approach-rail ul {
+    list-style: none; display: grid; gap: 1rem;
+  }
+  .approach-rail li {
+    color: var(--ink); font-size: 0.95rem; line-height: 1.62; padding-bottom: 0.95rem;
+    border-bottom: 1px solid rgba(15,31,53,0.08);
+  }
+  .approach-rail li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+  footer {
+    background: #0f1c2e; color: rgba(255,255,255,0.68);
+    padding: 2.4rem 2rem 3rem;
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-inner p { font-size: 0.9rem; }
+
+  @media (max-width: 980px) {
+    .services-intro, .featured-shell, .support-header, .service-approach {
+      grid-template-columns: 1fr;
+    }
+    .service-editorial-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .nav-inner { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .services-hero-inner, .services-intro, .featured-service, .support-services, .service-approach {
+      padding-left: 1.2rem; padding-right: 1.2rem;
+    }
+    .services-hero { min-height: 320px; }
+    .services-hero-inner { padding-top: 4.2rem; padding-bottom: 3rem; }
+    .featured-copy { padding: 2rem 1.4rem 2rem; }
+    .featured-image { min-height: 300px; }
+    .service-editorial-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      Poulin Chiropractic
+      <span>Herndon &amp; Ashburn, VA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#conditions">Conditions</a></li>
+      <li><a href="/#treatment">Cox Technic</a></li>
+      <li><a href="/Services/" class="active">Services</a></li>
+      <li><a href="/About/">About</a></li>
+      <li><a href="/#hours">Locations</a></li>
+    </ul>
+    <a href="tel:7037234040" class="nav-cta">Call Now</a>
+  </div>
+</nav>
+
+<main>
+  <section class="services-hero">
+    <div class="services-hero-inner">
+      <div class="eyebrow">What We Offer</div>
+      <h1>Comprehensive services designed for calmer, more confident recovery.</h1>
+      <p>Poulin Chiropractic combines focused spinal treatment with supportive therapies that help reduce irritation, improve movement, and make care feel more complete from the first visit onward.</p>
+    </div>
+  </section>
+
+  <section class="services-intro">
+    <div>
+      <div class="section-label">Our Services</div>
+      <h2 class="section-title">A more refined approach than a one-size-fits-all treatment plan.</h2>
+      <p class="section-desc">Care here is built around the spine first, then supported by complementary therapies when they add value to healing, pain relief, tissue recovery, and long-term resilience. The result is a treatment plan that feels deliberate, conservative, and clinically grounded.</p>
+    </div>
+    <aside class="intro-note">
+      <h3>Care Philosophy</h3>
+      <p>Treatment is chosen with purpose. The goal is not to overwhelm patients with modalities, but to use the right service at the right time in support of a clearer path forward.</p>
+    </aside>
+  </section>
+
+  <section class="featured-service">
+    <div class="featured-shell">
+      <div class="featured-image"></div>
+      <div class="featured-copy">
+        <div class="featured-label">Primary Service</div>
+        <h2>Cox® Technic Flexion-Distraction remains the clinical foundation of the practice.</h2>
+        <p>This is the core service for patients with disc problems, radiating pain, spinal stenosis, spondylolisthesis, chronic low back pain, neck pain, and cases where a non-surgical option is especially important.</p>
+        <p>Using a specialized Cox table, Dr. Poulin applies gentle, precise decompression intended to reduce intradiscal pressure, improve spinal motion, and calm irritation around affected nerves.</p>
+        <ul class="featured-list">
+          <li>Research-documented approach for spine and disc-related complaints</li>
+          <li>Gentle decompression without forceful twisting or aggressive manipulation</li>
+          <li>Often considered by patients referred from surgeons and pain specialists</li>
+          <li>Used as the anchor for more personalized treatment plans</li>
+        </ul>
+        <div class="featured-actions">
+          <a href="/#treatment" class="btn-primary">Explore Cox Technic</a>
+          <a href="tel:7037234040" class="btn-secondary">Call to Schedule</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="support-services">
+    <div class="support-header">
+      <div>
+        <div class="section-label">Complementary Therapies</div>
+        <h2 class="section-title">Supporting services used to round out care when clinically appropriate.</h2>
+      </div>
+      <p>Not every patient needs every modality. These therapies are integrated as needed to support pain control, tissue healing, mobility, posture, and better day-to-day function.</p>
+    </div>
+
+    <div class="service-editorial-grid">
+      <article class="service-row">
+        <div class="service-index">01</div>
+        <h3>Acupuncture</h3>
+        <p>Integrated as a complementary therapy to support pain management and reduce muscular tension when appropriate.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">02</div>
+        <h3>Massage Therapy</h3>
+        <p>Trigger point massage and soft tissue work used to improve comfort, mobility, and recovery between visits.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">03</div>
+        <h3>Electrotherapy</h3>
+        <p>Electrical stimulation used to help calm pain, reduce inflammation, and address muscle spasm in irritated areas.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">04</div>
+        <h3>Ultrasound Therapy</h3>
+        <p>Deep tissue ultrasound used to encourage local healing response and support tissue repair.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">05</div>
+        <h3>Hot and Cold Therapy</h3>
+        <p>Targeted heat and cold protocols applied to ease flare-ups and help patients recover more comfortably.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">06</div>
+        <h3>Foot Orthotics</h3>
+        <p>Custom orthotics used to improve postural alignment and support mechanics from the ground up.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">07</div>
+        <h3>Patient Education</h3>
+        <p>Back School, ergonomics, home exercise guidance, and practical education that helps patients understand their pain.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">08</div>
+        <h3>Spinal Decompression</h3>
+        <p>Non-surgical decompression strategies used to support patients with disc herniations and persistent low back pain.</p>
+      </article>
+      <article class="service-row">
+        <div class="service-index">09</div>
+        <h3>Integrated Treatment Planning</h3>
+        <p>Services are combined thoughtfully, so patients receive a plan that feels intentional rather than overloaded.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="service-approach">
+    <div class="approach-copy">
+      <div class="section-label">Why It Feels Different</div>
+      <h2>Professional, measured care with less noise and more clinical clarity.</h2>
+      <p>Patients often come here after trying multiple options that felt fragmented or overly reactive. What sets this practice apart is the discipline behind the treatment plan: a strong spinal focus, decades of experience, and a calm use of supportive therapies only when they genuinely strengthen care.</p>
+      <p>That is why the service mix feels more thoughtful. The office is not trying to sell every modality. It is trying to help patients move forward with less confusion and more confidence.</p>
+    </div>
+    <aside class="approach-rail">
+      <h3>Patients Often Come For</h3>
+      <ul>
+        <li>Disc herniations and recurring low back pain</li>
+        <li>Sciatica, leg pain, and nerve irritation</li>
+        <li>Neck pain, cervical complaints, and stiffness</li>
+        <li>Post-surgical pain and lingering spinal discomfort</li>
+        <li>A more conservative path before invasive intervention</li>
+      </ul>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p>Poulin Chiropractic of Herndon and Ashburn</p>
+    <p>© 2026 All rights reserved.</p>
+  </div>
+</footer>
+</body>
+</html>
