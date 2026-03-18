@@ -48,17 +48,16 @@
   }
   .portrait-wrap { display: flex; flex-direction: column; gap: 1.4rem; }
   .portrait-card {
-    background: #fff; border: 1px solid #edf1f4; border-radius: 30px;
-    padding: 1.2rem; box-shadow: 0 28px 60px rgba(15, 23, 42, 0.08);
+    border-radius: 30px;
   }
   .portrait-frame {
-    background: linear-gradient(180deg, #f5fafb 0%, #eef5f6 100%);
-    border-radius: 24px; padding: 1.1rem;
+    background: #fff;
+    border-radius: 30px; padding: 1.1rem;
+    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.08);
   }
   .portrait-image {
     border-radius: 999px; aspect-ratio: 1 / 1.32; width: min(100%, 520px);
     object-fit: cover; object-position: top center; margin: 0 auto;
-    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
   }
   .portrait-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
   .portrait-badge {
@@ -87,39 +86,35 @@
   }
 
   .story {
-    max-width: 1240px; margin: 0 auto; padding: 1.2rem 2rem 5rem;
+    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem;
   }
   .values {
-    max-width: 1240px; margin: 0 auto; padding: 0 2rem 2.5rem;
+    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
   }
-  .values-shell {
-    background: #fff; border: 1px solid var(--border); border-radius: 30px;
-    padding: 2.2rem; box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
-  }
-  .values-header { margin-bottom: 1.75rem; }
+  .values-header { margin-bottom: 2rem; text-align: center; }
   .values-header h2 { font-size: clamp(1.9rem, 3vw, 2.7rem); }
   .values-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
   .value-card {
-    background: linear-gradient(180deg, #ffffff 0%, #f8fbfb 100%);
-    border: 1px solid #e7eef2; border-radius: 22px; padding: 1.35rem 1.25rem;
+    background: #fff;
+    border-radius: 22px; padding: 1.5rem 1.35rem;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    text-align: center;
   }
   .value-card h3 {
     font-family: var(--font-serif); font-size: 1.38rem; line-height: 1.12;
     color: var(--navy); margin-bottom: 0.75rem;
   }
   .value-card p { color: var(--text-mid); line-height: 1.75; font-size: 0.96rem; }
-  .story-card {
-    background: #fff; border: 1px solid var(--border); border-radius: 28px;
-    padding: 2rem 2rem 2.1rem; box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+  .story-block h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
+  .story-block p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+  .story-block p:last-child { margin-bottom: 0; }
+  .memory-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.8rem; }
+  .memory-gallery img {
+    width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+    border-radius: 22px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
   }
-  .story-card h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
-  .story-card p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
-  .story-card p:last-child { margin-bottom: 0; }
-  .quote-card {
-    background: linear-gradient(180deg, #f3fbfa 0%, #edf7f6 100%);
-    border: 1px solid rgba(26,138,138,0.16);
-  }
+  .story-block.muted { padding-top: 0.35rem; }
   .cta-strip {
     max-width: 1240px; margin: 0 auto; padding: 0 2rem 5rem;
   }
@@ -153,8 +148,8 @@
     .nav-links { display: none; }
     .page-hero, .story, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
     .page-hero { padding-top: 3rem; }
-    .story-card, .cta-box, .values-shell { padding: 1.5rem; }
     .values-grid { grid-template-columns: 1fr; }
+    .memory-gallery { grid-template-columns: 1fr; }
     .portrait-image { width: 100%; }
   }
 </style>
@@ -210,46 +205,47 @@
     </div>
   </section>
 
-  <section class="values">
-    <div class="values-shell">
-      <div class="values-header">
-        <div class="eyebrow">Our Values</div>
-        <h2>What guides the way we care for patients.</h2>
-      </div>
-      <div class="values-grid">
-        <article class="value-card">
-          <h3>Excellence</h3>
-          <p>We stay up-to-date with the most recent research on spinal biomechanics, anatomy, imaging, and chiropractic treatment options.</p>
-        </article>
-        <article class="value-card">
-          <h3>Education</h3>
-          <p>We believe knowledge is power. Our mission is to help you understand your pain and provide knowledge to choose the best course of care.</p>
-        </article>
-        <article class="value-card">
-          <h3>Compassion</h3>
-          <p>We recognize the importance of helping you regain your quality of life as soon as possible and intend to do so with your involvement.</p>
-        </article>
-        <article class="value-card">
-          <h3>Community</h3>
-          <p>Involved in local community and church activities, serving the Fairfax and Loudoun County area for over 30 years.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <section class="story">
-    <article class="story-card quote-card">
-      <h2>In Memory of Dr. James Cox</h2>
-      <p>Dr. James Cox was the founder of Cox® Technic and an important mentor to Dr. Poulin. His passing in March 2025 marked the loss of one of chiropractic’s most influential innovators, but his work continues through the patients and practitioners shaped by his method.</p>
-      <p>Dr. Poulin’s direct training relationship with Dr. Cox remains one of the defining strengths of this practice, reinforcing a standard of care rooted in technique, precision, and fidelity to the original clinical intent.</p>
-    </article>
-
-    <article class="story-card">
+    <article class="story-block muted">
       <h2>A Practice Built on Trust</h2>
       <p>Poulin Chiropractic has grown through long-term patient relationships, specialist referrals, and a consistent reputation for conservative care that is calm, clear, and clinically grounded.</p>
       <p>For many patients, the experience here is not only about relief, but about finally understanding what is happening in the spine and having a measured plan that feels responsible and realistic.</p>
       <p>That combination of clinical experience, communication, and continuity is what continues to bring families back across Herndon, Ashburn, and the surrounding Northern Virginia communities.</p>
     </article>
+
+    <article class="story-block">
+      <h2>In Memory of Dr. James Cox</h2>
+      <p>Dr. James Cox was the founder of Cox® Technic and an important mentor to Dr. Poulin. His passing in March 2025 marked the loss of one of chiropractic’s most influential innovators, but his work continues through the patients and practitioners shaped by his method.</p>
+      <p>Dr. Poulin’s direct training relationship with Dr. Cox remains one of the defining strengths of this practice, reinforcing a standard of care rooted in technique, precision, and fidelity to the original clinical intent.</p>
+      <div class="memory-gallery">
+        <img src="/assets/local/doctor-cox.jpg" alt="Dr. Cox and Dr. Poulin">
+        <img src="/assets/local/poulin-cox-2021.jpg" alt="Dr. Poulin with Dr. Cox">
+      </div>
+    </article>
+  </section>
+
+  <section class="values">
+    <div class="values-header">
+      <h2>Our Values</h2>
+    </div>
+    <div class="values-grid">
+      <article class="value-card">
+        <h3>Excellence</h3>
+        <p>We stay up-to-date with the most recent research on spinal biomechanics, anatomy, imaging, and chiropractic treatment options.</p>
+      </article>
+      <article class="value-card">
+        <h3>Education</h3>
+        <p>We believe knowledge is power. Our mission is to help you understand your pain and provide knowledge to choose the best course of care.</p>
+      </article>
+      <article class="value-card">
+        <h3>Compassion</h3>
+        <p>We recognize the importance of helping you regain your quality of life as soon as possible and intend to do so with your involvement.</p>
+      </article>
+      <article class="value-card">
+        <h3>Community</h3>
+        <p>Involved in local community and church activities, serving the Fairfax and Loudoun County area for over 30 years.</p>
+      </article>
+    </div>
   </section>
 
   <section class="cta-strip">
