@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions | Poulin Chiropractic</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1f35;
+    --navy-deep: #152534;
+    --teal: #2a7f7a;
+    --teal-soft: #edf6f4;
+    --paper: #ffffff;
+    --warm-white: #fdfaf7;
+    --muted: #687789;
+    --line: rgba(15, 31, 53, 0.1);
+    --shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+    --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--warm-white); color: #1f2937; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font: inherit; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 247, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+  .nav-inner {
+    max-width: 1320px; margin: 0 auto; padding: 0 2rem;
+    min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .nav-logo { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 700; color: var(--navy); }
+  .nav-logo span {
+    display: block; font-family: var(--font-sans); font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--teal); margin-top: 0.2rem;
+  }
+  .nav-links { list-style: none; display: flex; gap: 1.4rem; color: #556274; font-size: 0.92rem; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta {
+    background: var(--teal); color: #fff; padding: 0.8rem 1.3rem; border-radius: 999px;
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  .hero {
+    position: relative; overflow: hidden; min-height: 340px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background:
+      linear-gradient(180deg, rgba(10, 20, 31, 0.45), rgba(10, 20, 31, 0.64)),
+      linear-gradient(90deg, rgba(10, 20, 31, 0.72) 0%, rgba(10, 20, 31, 0.46) 45%, rgba(10, 20, 31, 0.6) 100%),
+      url("/assets/local/doctor-cox.jpg") center 22% / cover no-repeat;
+  }
+  .hero-inner {
+    position: relative; z-index: 1; max-width: 880px; padding: 4.4rem 2rem 3.2rem;
+  }
+  .eyebrow {
+    color: var(--teal); text-transform: uppercase; letter-spacing: 0.16em;
+    font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--font-serif); color: #fff; font-size: clamp(2.7rem, 4vw, 4.5rem);
+    line-height: 1.04; letter-spacing: -0.035em; margin-bottom: 1.2rem;
+  }
+  .hero p {
+    max-width: 34ch; margin: 0 auto; color: rgba(244, 247, 246, 0.88);
+    font-size: 1.02rem; line-height: 1.65;
+  }
+
+  .filters {
+    margin-top: -2.2rem;
+    position: relative; z-index: 2;
+    padding: 0 2rem 2.2rem;
+  }
+  .filters-inner {
+    max-width: 1120px; margin: 0 auto;
+  }
+  .search-shell {
+    position: relative; margin: 0 auto 1.35rem; width: min(100%, 860px);
+    border-radius: 1.7rem; background: rgba(255,255,255,0.96); border: 1px solid rgba(15,31,53,0.08);
+    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08);
+  }
+  .search-shell svg {
+    position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; stroke: #6a788a; fill: none; stroke-width: 1.8;
+  }
+  .search-shell input {
+    width: 100%; height: 66px; border: 0; outline: 0; background: transparent;
+    padding: 0 1.2rem 0 4.25rem; font-size: 1rem; color: var(--navy); border-radius: 1.7rem;
+  }
+  .chip-row {
+    display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center;
+  }
+  .chip {
+    min-height: 3.2rem; border-radius: 999px; border: 1px solid rgba(15,31,53,0.12);
+    background: #fff; color: #64748b; padding: 0.8rem 1.3rem; font-weight: 600;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04); cursor: pointer;
+  }
+  .chip.active {
+    background: linear-gradient(135deg, #1d6f66 0%, #257c72 100%);
+    color: #fff; border-color: rgba(29,111,102,0.2); box-shadow: 0 14px 28px rgba(29,111,102,0.22);
+  }
+
+  .conditions {
+    padding: 3.6rem 2rem 5.4rem;
+  }
+  .conditions-inner {
+    max-width: 1120px; margin: 0 auto;
+  }
+  .results-meta {
+    color: var(--muted); font-size: 0.96rem; margin-bottom: 1.8rem;
+  }
+  .condition-list {
+    display: grid; gap: 1rem;
+  }
+  .condition-row {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem;
+    border: 1px solid rgba(15,31,53,0.08); border-radius: 1.7rem; background: linear-gradient(180deg, #fff, #fcfdfd);
+    padding: 1.3rem 1.5rem; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    cursor: pointer;
+  }
+  .condition-row:hover {
+    transform: translateY(-1px); box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08); border-color: rgba(42,127,122,0.24);
+  }
+  .condition-row-main {
+    min-width: 0;
+  }
+  .condition-name {
+    font-size: 1.04rem; font-weight: 700; color: #223042; margin-bottom: 0.28rem;
+  }
+  .condition-sub {
+    color: var(--muted); font-size: 0.92rem; line-height: 1.52;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .condition-meta {
+    display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 0.7rem;
+    padding: 0.36rem 0.7rem; border-radius: 999px; background: var(--teal-soft); color: var(--teal);
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .condition-row svg {
+    width: 20px; height: 20px; stroke: #78879a; fill: none; stroke-width: 1.9;
+  }
+  .empty-state {
+    border: 1px solid rgba(15,31,53,0.08); border-radius: 1.7rem; background: #fff;
+    padding: 2rem; text-align: center; color: var(--muted);
+  }
+
+  .modal {
+    position: fixed; inset: 0; z-index: 80; display: none; align-items: flex-start; justify-content: center;
+    padding: 6rem 1.2rem 2rem; background: rgba(15, 23, 42, 0.42); backdrop-filter: blur(8px);
+  }
+  .modal.open { display: flex; }
+  .modal-card {
+    width: min(100%, 1070px); max-height: calc(100vh - 8rem); overflow: auto;
+    border-radius: 2rem; background: #fff; box-shadow: 0 32px 80px rgba(15, 23, 42, 0.2);
+    border: 1px solid rgba(15,31,53,0.08);
+  }
+  .modal-head {
+    display: flex; justify-content: space-between; gap: 1.5rem;
+    padding: 2rem 2rem 1.7rem;
+    background: linear-gradient(135deg, rgba(225,245,240,0.82), rgba(245,251,249,0.92) 48%, rgba(255,255,255,0.98) 100%);
+    border-bottom: 1px solid rgba(148,163,184,0.18);
+  }
+  .modal-kicker {
+    display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.42rem 0.72rem;
+    border-radius: 999px; background: rgba(255,255,255,0.72); color: var(--teal);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .modal-title {
+    margin-top: 1rem; font-family: var(--font-serif); font-size: clamp(2.3rem, 4vw, 4rem);
+    line-height: 1.02; letter-spacing: -0.03em; color: #1f2937;
+  }
+  .modal-deck {
+    max-width: 38rem; margin-top: 0.9rem; color: #5f7184; font-size: 0.98rem; line-height: 1.7;
+  }
+  .modal-close {
+    width: 3rem; height: 3rem; border: 1px solid rgba(15,31,53,0.1); border-radius: 999px;
+    background: rgba(255,255,255,0.92); color: #607184; cursor: pointer; flex: 0 0 auto;
+    font-size: 1.45rem; line-height: 1;
+  }
+  .modal-body-wrap {
+    padding: 2rem 2rem 2.5rem;
+  }
+  .modal-body {
+    max-width: 56rem; color: var(--muted); font-size: 1.02rem; line-height: 1.82;
+  }
+  .modal-body h2, .modal-body h3 {
+    font-family: var(--font-serif); color: #1f2937; line-height: 1.12; letter-spacing: -0.025em;
+  }
+  .modal-body h2 {
+    font-size: clamp(1.9rem, 2.4vw, 2.5rem); margin: 2.3rem 0 0.9rem;
+  }
+  .modal-body h3 {
+    font-size: 1.24rem; margin: 1.75rem 0 0.7rem;
+  }
+  .modal-body > h2:first-child { margin-top: 0; }
+  .modal-body p { margin: 0 0 1.05rem; }
+  .modal-body ul, .modal-body ol { margin: 1rem 0 1.2rem; padding-left: 1.2rem; }
+  .modal-body li { margin: 0.45rem 0; padding-left: 0.2rem; }
+  .modal-note {
+    display: inline-flex; align-items: center; padding: 0.62rem 0.9rem; border-radius: 999px;
+    background: rgba(42,127,122,0.08); color: var(--teal); font-size: 0.85rem; font-weight: 600; margin: 0.2rem 0 1rem;
+  }
+
+  footer {
+    background: #0f1c2e; color: rgba(255,255,255,0.68);
+    padding: 2.4rem 2rem 3rem;
+  }
+  .footer-inner {
+    max-width: 1320px; margin: 0 auto; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .footer-inner p { font-size: 0.9rem; }
+
+  @media (max-width: 760px) {
+    .nav-inner { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .hero-inner, .filters, .conditions, footer { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .hero { min-height: 300px; }
+    .hero-inner { padding-top: 3.8rem; padding-bottom: 2.8rem; }
+    .search-shell input { height: 60px; }
+    .modal { padding-top: 5.2rem; }
+    .modal-card { max-height: calc(100vh - 6.4rem); border-radius: 1.4rem; }
+    .modal-head { padding: 1.35rem 1.35rem 1.1rem; flex-direction: column; }
+    .modal-body-wrap { padding: 1.35rem 1.35rem 1.8rem; }
+    .modal-title { font-size: 2.2rem; }
+    .condition-row { padding: 1.15rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      Poulin Chiropractic
+      <span>Herndon &amp; Ashburn, VA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/Conditions/" class="active">Conditions</a></li>
+      <li><a href="/#treatment">Cox Technic</a></li>
+      <li><a href="/Services/">Services</a></li>
+      <li><a href="/About/">About</a></li>
+      <li><a href="/#hours">Locations</a></li>
+    </ul>
+    <a href="tel:7037234040" class="nav-cta">Call Now</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Identify Your Pain</div>
+      <h1>Conditions We Treat</h1>
+      <p>Cox® Technic protocols address spine pain conditions in the safest and gentlest means possible. Even if you have a combination of conditions, we can help.</p>
+    </div>
+  </section>
+
+  <section class="filters">
+    <div class="filters-inner">
+      <div class="search-shell">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="condition-search" type="search" placeholder="Search conditions..." autocomplete="off">
+      </div>
+      <div id="chip-row" class="chip-row"></div>
+    </div>
+  </section>
+
+  <section class="conditions">
+    <div class="conditions-inner">
+      <p id="results-meta" class="results-meta">0 conditions found</p>
+      <div id="condition-list" class="condition-list"></div>
+    </div>
+  </section>
+</main>
+
+<div id="condition-modal" class="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <div>
+        <p class="modal-kicker">Condition Guide</p>
+        <h2 id="modal-title" class="modal-title"></h2>
+        <p id="modal-deck" class="modal-deck"></p>
+      </div>
+      <button id="modal-close" class="modal-close" type="button" aria-label="Close article">×</button>
+    </div>
+    <div class="modal-body-wrap">
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p>Poulin Chiropractic of Herndon and Ashburn</p>
+    <p>© 2026 All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/assets/condition-articles.js"></script>
+<script>
+  (function () {
+    const dataset = window.__POULIN_CONDITION_ARTICLES__;
+    if (!dataset || !dataset.articles || !dataset.aliases) {
+      return;
+    }
+
+    const categoryOrder = ["All", "Pain", "Disc", "Structural", "Nerve", "Degenerative", "Post-Surgical", "Inflammatory", "Other"];
+    const query = new URLSearchParams(window.location.search);
+
+    const searchInput = document.getElementById("condition-search");
+    const chipRow = document.getElementById("chip-row");
+    const resultsMeta = document.getElementById("results-meta");
+    const list = document.getElementById("condition-list");
+    const modal = document.getElementById("condition-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDeck = document.getElementById("modal-deck");
+    const modalBody = document.getElementById("modal-body");
+    const closeBtn = document.getElementById("modal-close");
+
+    let activeCategory = "All";
+    let activeConditionKey = null;
+
+    function normalizeConditionName(name) {
+      return dataset.aliases[String(name || "").trim()] || null;
+    }
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function looksLikeSectionHeading(text) {
+      const normalized = normalizeText(text);
+      if (!normalized || normalized.length > 60) return false;
+      if (/[.!?]/.test(normalized)) return false;
+      return /^(Introduction|Definition|Description|Examination|Treatment|At Home Care|At-Home Care|Summary|Clinical Case Reports?|Clinical Focus|Common Symptoms|What Patients May Notice|Where It Can Occur|Treatment Approach|Typical Complaints|At-Home Considerations|What patients may experience|What symptoms can feel like)$/i.test(normalized);
+    }
+
+    function beautifyArticleHtml(html) {
+      if (!html) return "";
+      return html
+        .replace(/<p>\s*<span>\s*<strong>([\s\S]*?)<\/strong>\s*<\/span>\s*<\/p>/gi, (m, text) => {
+          const heading = normalizeText(text);
+          return looksLikeSectionHeading(heading) ? "<h2>" + heading + "</h2>" : m;
+        })
+        .replace(/<p>\s*<strong>\s*<span>([\s\S]*?)<\/span>\s*<\/strong>\s*<\/p>/gi, (m, text) => {
+          const heading = normalizeText(text);
+          return looksLikeSectionHeading(heading) ? "<h2>" + heading + "</h2>" : m;
+        })
+        .replace(/<p>\s*<strong>([\s\S]*?)<\/strong>\s*<\/p>/gi, (m, text) => {
+          const heading = normalizeText(text);
+          return looksLikeSectionHeading(heading) ? "<h2>" + heading + "</h2>" : m;
+        })
+        .replace(/<p>\s*<em>(Video[\s\S]*?|Graphic Animation[\s\S]*?|Cervical Spine Exam Description|Thoracic Spine Exam Description|Lumbar Spine Exam Description|Compression Fracture Condition Description|Sacroiliac Joint Pain Condition Description|Subluxation Condition Description)\s*<\/em>\s*<\/p>/gi, (m, text) => {
+          return '<p class="modal-note">' + normalizeText(text) + "</p>";
+        });
+    }
+
+    function getConditionSummary(name) {
+      return "A focused guide to symptoms, spinal mechanics, examination findings, and conservative care for " + name + ".";
+    }
+
+    function buildDisplayConditions() {
+      const namesByKey = {};
+      Object.entries(dataset.aliases).forEach(([label, key]) => {
+        if (!dataset.articles[key]) return;
+        const current = namesByKey[key];
+        if (!current || label.length < current.length) {
+          namesByKey[key] = label;
+        }
+      });
+
+      return Object.entries(dataset.articles).map(([key, article]) => ({
+        key,
+        name: namesByKey[key] || key,
+        category: article.category || "Other",
+        summary: getConditionSummary(namesByKey[key] || key),
+        body: beautifyArticleHtml(article.contentHtml || "")
+      })).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    const allConditions = buildDisplayConditions();
+
+    function renderChips() {
+      chipRow.innerHTML = "";
+      categoryOrder.forEach((category) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip" + (category === activeCategory ? " active" : "");
+        chip.textContent = category;
+        chip.addEventListener("click", () => {
+          activeCategory = category;
+          renderChips();
+          renderList();
+        });
+        chipRow.appendChild(chip);
+      });
+    }
+
+    function getFilteredConditions() {
+      const term = searchInput.value.trim().toLowerCase();
+      return allConditions.filter((condition) => {
+        const matchesCategory = activeCategory === "All" || condition.category === activeCategory;
+        const haystack = (condition.name + " " + condition.category + " " + condition.summary).toLowerCase();
+        return matchesCategory && (!term || haystack.includes(term));
+      });
+    }
+
+    function setQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      if (name) params.set("name", name);
+      else params.delete("name");
+      const next = window.location.pathname + (params.toString() ? "?" + params.toString() : "");
+      window.history.replaceState({}, "", next);
+    }
+
+    function openCondition(condition) {
+      activeConditionKey = condition.key;
+      modalTitle.textContent = condition.name;
+      modalDeck.textContent = condition.summary;
+      modalBody.innerHTML = condition.body || "<p>This condition is available, but its article content could not be loaded locally.</p>";
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setQueryParam(condition.name);
+    }
+
+    function closeModal() {
+      activeConditionKey = null;
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      setQueryParam("");
+    }
+
+    function renderList() {
+      const filtered = getFilteredConditions();
+      resultsMeta.textContent = filtered.length + " conditions found";
+      list.innerHTML = "";
+
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty-state">No conditions matched your search. Try a broader term or choose a different filter.</div>';
+        return;
+      }
+
+      filtered.forEach((condition) => {
+        const row = document.createElement("button");
+        row.type = "button";
+        row.className = "condition-row";
+        row.innerHTML =
+          '<div class="condition-row-main">' +
+            '<div class="condition-name">' + condition.name + '</div>' +
+            '<div class="condition-sub">' + condition.summary + '</div>' +
+            '<div class="condition-meta">' + condition.category + '</div>' +
+          '</div>' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>';
+        row.addEventListener("click", () => openCondition(condition));
+        list.appendChild(row);
+      });
+    }
+
+    searchInput.addEventListener("input", renderList);
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    renderChips();
+    renderList();
+
+    const requestedName = query.get("name");
+    if (requestedName) {
+      const key = normalizeConditionName(requestedName);
+      const found = allConditions.find((item) => item.key === key);
+      if (found) openCondition(found);
+    }
+  })();
+</script>
+</body>
+</html>
