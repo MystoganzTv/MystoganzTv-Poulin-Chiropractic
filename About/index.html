@@ -47,6 +47,20 @@
     max-width: 1360px; margin: 0 auto; padding: 4.8rem 2.4rem 2.2rem;
     display: grid; grid-template-columns: minmax(420px, 0.88fr) minmax(0, 1.12fr); gap: 3.2rem; align-items: start;
   }
+  .page-header {
+    max-width: 1360px; margin: 0 auto; padding: 4.4rem 2.4rem 1.2rem;
+    text-align: center;
+  }
+  .page-header .eyebrow {
+    margin-bottom: 0.95rem;
+  }
+  .page-header h1 {
+    margin-bottom: 1rem;
+  }
+  .page-subtitle {
+    max-width: 34ch; margin: 0 auto;
+    font-size: 1.08rem; line-height: 1.72; color: #6b7a8c;
+  }
   .portrait-wrap { display: flex; flex-direction: column; gap: 1.55rem; }
   .portrait-card {
     border-radius: 30px;
@@ -155,7 +169,7 @@
   @media (max-width: 720px) {
     .nav-inner { padding: 0 1.2rem; }
     .nav-links { display: none; }
-    .page-hero, .memory-section, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .page-header, .page-hero, .memory-section, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
     .page-hero { padding-top: 3rem; }
     .values-grid { grid-template-columns: 1fr; }
     .memory-gallery { grid-template-columns: 1fr; }
@@ -183,6 +197,12 @@
 </nav>
 
 <main>
+  <section class="page-header">
+    <div class="eyebrow">About Us</div>
+    <h1>Meet Dr. Mike M. Poulin, D.C.</h1>
+    <p class="page-subtitle">Over 30 years of dedicated chiropractic excellence serving the Herndon and Ashburn communities.</p>
+  </section>
+
   <section class="page-hero">
     <div class="portrait-wrap">
       <div class="portrait-card">
@@ -197,8 +217,8 @@
     </div>
 
     <div class="about-copy">
-      <div class="eyebrow">About Us</div>
-      <h1>Background &amp; Credentials</h1>
+      <div class="eyebrow">Background</div>
+      <h2>Background &amp; Credentials</h2>
       <p class="intro">Dr. Poulin has dedicated his career to providing the highest quality chiropractic care. His extensive training in Cox® Technic Flexion-Distraction and Decompression makes him uniquely qualified to treat complex spinal conditions without surgery. Our office receives frequent referrals from neurosurgeons, pain management doctors, orthopedic surgeons, general practitioners, dentists, and physiatrists.</p>
 
       <ul class="credentials-list">
