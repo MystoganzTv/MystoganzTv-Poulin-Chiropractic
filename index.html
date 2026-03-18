@@ -1,71 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <link href="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png" rel="icon" type="image/svg+xml"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://poulin-vitality-hub.base44.app/manifest.json" rel="manifest"/>
-  <title>
-   Poulin Vitality Portal
-  </title>
-  <script crossorigin="" src="/assets/index-BOA5E3cS.js" type="module">
-  </script>
-  <link crossorigin="" href="/assets/index-CbC6RmJK.css" rel="stylesheet"/>
-  <script type="module">
-   if (window.self === window.top) {
-  let lastPath = "";
-  function getPageNameFromPath(path) {
-    const segments = path.split("/").filter(Boolean);
-    return segments[0] || null;
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poulin Chiropractic – Herndon & Ashburn, VA</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1f35; --navy-mid: #162d4a;
+    --teal: #1a8a8a; --teal-light: #25b0b0;
+    --gold: #c9a24a; --gold-light: #e8c06a;
+    --cream: #f8f4ef; --warm-white: #fdfaf7;
+    --text-dark: #1a1a1a; --text-mid: #4a5568; --text-light: #718096;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
-  function trackPageView() {
-    const path = window.location.pathname;
-    if (path === lastPath) return;
-    lastPath = path;
-    const pageName = getPageNameFromPath(path) || "home";
-    const appId = "69aea6cd5dc3ca3701a5c0f6";
-    if (!appId) return;
-    fetch(`/app-logs/${appId}/log-user-in-app/${pageName}`, {
-      method: "POST",
-    }).catch(() => {});
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--warm-white); color: var(--text-dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,31,53,0.97); backdrop-filter: blur(10px); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; border-bottom: 1px solid rgba(201,162,74,0.3); }
+  .nav-logo { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--gold); line-height: 1.2; }
+  .nav-logo span { display: block; font-size: 0.68rem; font-family: var(--font-sans); color: var(--teal-light); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--teal); color: #fff; padding: 0.55rem 1.4rem; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; transition: background 0.2s, transform 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; padding: 100px 5% 60px; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; background-image: url('assets/local/hero-bg.jpg'); background-size: cover; background-position: center top; filter: brightness(0.32); }
+  .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(105deg, rgba(13,31,53,0.92) 40%, rgba(13,31,53,0.5) 100%); }
+  .hero-grid { position: absolute; inset: 0; z-index: 2; opacity: 0.03; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-content { position: relative; z-index: 3; max-width: 620px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(26,138,138,0.2); border: 1px solid rgba(26,138,138,0.5); color: var(--teal-light); padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.8rem; animation: fadeUp 0.8s ease both; }
+  .hero-badge::before { content: '✦'; font-size: 0.6rem; }
+  .hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 900; line-height: 1.1; color: #fff; margin-bottom: 1.5rem; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero p { font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.75); margin-bottom: 2.5rem; animation: fadeUp 0.8s 0.2s ease both; max-width: 520px; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 0.85rem 2rem; border-radius: 4px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s; border: 2px solid var(--gold); }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,162,74,0.4); }
+  .btn-outline { background: transparent; color: #fff; padding: 0.85rem 2rem; border-radius: 4px; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s; border: 2px solid rgba(255,255,255,0.35); }
+  .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+  .hero-stats { position: absolute; bottom: 4rem; right: 5%; display: flex; gap: 2.5rem; z-index: 3; animation: fadeUp 0.8s 0.5s ease both; }
+  .stat { text-align: center; }
+  .stat-num { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+  /* TRUST BAR */
+  .trust-bar { background: var(--navy); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 1.2rem 5%; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 0.6rem; color: rgba(255,255,255,0.7); font-size: 0.85rem; font-weight: 500; }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; }
+  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.8rem; }
+  .section-title { font-family: var(--font-serif); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.2; color: var(--navy); margin-bottom: 1.2rem; }
+  .section-desc { font-size: 1.05rem; line-height: 1.75; color: var(--text-mid); max-width: 600px; }
+
+  /* ABOUT */
+  .about { background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-photos { display: flex; flex-direction: column; gap: 1rem; }
+  .about-photo-main { width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 16/9; background: #1a2e45; }
+  .about-photo-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .about-thumb-wrap {}
+  .about-photo-thumb { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; background: #1a2e45; box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+  .about-photo-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.4s; }
+  .about-photo-thumb:hover img { transform: scale(1.04); }
+  .photo-caption { font-size: 0.74rem; color: var(--text-light); text-align: center; font-style: italic; margin-top: 0.4rem; line-height: 1.4; }
+  .about-card { background: var(--navy); border-radius: 12px; padding: 2rem; color: #fff; margin-top: 0.5rem; position: relative; overflow: hidden; }
+  .about-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(26,138,138,0.3), transparent); }
+  .about-card h3 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--gold); }
+  .about-card p { line-height: 1.7; color: rgba(255,255,255,0.78); font-size: 0.88rem; }
+  .cert-row { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+  .cert-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(26,138,138,0.2); border: 1px solid var(--teal); padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; color: var(--teal-light); }
+  .cox-seal { height: 52px; opacity: 0.85; }
+
+  /* CONDITIONS */
+  .conditions { background: var(--warm-white); }
+  .conditions-header { text-align: center; margin-bottom: 3.5rem; }
+  .conditions-header .section-desc { margin: 0 auto; }
+  .conditions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .condition-card { background: #fff; border: 1px solid #e8e0d6; border-radius: 12px; padding: 0 0 1.5rem; text-align: center; transition: all 0.3s; cursor: pointer; overflow: hidden; }
+  .condition-card::after { content: ''; display: block; height: 3px; background: linear-gradient(90deg, var(--teal), var(--gold)); transform: scaleX(0); transition: transform 0.3s; }
+  .condition-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: var(--teal); }
+  .condition-card:hover::after { transform: scaleX(1); }
+  .condition-img { width: 100%; height: 130px; object-fit: cover; display: block; margin-bottom: 1.2rem; background: var(--cream); }
+  .condition-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; padding: 0 1rem; }
+  .condition-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; padding: 0 1rem; }
+
+  /* TREATMENT */
+  .treatment { background: var(--navy); color: #fff; position: relative; overflow: hidden; }
+  .treatment::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 0% 50%, rgba(26,138,138,0.2), transparent); }
+  .treatment-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .treatment .section-desc { color: rgba(255,255,255,0.7); }
+  .treatment-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .treatment-list li { display: flex; align-items: flex-start; gap: 0.8rem; font-size: 0.95rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  .treatment-list li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .cox-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+  .video-thumb { border-radius: 10px; overflow: hidden; position: relative; cursor: pointer; background: #0a1e30; aspect-ratio: 16/9; transition: transform 0.3s; box-shadow: 0 6px 20px rgba(0,0,0,0.35); display: block; text-decoration: none; }
+  .video-thumb:hover { transform: scale(1.03); }
+  .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.75; }
+  .video-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(13,31,53,0.4); }
+  .play-btn { width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background 0.2s; color: var(--navy); }
+  .video-thumb:hover .play-btn { background: var(--gold-light); }
+  .video-label { font-size: 0.7rem; color: #fff; text-align: center; padding: 0 0.5rem; line-height: 1.4; font-weight: 600; }
+
+  /* SERVICES */
+  .services { background: var(--cream); }
+  .services-header { margin-bottom: 3.5rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+  .service-card { background: #fff; border-radius: 12px; padding: 2rem; border: 1px solid #e8e0d6; transition: all 0.3s; }
+  .service-card:hover { box-shadow: 0 10px 35px rgba(0,0,0,0.1); transform: translateY(-4px); }
+  .service-icon { width: 48px; height: 48px; background: rgba(26,138,138,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.2rem; }
+  .service-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .service-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--warm-white); }
+  .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .testimonial-card { background: #fff; border-radius: 14px; padding: 2rem; border: 1px solid #e8e0d6; position: relative; }
+  .testimonial-card::before { content: '\201C'; font-family: var(--font-serif); font-size: 6rem; color: rgba(26,138,138,0.1); line-height: 0; position: absolute; top: 3rem; left: 1.5rem; }
+  .stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; }
+  .testimonial-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-mid); position: relative; z-index: 1; }
+  .testimonial-author { margin-top: 1.2rem; font-weight: 700; color: var(--navy); font-size: 0.9rem; }
+
+  /* HOURS */
+  .hours { background: #fff; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+  .hours-table tr { border-bottom: 1px solid #f0ebe4; }
+  .hours-table td { padding: 0.85rem 0; font-size: 0.9rem; }
+  .hours-table td:first-child { font-weight: 700; color: var(--navy); width: 110px; }
+  .hours-table td:nth-child(2) { color: var(--text-mid); }
+  .hours-table .closed { color: #bbb; font-style: italic; }
+  .location-card { background: var(--cream); border-radius: 12px; padding: 2rem; border: 1px solid #e8e0d6; }
+  .location-photo { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 1.2rem; display: block; background: #d0cbc5; }
+  .location-card h4 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy); margin-bottom: 1rem; padding-bottom: 0.7rem; border-bottom: 2px solid var(--gold); }
+  .location-info { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+  .location-info p { font-size: 0.9rem; color: var(--text-mid); display: flex; gap: 0.5rem; align-items: flex-start; }
+  .location-info span { font-weight: 700; color: var(--navy); min-width: 65px; flex-shrink: 0; }
+  .location-phone { color: var(--teal); font-weight: 700; font-size: 1.05rem; text-decoration: none; transition: color 0.2s; }
+  .location-phone:hover { color: var(--teal-light); }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, var(--teal) 0%, #0d6b6b 100%); text-align: center; padding: 6rem 5%; }
+  .cta-section h2 { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 1rem; }
+  .cta-section p { color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-bottom: 2.5rem; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: #fff; color: var(--teal); padding: 0.9rem 2.2rem; border-radius: 4px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+  .cta-phones { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .cta-phone-link { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+  .cta-phone-link:hover { color: #fff; }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 4rem 5% 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand h3 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold); margin-bottom: 1rem; }
+  .footer-brand p { color: rgba(255,255,255,0.6); font-size: 0.88rem; line-height: 1.7; }
+  .footer-col h4 { color: #fff; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-seal { height: 55px; opacity: 0.7; margin-top: 1rem; display: block; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .about, .treatment-inner, .hours { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
   }
-  const originalPushState = history.pushState.bind(history);
-  history.pushState = function (...args) {
-    originalPushState(...args);
-    trackPageView();
-  };
-  const originalReplaceState = history.replaceState.bind(history);
-  history.replaceState = function (...args) {
-    originalReplaceState(...args);
-    trackPageView();
-  };
-  window.addEventListener("popstate", trackPageView);
-  trackPageView();
-}
-  </script>
-  <meta content="Poulin Vitality Portal" property="og:title"/>
-  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." property="og:description"/>
-  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png?width=1200&amp;height=630&amp;resize=contain" property="og:image"/>
-  <meta content="https://poulin-vitality-hub.base44.app" property="og:url"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Poulin Vitality Portal" property="og:site_name"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Poulin Vitality Portal" name="twitter:title"/>
-  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." name="twitter:description"/>
-  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/69aea6cd5dc3ca3701a5c0f6/33ffc5661_logo.png?width=1200&amp;height=630&amp;resize=contain" name="twitter:image"/>
-  <meta content="https://poulin-vitality-hub.base44.app" name="twitter:url"/>
-  <meta content="A modern, patient-focused digital experience for Poulin Chiropractic, featuring intuitive scheduling, health documentation access, and wellness resources." name="description"/>
-  <meta content="yes" name="mobile-web-app-capable"/>
-  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
-  <meta content="Poulin Vitality Portal" name="apple-mobile-web-app-title"/>
-  <link href="https://poulin-vitality-hub.base44.app" rel="canonical"/>
- </head>
- <body>
-  <div id="root">
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    section { padding: 4rem 5%; }
+    .about-photo-row { grid-template-columns: 1fr 1fr; }
+    .cox-videos { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Poulin Chiropractic
+    <span>Herndon &amp; Ashburn, VA · Est. 1993</span>
   </div>
-  <script src="/assets/condition-articles.js">
-  </script>
-  <script src="/assets/condition-overrides.js">
-  </script>
- </body>
+  <ul class="nav-links">
+    <li><a href="#conditions">Conditions</a></li>
+    <li><a href="#treatment">Cox Technic</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a href="tel:7037234040" class="nav-cta">📞 Call Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Cox® Technic Certified · Serving VA Since 1993</div>
+    <h1>Non-surgical<br>spine relief<br><em>that works.</em></h1>
+    <p>Dr. Poulin has helped thousands of patients in Herndon and Ashburn reclaim their quality of life — without surgery, without drugs, using research-documented Cox® Technic Flexion-Distraction.</p>
+    <div class="hero-actions">
+      <a href="tel:7037234040" class="btn-primary">Book an Appointment</a>
+      <a href="#treatment" class="btn-outline">What is Cox Technic?</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">33+</div><div class="stat-label">Years<br>serving VA</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Locations<br>in NoVA</div></div>
+    <div class="stat"><div class="stat-num">80%</div><div class="stat-label">Will suffer<br>back pain</div></div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">✅&nbsp; Cox® Technic Certified Chiropractor</div>
+  <div class="trust-item">🚫&nbsp; No surgery. No drugs.</div>
+  <div class="trust-item">🏥&nbsp; Referred by neurosurgeons &amp; orthopedic surgeons</div>
+  <div class="trust-item">⭐&nbsp; 5-Star Google Reviews</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="about-text reveal">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title">Poulin Chiropractic Welcomes You</h2>
+    <p class="section-desc">Dr. Poulin is here for your relief of pain, stress, and uncertainty of your condition. Poulin Chiropractic has been serving the Fairfax and Loudoun County community since 1993 — over 33 years of dedicated care.</p>
+    <p class="section-desc" style="margin-top:1rem;">We work closely with medical doctors and receive frequent referrals from neurosurgeons, pain management doctors, orthopedic surgeons, general practitioners, and many other physicians who trust our approach.</p>
+    <a href="#hours" class="btn-primary" style="display:inline-block; margin-top:2rem;">See Hours &amp; Locations</a>
+  </div>
+  <div class="about-photos reveal">
+    <div class="about-photo-main">
+      <img src="assets/local/doctor-main.jpeg"
+           alt="Herndon chiropractic office" loading="lazy">
+    </div>
+    <div class="about-photo-row">
+      <div class="about-thumb-wrap">
+        <div class="about-photo-thumb">
+          <img src="assets/local/doctor-cox.jpg"
+               alt="Dr. Cox and Dr. Poulin at ACA Conference 2020" loading="lazy">
+        </div>
+        <p class="photo-caption">Dr. Cox &amp; Dr. Poulin — ACA Conference, Jan. 2020</p>
+      </div>
+      <div class="about-thumb-wrap">
+        <div class="about-photo-thumb">
+          <img src="assets/local/poulin-cox-2021.jpg"
+               alt="Dr. Poulin and Dr. Cox at Cox Technic Seminar September 2021" loading="lazy">
+        </div>
+        <p class="photo-caption">Dr. Poulin &amp; Dr. Cox — Cox Seminar, Sept. 2021</p>
+      </div>
+    </div>
+    <div class="about-card">
+      <h3>A Personal Legacy with Dr. James M. Cox</h3>
+      <p>Dr. Poulin had the privilege of studying and working directly alongside Dr. James M. Cox I, founder of Cox Technic, until his passing in March 2025 at age 84. That personal mentorship ensures the highest fidelity to the original, evidence-based technique.</p>
+      <div class="cert-row">
+        <div class="cert-badge">✦ Cox® Technic Certified</div>
+        <img src="assets/local/cox-seal.png" alt="Cox Technic Certified Seal" class="cox-seal">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONDITIONS -->
+<section id="conditions" class="conditions">
+  <div class="conditions-header reveal">
+    <div class="section-label">Conditions We Treat</div>
+    <h2 class="section-title">How Can We Help You?</h2>
+    <p class="section-desc">1 in 3 people in the U.S. experiences back pain at any given time. You don't have to live with it.</p>
+  </div>
+  <div class="conditions-grid reveal">
+    <div class="condition-card">
+      <img src="assets/local/condition-back-pain.jpg" alt="Back Pain" class="condition-img" loading="lazy">
+      <h3>Back Pain</h3>
+      <p>Hands-on, research-documented chiropractic relief for back pain.</p>
+    </div>
+    <div class="condition-card">
+      <img src="assets/local/condition-neck-pain.png" alt="Neck Pain" class="condition-img" loading="lazy">
+      <h3>Neck Pain</h3>
+      <p>Spending all day at a screen? Let us help relieve your cervical pain.</p>
+    </div>
+    <div class="condition-card">
+      <img src="assets/local/condition-shoulder-pain.png" alt="Arm & Shoulder Pain" class="condition-img" loading="lazy">
+      <h3>Arm &amp; Shoulder Pain</h3>
+      <p>Chiropractic care of spine-related arm pain and shoulder pain.</p>
+    </div>
+    <div class="condition-card">
+      <img src="assets/local/condition-sciatica.jpg" alt="Sciatica Leg Pain" class="condition-img" loading="lazy">
+      <h3>Leg Pain / Sciatica</h3>
+      <p>Non-surgical chiropractic relief for leg pain and sciatica.</p>
+    </div>
+    <div class="condition-card">
+      <img src="assets/local/condition-post-surgical.jpg" alt="Post-Surgical Pain" class="condition-img" loading="lazy">
+      <h3>Post-Surgical Pain</h3>
+      <p>Still in pain after back or neck surgery? There is hope.</p>
+    </div>
+    <div class="condition-card">
+      <img src="assets/local/condition-other.jpg" alt="Other Conditions" class="condition-img" loading="lazy">
+      <h3>Other Conditions</h3>
+      <p>Disc herniations, stenosis, spondylolisthesis, scoliosis &amp; more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENT / COX TECHNIC -->
+<section id="treatment" class="treatment">
+  <div class="treatment-inner reveal">
+    <div>
+      <div class="section-label" style="color:var(--teal-light)">Our Method</div>
+      <h2 class="section-title" style="color:#fff">Cox® Technic Flexion-Distraction</h2>
+      <p class="section-desc">The most researched chiropractic method for spine pain relief. Using a specialized table, Dr. Poulin applies gentle traction that decompresses spinal discs and nerves — no forceful cracking, no surgery.</p>
+      <ul class="treatment-list">
+        <li>Increases disc height and reduces intradiscal pressure</li>
+        <li>Decompresses spinal nerves to relieve radiating pain</li>
+        <li>Improves spinal mobility without aggressive manipulation</li>
+        <li>Backed by decades of published clinical research</li>
+        <li>Indicated for disc herniations, stenosis, spondylolisthesis &amp; more</li>
+      </ul>
+    </div>
+    <div class="cox-videos">
+      <a href="https://youtu.be/sqgNZj25bUk" target="_blank" rel="noopener" class="video-thumb">
+        <img src="assets/local/video-what-is-cox.jpg" alt="What Cox Technic is" loading="lazy">
+        <div class="video-play"><div class="play-btn">▶</div><div class="video-label">What Cox Technic is…<br>and is not</div></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=wOLmLlYwbzg" target="_blank" rel="noopener" class="video-thumb">
+        <img src="assets/local/video-effects-goals.jpg" alt="Effects and Goals of Cox Technic" loading="lazy">
+        <div class="video-play"><div class="play-btn">▶</div><div class="video-label">Effects &amp; Goals<br>of Cox Technic</div></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=xAaKBH-50MQ" target="_blank" rel="noopener" class="video-thumb">
+        <img src="assets/local/video-table-tour.jpg" alt="The Cox8 Table" loading="lazy">
+        <div class="video-play"><div class="play-btn">▶</div><div class="video-label">The Cox8 Table<br>Tour</div></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=yKb-K_VT7U0" target="_blank" rel="noopener" class="video-thumb">
+        <img src="assets/local/video-cox-treatment.jpg" alt="Cox Technic Treatment" loading="lazy">
+        <div class="video-play"><div class="play-btn">▶</div><div class="video-label">Cox Technic<br>Treatment</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services">
+  <div class="services-header reveal">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-title">Comprehensive Chiropractic Services</h2>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card"><div class="service-icon">🏃</div><h3>Cox Technic</h3><p>Spinal flexion-distraction decompression — the core of our treatment approach.</p></div>
+    <div class="service-card"><div class="service-icon">🧘</div><h3>Acupuncture</h3><p>Integrated as complementary therapy for effective pain management.</p></div>
+    <div class="service-card"><div class="service-icon">💆</div><h3>Massage Therapy</h3><p>Trigger point massage and soft tissue techniques to accelerate healing.</p></div>
+    <div class="service-card"><div class="service-icon">⚡</div><h3>Electrotherapy</h3><p>Electrical stimulation to reduce pain, inflammation, and muscle spasm.</p></div>
+    <div class="service-card"><div class="service-icon">🔊</div><h3>Ultrasound Therapy</h3><p>Deep tissue ultrasound for healing and tissue repair.</p></div>
+    <div class="service-card"><div class="service-icon">🌡️</div><h3>Hot/Cold Therapy</h3><p>Applied heat and cold protocols for faster recovery between visits.</p></div>
+    <div class="service-card"><div class="service-icon">🦶</div><h3>Foot Orthotics</h3><p>Custom foot orthotics to improve postural alignment from the ground up.</p></div>
+    <div class="service-card"><div class="service-icon">📚</div><h3>Patient Education</h3><p>Back School, ergonomics, nutrition and home exercise programs.</p></div>
+    <div class="service-card"><div class="service-icon">🔩</div><h3>Spinal Decompression</h3><p>Non-surgical decompression for disc herniations and chronic back pain.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header reveal">
+    <div class="section-label">Patient Success Stories</div>
+    <h2 class="section-title">What Our Patients Say</h2>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>After years of suffering with sciatica, Dr. Poulin was the only one who truly helped me. The Cox Technique is incredible — gentle and very effective. I avoided surgery entirely.</p>
+      <div class="testimonial-author">— M. Rivera, Herndon VA</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>My neurosurgeon referred me to Dr. Poulin before considering surgery. After 8 weeks of treatment, my pain was reduced by more than half and I no longer need an operation.</p>
+      <div class="testimonial-author">— T. Johnson, Ashburn VA</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>I've been a patient for over 15 years. Dr. Poulin is very professional, caring, friendly, and effective in reducing back and neck pain. The entire team is wonderful.</p>
+      <div class="testimonial-author">— L. Chen, Fairfax VA</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section id="hours" class="hours">
+  <div class="reveal">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title">Herndon Location</h2>
+    <div class="location-card">
+      <img src="assets/local/doctor-main.jpeg"
+           alt="Herndon Chiropractic Office" class="location-photo" loading="lazy">
+      <h4>📍 Herndon (New Address – Same Location)</h4>
+      <div class="location-info">
+        <p><span>Address</span>2445 Centreville Rd, Suite 43, Herndon, VA 20171</p>
+        <p><span>Phone</span><a href="tel:7035610600" class="location-phone">📞 (703) 561-0600</a></p>
+        <p><span>Fax</span>703-561-0601</p>
+      </div>
+    </div>
+    <table class="hours-table">
+      <tr><td>Monday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
+      <tr><td>Tuesday</td><td class="closed">Open in Ashburn only</td></tr>
+      <tr><td>Wednesday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
+      <tr><td>Thursday</td><td class="closed">Open in Ashburn only</td></tr>
+      <tr><td>Friday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
+      <tr><td>Saturday</td><td>7:00 am – 10:45 am</td></tr>
+      <tr><td>Sunday</td><td class="closed">Closed</td></tr>
+    </table>
+  </div>
+
+  <div class="reveal">
+    <div class="section-label">&nbsp;</div>
+    <h2 class="section-title">Ashburn Location</h2>
+    <div class="location-card">
+      <img src="assets/local/ashburn-office.jpg"
+           alt="Ashburn Chiropractic Office" class="location-photo" loading="lazy">
+      <h4>📍 Ashburn</h4>
+      <div class="location-info">
+        <p><span>Address</span>44121 Leesburg Pike, Suite 150, Ashburn, VA 20147</p>
+        <p><span>Phone</span><a href="tel:7037234040" class="location-phone">📞 (703) 723-4040</a></p>
+        <p><span>Fax</span>703-561-0601</p>
+      </div>
+    </div>
+    <table class="hours-table">
+      <tr><td>Monday</td><td class="closed">Open in Herndon only</td></tr>
+      <tr><td>Tuesday</td><td>8:00 am – 12:30 pm &amp; 3:00 – 6:15 pm</td></tr>
+      <tr><td>Wednesday</td><td class="closed">Open in Herndon only</td></tr>
+      <tr><td>Thursday</td><td>8:00 am – 12:30 pm &amp; 3:00 – 6:15 pm</td></tr>
+      <tr><td>Friday</td><td class="closed">Open in Herndon only</td></tr>
+      <tr><td>Saturday</td><td class="closed">Open in Herndon only</td></tr>
+      <tr><td>Sunday</td><td class="closed">Closed</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>Ready to live without pain?</h2>
+  <p>Schedule your first appointment today. Dr. Poulin and his team are ready to help you reclaim your quality of life.</p>
+  <div class="cta-buttons">
+    <a href="tel:7037234040" class="btn-white">📞 Call Ashburn</a>
+    <a href="tel:7035610600" class="btn-white">📞 Call Herndon</a>
+  </div>
+  <div class="cta-phones">
+    <a href="tel:7037234040" class="cta-phone-link">(703) 723-4040 — Ashburn</a>
+    <a href="tel:7035610600" class="cta-phone-link">(703) 561-0600 — Herndon</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Poulin Chiropractic</h3>
+      <p>Serving the communities of Herndon, Ashburn and Northern Virginia since 1993. Certified specialists in Cox® Technic Flexion-Distraction and Decompression.</p>
+      <img src="assets/local/cox-seal.png" alt="Cox Technic Certified" class="footer-seal">
+      <p style="margin-top:1rem; font-size:0.75rem; color:rgba(255,255,255,0.3);">This website is informational only and does not replace medical consultation.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#treatment">Cox Technic</a></li>
+        <li><a href="#services">Acupuncture</a></li>
+        <li><a href="#services">Massage</a></li>
+        <li><a href="#services">Electrotherapy</a></li>
+        <li><a href="#services">Ultrasound</a></li>
+        <li><a href="#services">Spinal Decompression</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Conditions</h4>
+      <ul>
+        <li><a href="#conditions">Low Back Pain</a></li>
+        <li><a href="#conditions">Sciatica</a></li>
+        <li><a href="#conditions">Disc Herniation</a></li>
+        <li><a href="#conditions">Stenosis</a></li>
+        <li><a href="#conditions">Neck Pain</a></li>
+        <li><a href="#conditions">Post-Surgical Pain</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:7037234040">(703) 723-4040 Ashburn</a></li>
+        <li><a href="tel:7035610600">(703) 561-0600 Herndon</a></li>
+        <li><a href="#hours">Office Hours</a></li>
+        <li><a href="https://www.poulinchiro.com/new-patient-center/new-patient-forms" target="_blank">New Patient Forms</a></li>
+        <li><a href="https://www.poulinchiro.com/contact-us" target="_blank">Contact Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Poulin Chiropractic of Herndon and Ashburn. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://www.poulinchiro.com/privacy-policy" target="_blank">Privacy Policy</a>
+      <a href="https://www.poulinchiro.com/disclaimer" target="_blank">Disclaimer</a>
+      <a href="https://www.poulinchiro.com/sitemap" target="_blank">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
 </html>
