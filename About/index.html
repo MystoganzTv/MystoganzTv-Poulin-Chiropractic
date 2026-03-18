@@ -80,6 +80,16 @@
     max-width: 900px;
     margin: 0 auto;
   }
+  .banner-breadcrumb {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    margin-bottom: 1rem; color: rgba(239, 246, 245, 0.88); font-size: 0.82rem; font-weight: 600;
+  }
+  .banner-breadcrumb svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .banner-breadcrumb a {
+    color: inherit;
+  }
   .page-header .eyebrow {
     margin-bottom: 0.95rem;
     color: rgba(230, 244, 242, 0.88);
@@ -226,7 +236,7 @@
       <li><a href="/About/" class="active">About</a></li>
       <li><a href="/#hours">Locations</a></li>
     </ul>
-    <a href="tel:7037234040" class="nav-cta">Call Now</a>
+    <a href="/Contact/#contact-form" class="nav-cta">Book Appointment</a>
   </div>
 </nav>
 
@@ -234,6 +244,13 @@
   <section class="page-header">
     <div class="page-header-banner">
       <div class="page-header-copy">
+        <div class="banner-breadcrumb">
+          <a href="/" aria-label="Home">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
+          </a>
+          <span>/</span>
+          <span>About</span>
+        </div>
         <div class="eyebrow">About Us</div>
         <h1>Meet Dr. Mike M. Poulin, D.C.</h1>
         <p class="page-subtitle">More than 30 years of dedicated chiropractic care serving the Herndon and Ashburn communities.</p>
@@ -320,7 +337,7 @@
         <p>Explore office hours, locations, and the treatment approach that has made Poulin Chiropractic a trusted name in conservative spine care for decades.</p>
       </div>
       <div class="cta-actions">
-        <a href="/#hours" class="btn-primary">View Locations</a>
+        <a href="/Contact/#locations" class="btn-primary">View Locations</a>
         <a href="/#treatment" class="btn-secondary">See Cox Technic</a>
       </div>
     </div>

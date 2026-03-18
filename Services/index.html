@@ -47,6 +47,13 @@
     background: var(--teal); color: #fff; padding: 0.8rem 1.3rem; border-radius: 999px;
     font-weight: 700; font-size: 0.9rem;
   }
+  .banner-breadcrumb {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    margin-bottom: 1rem; color: #5b6d7f; font-size: 0.82rem; font-weight: 600;
+  }
+  .banner-breadcrumb svg {
+    width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+  }
 
   section { padding: 5.8rem 2rem; }
   .container { max-width: 1320px; margin: 0 auto; }
@@ -250,7 +257,7 @@
       <li><a href="/About/">About</a></li>
       <li><a href="/#hours">Locations</a></li>
     </ul>
-    <a href="tel:7037234040" class="nav-cta">Call Now</a>
+    <a href="/Contact/#contact-form" class="nav-cta">Book Appointment</a>
   </div>
 </nav>
 
@@ -258,6 +265,13 @@
   <section class="treatment">
     <div class="container treatment-grid">
       <div class="treatment-copy">
+        <div class="banner-breadcrumb">
+          <a href="/" aria-label="Home">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
+          </a>
+          <span>/</span>
+          <span>Services</span>
+        </div>
         <div class="eyebrow">The Treatment</div>
         <h1 class="section-title">What is Cox® Technic?</h1>
         <p class="section-copy">Named after its developer, James M. Cox DC DACBR, Cox® Technic Flexion Distraction and Decompression is a gentle, non-force chiropractic adjusting approach. It is a fusion of chiropractic and osteopathic principles, offering a non-surgical alternative as a first-line treatment.</p>
@@ -364,7 +378,7 @@
     <div class="container">
       <h2>Ready to Experience Cox® Technic?</h2>
       <p>Schedule your appointment today and begin your journey to pain-free living.</p>
-      <a href="tel:7037234040" class="cta-button">
+      <a href="/Contact/#contact-form" class="cta-button">
         <span>Schedule Appointment</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
