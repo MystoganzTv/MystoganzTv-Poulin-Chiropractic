@@ -62,23 +62,29 @@
   .section-desc { font-size: 1.05rem; line-height: 1.75; color: var(--text-mid); max-width: 600px; }
 
   /* ABOUT */
-  .about { background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .about-photos { display: flex; flex-direction: column; gap: 1rem; }
-  .about-photo-main { width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 16/9; background: #1a2e45; }
+  .about { background: #f9fbfb; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 4rem; align-items: start; }
+  .about-photos { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 104px; }
+  .about-photo-main { width: 100%; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 60px rgba(15, 23, 42, 0.12); aspect-ratio: 4/4.7; background: #1a2e45; }
   .about-photo-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .about-photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .about-photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .about-thumb-wrap {}
-  .about-photo-thumb { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; background: #1a2e45; box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+  .about-photo-thumb { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; background: #1a2e45; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08); }
   .about-photo-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.4s; }
   .about-photo-thumb:hover img { transform: scale(1.04); }
-  .photo-caption { font-size: 0.74rem; color: var(--text-light); text-align: center; font-style: italic; margin-top: 0.4rem; line-height: 1.4; }
-  .about-card { background: var(--navy); border-radius: 12px; padding: 2rem; color: #fff; margin-top: 0.5rem; position: relative; overflow: hidden; }
-  .about-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(26,138,138,0.3), transparent); }
-  .about-card h3 { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--gold); }
-  .about-card p { line-height: 1.7; color: rgba(255,255,255,0.78); font-size: 0.88rem; }
-  .cert-row { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
-  .cert-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(26,138,138,0.2); border: 1px solid var(--teal); padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; color: var(--teal-light); }
-  .cox-seal { height: 52px; opacity: 0.85; }
+  .photo-caption { font-size: 0.78rem; color: var(--text-light); text-align: center; font-style: italic; margin-top: 0.45rem; line-height: 1.45; }
+  .about-text { display: flex; flex-direction: column; gap: 1.5rem; }
+  .about-lead { font-size: 1.08rem; line-height: 1.9; color: var(--text-mid); max-width: 64ch; }
+  .about-copy { display: grid; gap: 1rem; }
+  .about-copy p { font-size: 0.98rem; line-height: 1.85; color: var(--text-mid); }
+  .about-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
+  .about-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 22px; padding: 1.35rem 1.4rem; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06); }
+  .about-panel h3 { font-family: var(--font-serif); font-size: 1.22rem; line-height: 1.15; color: var(--navy); margin-bottom: 0.8rem; }
+  .about-panel p { font-size: 0.93rem; line-height: 1.75; color: var(--text-mid); }
+  .about-panel.accent { background: linear-gradient(180deg, #ffffff 0%, #f5fbfa 100%); }
+  .about-credentials { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.15rem; }
+  .cert-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid rgba(26,138,138,0.22); padding: 0.5rem 0.95rem; border-radius: 999px; font-size: 0.76rem; font-weight: 700; color: var(--teal); }
+  .cox-seal { height: 54px; opacity: 0.9; }
+  .about-cta { margin-top: 0.4rem; }
 
   /* CONDITIONS */
   .conditions { background: var(--warm-white); }
@@ -187,6 +193,8 @@
     .nav-links { display: none; }
     .about, .treatment-inner { grid-template-columns: 1fr; gap: 3rem; }
     .hours-grid { grid-template-columns: 1fr; }
+    .about-photos { position: static; }
+    .about-panels { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 600px) {
@@ -257,10 +265,30 @@
 <section id="about" class="about">
   <div class="about-text reveal">
     <div class="section-label">Who We Are</div>
-    <h2 class="section-title">Poulin Chiropractic Welcomes You</h2>
-    <p class="section-desc">Dr. Poulin is here for your relief of pain, stress, and uncertainty of your condition. Poulin Chiropractic has been serving the Fairfax and Loudoun County community since 1993 — over 33 years of dedicated care.</p>
-    <p class="section-desc" style="margin-top:1rem;">We work closely with medical doctors and receive frequent referrals from neurosurgeons, pain management doctors, orthopedic surgeons, general practitioners, and many other physicians who trust our approach.</p>
-    <a href="#hours" class="btn-primary" style="display:inline-block; margin-top:2rem;">See Hours &amp; Locations</a>
+    <h2 class="section-title">A long-standing practice built on thoughtful, conservative spine care.</h2>
+    <p class="about-lead">Poulin Chiropractic has served patients across Fairfax and Loudoun County since 1993, helping people navigate pain, uncertainty, and recovery with a calm, evidence-based approach to chiropractic treatment.</p>
+    <div class="about-copy">
+      <p>Dr. Poulin is known for careful assessment, clear communication, and treatment that prioritizes precision over force. The goal is not just short-term relief, but a smarter path forward for patients dealing with disc problems, neck pain, sciatica, and persistent spinal discomfort.</p>
+      <p>That clinical trust is reflected in regular referrals from neurosurgeons, orthopedic surgeons, pain specialists, general practitioners, and other physicians who want their patients to explore a non-surgical option first.</p>
+    </div>
+    <div class="about-panels">
+      <div class="about-panel accent">
+        <h3>Clinical Legacy</h3>
+        <p>Dr. Poulin had the privilege of studying and working directly alongside Dr. James M. Cox I, founder of Cox Technic, which gives this practice an unusually direct connection to the original method and its clinical intent.</p>
+      </div>
+      <div class="about-panel">
+        <h3>Trusted By Referring Doctors</h3>
+        <p>Patients often arrive here after recommendations from specialists who value a measured, research-supported chiropractic approach before moving further toward invasive care.</p>
+      </div>
+    </div>
+    <div class="about-credentials">
+      <div class="cert-badge">✦ Cox® Technic Certified</div>
+      <div class="cert-badge">Serving Northern Virginia Since 1993</div>
+      <img src="assets/local/cox-seal.png" alt="Cox Technic Certified Seal" class="cox-seal">
+    </div>
+    <div class="about-cta">
+      <a href="#hours" class="btn-primary">See Hours &amp; Locations</a>
+    </div>
   </div>
   <div class="about-photos reveal">
     <div class="about-photo-main">
@@ -281,14 +309,6 @@
                alt="Dr. Poulin and Dr. Cox at Cox Technic Seminar September 2021" loading="lazy">
         </div>
         <p class="photo-caption">Dr. Poulin &amp; Dr. Cox — Cox Seminar, Sept. 2021</p>
-      </div>
-    </div>
-    <div class="about-card">
-      <h3>A Personal Legacy with Dr. James M. Cox</h3>
-      <p>Dr. Poulin had the privilege of studying and working directly alongside Dr. James M. Cox I, founder of Cox Technic, until his passing in March 2025 at age 84. That personal mentorship ensures the highest fidelity to the original, evidence-based technique.</p>
-      <div class="cert-row">
-        <div class="cert-badge">✦ Cox® Technic Certified</div>
-        <img src="assets/local/cox-seal.png" alt="Cox Technic Certified Seal" class="cox-seal">
       </div>
     </div>
   </div>
