@@ -129,21 +129,20 @@
   .testimonial-author { margin-top: 1.2rem; font-weight: 700; color: var(--navy); font-size: 0.9rem; }
 
   /* HOURS */
-  .hours { background: #fff; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-  .hours-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-  .hours-table tr { border-bottom: 1px solid #f0ebe4; }
-  .hours-table td { padding: 0.85rem 0; font-size: 0.9rem; }
-  .hours-table td:first-child { font-weight: 700; color: var(--navy); width: 110px; }
-  .hours-table td:nth-child(2) { color: var(--text-mid); }
-  .hours-table .closed { color: #bbb; font-style: italic; }
-  .location-card { background: var(--cream); border-radius: 12px; padding: 2rem; border: 1px solid #e8e0d6; }
-  .location-photo { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 1.2rem; display: block; background: #d0cbc5; }
-  .location-card h4 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--navy); margin-bottom: 1rem; padding-bottom: 0.7rem; border-bottom: 2px solid var(--gold); }
-  .location-info { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
-  .location-info p { font-size: 0.9rem; color: var(--text-mid); display: flex; gap: 0.5rem; align-items: flex-start; }
-  .location-info span { font-weight: 700; color: var(--navy); min-width: 65px; flex-shrink: 0; }
-  .location-phone { color: var(--teal); font-weight: 700; font-size: 1.05rem; text-decoration: none; transition: color 0.2s; }
+  .hours { background: #fff; }
+  .hours-intro { text-align: center; margin-bottom: 3.5rem; }
+  .hours-intro .section-desc { margin: 0 auto; }
+  .hours-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; align-items: stretch; }
+  .location-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #dfe5ea; box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08); }
+  .location-photo { width: 100%; height: 250px; object-fit: cover; display: block; background: #d0cbc5; }
+  .location-copy { padding: 1.7rem 1.75rem 1.85rem; }
+  .location-card h4 { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 800; color: #1f2937; margin-bottom: 1.2rem; }
+  .location-meta { display: flex; flex-direction: column; gap: 1rem; }
+  .location-meta-item { display: flex; gap: 0.9rem; align-items: flex-start; color: #455468; font-size: 0.95rem; line-height: 1.45; }
+  .location-icon { width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 1.5px solid rgba(26,138,138,0.35); color: var(--teal); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; margin-top: 0.05rem; }
+  .location-phone { color: var(--teal); font-weight: 700; font-size: 0.98rem; text-decoration: none; transition: color 0.2s; }
   .location-phone:hover { color: var(--teal-light); }
+  .location-hours-note { color: #6a7889; }
 
   /* CTA */
   .cta-section { background: linear-gradient(135deg, var(--teal) 0%, #0d6b6b 100%); text-align: center; padding: 6rem 5%; }
@@ -181,7 +180,8 @@
   /* RESPONSIVE */
   @media (max-width: 900px) {
     .nav-links { display: none; }
-    .about, .treatment-inner, .hours { grid-template-columns: 1fr; gap: 3rem; }
+    .about, .treatment-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hours-grid { grid-template-columns: 1fr; }
     .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -190,6 +190,8 @@
     section { padding: 4rem 5%; }
     .about-photo-row { grid-template-columns: 1fr 1fr; }
     .cox-videos { grid-template-columns: 1fr 1fr; }
+    .location-photo { height: 210px; }
+    .location-copy { padding: 1.35rem 1.2rem 1.4rem; }
   }
 </style>
 </head>
@@ -404,52 +406,55 @@
 
 <!-- HOURS -->
 <section id="hours" class="hours">
-  <div class="reveal">
-    <div class="section-label">Find Us</div>
-    <h2 class="section-title">Herndon Location</h2>
-    <div class="location-card">
-      <img src="assets/local/doctor-main.jpeg"
-           alt="Herndon Chiropractic Office" class="location-photo" loading="lazy">
-      <h4>📍 Herndon (New Address – Same Location)</h4>
-      <div class="location-info">
-        <p><span>Address</span>2445 Centreville Rd, Suite 43, Herndon, VA 20171</p>
-        <p><span>Phone</span><a href="tel:7035610600" class="location-phone">📞 (703) 561-0600</a></p>
-        <p><span>Fax</span>703-561-0601</p>
-      </div>
-    </div>
-    <table class="hours-table">
-      <tr><td>Monday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
-      <tr><td>Tuesday</td><td class="closed">Open in Ashburn only</td></tr>
-      <tr><td>Wednesday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
-      <tr><td>Thursday</td><td class="closed">Open in Ashburn only</td></tr>
-      <tr><td>Friday</td><td>8:00 am – 12:15 pm &amp; 2:00 – 6:15 pm</td></tr>
-      <tr><td>Saturday</td><td>7:00 am – 10:45 am</td></tr>
-      <tr><td>Sunday</td><td class="closed">Closed</td></tr>
-    </table>
+  <div class="hours-intro reveal">
+    <div class="section-label">Visit Us</div>
+    <h2 class="section-title">Our Locations</h2>
   </div>
 
-  <div class="reveal">
-    <div class="section-label">&nbsp;</div>
-    <h2 class="section-title">Ashburn Location</h2>
-    <div class="location-card">
+  <div class="hours-grid">
+    <article class="location-card reveal">
+      <img src="assets/local/doctor-main.jpeg"
+           alt="Herndon Chiropractic Office" class="location-photo" loading="lazy">
+      <div class="location-copy">
+        <h4>Herndon Office</h4>
+        <div class="location-meta">
+          <div class="location-meta-item">
+            <span class="location-icon">⌖</span>
+            <div>2445 Centreville Road, Suite 43<br>Herndon, VA 20171</div>
+          </div>
+          <div class="location-meta-item">
+            <span class="location-icon">✆</span>
+            <div><a href="tel:7035610600" class="location-phone">(703) 561-0600</a></div>
+          </div>
+          <div class="location-meta-item">
+            <span class="location-icon">◷</span>
+            <div class="location-hours-note">Mon, Wed, Fri: 8:00am – 12:15pm &amp; 2:00pm – 6:15pm<br>Sat: 7:00am – 10:45am</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="location-card reveal">
       <img src="assets/local/ashburn-office.jpg"
            alt="Ashburn Chiropractic Office" class="location-photo" loading="lazy">
-      <h4>📍 Ashburn</h4>
-      <div class="location-info">
-        <p><span>Address</span>44121 Leesburg Pike, Suite 150, Ashburn, VA 20147</p>
-        <p><span>Phone</span><a href="tel:7037234040" class="location-phone">📞 (703) 723-4040</a></p>
-        <p><span>Fax</span>703-561-0601</p>
+      <div class="location-copy">
+        <h4>Ashburn Office</h4>
+        <div class="location-meta">
+          <div class="location-meta-item">
+            <span class="location-icon">⌖</span>
+            <div>44121 Leesburg Pike, Suite 150<br>Ashburn, VA 20147</div>
+          </div>
+          <div class="location-meta-item">
+            <span class="location-icon">✆</span>
+            <div><a href="tel:7037234040" class="location-phone">(703) 723-4040</a></div>
+          </div>
+          <div class="location-meta-item">
+            <span class="location-icon">◷</span>
+            <div class="location-hours-note">Tue, Thu: 8:00am – 12:30pm &amp; 3:00pm – 6:15pm</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <table class="hours-table">
-      <tr><td>Monday</td><td class="closed">Open in Herndon only</td></tr>
-      <tr><td>Tuesday</td><td>8:00 am – 12:30 pm &amp; 3:00 – 6:15 pm</td></tr>
-      <tr><td>Wednesday</td><td class="closed">Open in Herndon only</td></tr>
-      <tr><td>Thursday</td><td>8:00 am – 12:30 pm &amp; 3:00 – 6:15 pm</td></tr>
-      <tr><td>Friday</td><td class="closed">Open in Herndon only</td></tr>
-      <tr><td>Saturday</td><td class="closed">Open in Herndon only</td></tr>
-      <tr><td>Sunday</td><td class="closed">Closed</td></tr>
-    </table>
+    </article>
   </div>
 </section>
 
