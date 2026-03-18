@@ -18,7 +18,7 @@
   };
   var HERO_CARD_IMAGES = {
     Home: "https://www.poulinchiro.com/data/uploads/Poulin-Cox-9-2021.jpg",
-    About: "https://www.poulinchiro.com/data/uploads/Poulin-Cox-9-2021.jpg",
+    About: "https://www.poulinchiro.com/data/images/mikepoulin--1--1.jpg",
   };
   var VIDEO_LIBRARY = [
     {
@@ -1977,7 +1977,13 @@
       return;
     }
 
+    var anchorSection = findSectionByText("Dedicated to Your Spinal Health");
     var main = document.querySelector("main");
+
+    if (anchorSection && anchorSection.parentNode) {
+      anchorSection.insertAdjacentHTML("beforebegin", buildPainTopicsSectionMarkup());
+      return;
+    }
 
     if (main) {
       main.insertAdjacentHTML("beforeend", buildPainTopicsSectionMarkup());
@@ -2084,12 +2090,7 @@
       "</section>" +
       '<section class="pc-blog-section" data-inline-blog-route="detail">' +
       '<div class="pc-blog-shell">' +
-      '<article class="pc-topic-article">' +
-      '<div class="pc-topic-body">' +
-      buildTopicBodyHtml(topic) +
-      buildTopicRelatedHtml(topic) +
-      "</div>" +
-      "</article>" +
+      buildTopicDetailMarkup(topic, true) +
       "</div>" +
       "</section>"
     );
@@ -2163,35 +2164,7 @@
 
     if (routeKey === "About") {
       replaceHeroCardMedia(findSectionByText("Dedicated to Your Spinal Health") || hero, routeKey, "center center", "contain");
-      fixAboutFeatureSection();
     }
-  }
-
-  function fixAboutFeatureSection() {
-    var section = findSectionByText("Dedicated to Your Spinal Health");
-
-    if (!section) {
-      return;
-    }
-
-    Array.prototype.slice.call(section.querySelectorAll("img")).forEach(function (image) {
-      image.src = HERO_CARD_IMAGES.About;
-      image.srcset = "";
-      image.alt = "Dr. Poulin with Dr. James Cox";
-      image.style.objectFit = "contain";
-      image.style.objectPosition = "center top";
-      image.style.width = "100%";
-      image.style.height = "100%";
-      image.style.background = "#f4efe8";
-    });
-
-    Array.prototype.slice.call(section.querySelectorAll("[style*='background-image']")).forEach(function (node) {
-      node.style.backgroundImage = "url('" + HERO_CARD_IMAGES.About + "')";
-      node.style.backgroundSize = "contain";
-      node.style.backgroundPosition = "center top";
-      node.style.backgroundRepeat = "no-repeat";
-      node.style.backgroundColor = "#f4efe8";
-    });
   }
 
   function ensureBlogNavLink() {
