@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Us | Poulin Chiropractic</title>
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --navy: #0d1f35;
@@ -15,8 +16,8 @@
     --text-dark: #1f2937;
     --text-mid: #64748b;
     --border: #dbe4ea;
-    --font-serif: Georgia, "Times New Roman", serif;
-    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-sans); background: var(--warm-white); color: var(--text-dark); }
@@ -43,87 +44,83 @@
   }
 
   .page-hero {
-    max-width: 1240px; margin: 0 auto; padding: 4.5rem 2rem 2.5rem;
-    display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 4rem; align-items: start;
+    max-width: 1220px; margin: 0 auto; padding: 4.8rem 2rem 1.8rem;
+    display: grid; grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: 4.4rem; align-items: start;
   }
-  .portrait-wrap { display: flex; flex-direction: column; gap: 1.4rem; }
+  .portrait-wrap { display: flex; flex-direction: column; gap: 1.55rem; }
   .portrait-card {
     border-radius: 30px;
   }
   .portrait-frame {
     background: #fff;
-    border-radius: 30px; padding: 1.1rem;
-    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.08);
+    border-radius: 26px; padding: 0.95rem;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.09);
   }
   .portrait-image {
-    border-radius: 999px; aspect-ratio: 1 / 1.32; width: min(100%, 520px);
+    border-radius: 999px; aspect-ratio: 1 / 1.34; width: min(100%, 540px);
     object-fit: cover; object-position: top center; margin: 0 auto;
   }
-  .portrait-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  .portrait-badges { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; }
   .portrait-badge {
     display: inline-flex; align-items: center; gap: 0.55rem;
-    background: #eef6f5; border: 1px solid rgba(26,138,138,0.14);
-    border-radius: 999px; padding: 0.7rem 1rem; color: #236c6c; font-weight: 700; font-size: 0.9rem;
+    background: #eef6f3;
+    border-radius: 999px; padding: 0.82rem 1.24rem; color: #237a76; font-weight: 600; font-size: 0.92rem;
   }
 
-  .about-copy { padding-top: 0.4rem; }
+  .about-copy { padding-top: 0.25rem; }
   .eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; font-weight: 700; margin-bottom: 1rem; }
   h1, h2 { font-family: var(--font-serif); color: var(--navy); line-height: 1.08; }
-  h1 { font-size: clamp(2.5rem, 4.6vw, 4rem); margin-bottom: 1.25rem; }
+  h1 { font-size: clamp(2.45rem, 4vw, 3.65rem); margin-bottom: 1.6rem; letter-spacing: -0.03em; }
   .intro {
-    font-size: 1.06rem; line-height: 1.85; color: var(--text-mid);
-    max-width: 58ch; margin-bottom: 1.8rem;
+    font-size: 1rem; line-height: 1.72; color: #6b7a8c;
+    max-width: 39ch; margin-bottom: 2.2rem;
   }
-  .credentials-list { list-style: none; display: grid; gap: 1rem; margin-top: 1.9rem; }
+  .credentials-list { list-style: none; display: grid; gap: 1.2rem; margin-top: 1.95rem; max-width: 54ch; }
   .credentials-list li {
     display: grid; grid-template-columns: 24px 1fr; gap: 0.9rem; align-items: start;
-    font-size: 0.98rem; line-height: 1.6; color: #1f2937;
+    font-size: 0.95rem; line-height: 1.46; color: #1f2937;
   }
   .check {
     width: 24px; height: 24px; border-radius: 50%;
-    border: 1.5px solid rgba(26,138,138,0.55); color: var(--teal);
-    display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; margin-top: 0.1rem;
+    border: 1.5px solid rgba(26,138,138,0.7); color: var(--teal);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; margin-top: 0.05rem;
   }
 
   .memory-section {
-    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem;
+    max-width: 1220px; margin: 0 auto; padding: 0 2rem 4.8rem;
+    display: grid; grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: 4.4rem;
   }
   .memory-spacer { min-height: 1px; }
-  .memory-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
-  .memory-copy p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
+  .memory-copy h2 { font-size: clamp(2.1rem, 3vw, 3.05rem); margin-bottom: 1.45rem; letter-spacing: -0.03em; }
+  .memory-copy p { color: #6b7a8c; line-height: 1.72; font-size: 1rem; max-width: 39ch; margin-bottom: 0; }
   .memory-copy p:last-child { margin-bottom: 0; }
   .values {
-    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
+    max-width: 1380px; margin: 0 auto; padding: 0 2rem 4.8rem;
   }
-  .values-header { margin-bottom: 2rem; text-align: center; }
-  .values-header h2 { font-size: clamp(1.9rem, 3vw, 2.7rem); }
-  .values-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .values-header { margin-bottom: 2.2rem; text-align: center; }
+  .values-header h2 { font-size: clamp(2.3rem, 3.2vw, 3.5rem); letter-spacing: -0.03em; }
+  .values-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.6rem; }
   .value-card {
     background: #fff;
-    border-radius: 22px; padding: 1.5rem 1.35rem;
-    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    border-radius: 18px; padding: 1.7rem 1.6rem 1.8rem;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
     text-align: center;
   }
+  .value-icon {
+    width: 68px; height: 68px; border-radius: 20px; margin: 0 auto 1.2rem;
+    background: #eef6f3; color: #237a76; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; font-weight: 600;
+  }
   .value-card h3 {
-    font-family: var(--font-serif); font-size: 1.38rem; line-height: 1.12;
-    color: var(--navy); margin-bottom: 0.75rem;
+    font-family: var(--font-sans); font-size: 1.04rem; line-height: 1.2;
+    color: #1f2937; margin-bottom: 0.9rem; font-weight: 700;
   }
-  .value-card p { color: var(--text-mid); line-height: 1.75; font-size: 0.96rem; }
-  .memory-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.8rem; }
+  .value-card p { color: #6b7a8c; line-height: 1.72; font-size: 1rem; }
+  .memory-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; max-width: 760px; }
   .memory-gallery img {
-    width: 100%; height: auto; object-fit: contain; object-position: top center;
-    border-radius: 22px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    width: 100%; aspect-ratio: 1.18 / 0.72; object-fit: cover; object-position: top center;
+    border-radius: 18px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
   }
-  .trust-section {
-    max-width: 1240px; margin: 0 auto; padding: 0 2rem 4.5rem;
-  }
-  .trust-copy {
-    max-width: 760px;
-  }
-  .trust-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.15rem; }
-  .trust-copy p { color: var(--text-mid); line-height: 1.85; font-size: 1rem; margin-bottom: 1rem; }
-  .trust-copy p:last-child { margin-bottom: 0; }
   .cta-strip {
     max-width: 1240px; margin: 0 auto; padding: 0 2rem 5rem;
   }
@@ -152,11 +149,13 @@
     .page-hero, .memory-section { grid-template-columns: 1fr; gap: 2.5rem; }
     .values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .memory-spacer { display: none; }
+    .intro, .credentials-list, .memory-copy p { max-width: none; }
+    .memory-gallery { max-width: none; }
   }
   @media (max-width: 720px) {
     .nav-inner { padding: 0 1.2rem; }
     .nav-links { display: none; }
-    .page-hero, .memory-section, .cta-strip, .values, .trust-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .page-hero, .memory-section, .cta-strip, .values { padding-left: 1.2rem; padding-right: 1.2rem; }
     .page-hero { padding-top: 3rem; }
     .values-grid { grid-template-columns: 1fr; }
     .memory-gallery { grid-template-columns: 1fr; }
@@ -193,24 +192,25 @@
       </div>
       <div class="portrait-badges">
         <div class="portrait-badge">⟡ Cox® Part 3 Certified</div>
-        <div class="portrait-badge">◎ Fluent in French</div>
+        <div class="portrait-badge">◎ Bilingual</div>
       </div>
     </div>
 
     <div class="about-copy">
       <div class="eyebrow">About Us</div>
       <h1>Background &amp; Credentials</h1>
-      <p class="intro">Dr. Poulin has dedicated his career to thoughtful, high-quality chiropractic care, with extensive training in Cox® Technic Flexion-Distraction and Decompression for patients seeking a more conservative path for complex spinal conditions.</p>
-      <p class="intro">The practice receives frequent referrals from neurosurgeons, pain management physicians, orthopedic surgeons, general practitioners, dentists, and physiatrists who value a careful, non-surgical approach.</p>
+      <p class="intro">Dr. Poulin has dedicated his career to providing the highest quality chiropractic care. His extensive training in Cox® Technic Flexion-Distraction and Decompression makes him uniquely qualified to treat complex spinal conditions without surgery. Our office receives frequent referrals from neurosurgeons, pain management doctors, orthopedic surgeons, general practitioners, dentists, and physiatrists.</p>
 
       <ul class="credentials-list">
-        <li><span class="check">✓</span><span>Part 3 Certified in Cox® Disc Decompression, a distinction held by a small percentage of chiropractors.</span></li>
-        <li><span class="check">✓</span><span>Providing chiropractic care in Herndon since 1993, with a second location in Ashburn added in 2006.</span></li>
-        <li><span class="check">✓</span><span>Graduate of Parker Chiropractic College, completing an accelerated doctoral program with a strong focus on clinical discipline.</span></li>
-        <li><span class="check">✓</span><span>Former President of the Sports Council on Chiropractic at Parker.</span></li>
-        <li><span class="check">✓</span><span>Equipped with advanced chiropractic technology, including Cox® treatment tables for decompression-focused care.</span></li>
-        <li><span class="check">✓</span><span>Fluent in French and knowledgeable in Spanish, helping patients feel more comfortable and understood.</span></li>
-        <li><span class="check">✓</span><span>Long-standing involvement in the Herndon and Ashburn community through local business and civic relationships.</span></li>
+        <li><span class="check">✓</span><span>Part 3 Certified in Cox® Disc Decompression — less than 1% of chiropractors worldwide</span></li>
+        <li><span class="check">✓</span><span>In practice in Herndon since 1993</span></li>
+        <li><span class="check">✓</span><span>Opened Herndon practice in May 1997</span></li>
+        <li><span class="check">✓</span><span>Opened second location in Ashburn in 2006</span></li>
+        <li><span class="check">✓</span><span>Graduated Parker Chiropractic College (1989–1992) — finished 4-year doctorate in 3 years</span></li>
+        <li><span class="check">✓</span><span>President of the Sports Council on Chiropractic at Parker</span></li>
+        <li><span class="check">✓</span><span>State-of-the-art chiropractic equipment including Cox® 7th generation tables</span></li>
+        <li><span class="check">✓</span><span>Fluent in French, knowledgeable in Spanish</span></li>
+        <li><span class="check">✓</span><span>Member of the Herndon Chamber of Commerce and Herndon Arts Council</span></li>
       </ul>
     </div>
   </section>
@@ -219,22 +219,12 @@
     <div class="memory-spacer"></div>
     <article class="memory-copy">
       <h2>In Memory of Dr. James Cox</h2>
-      <p>Dr. James Cox was the founder of Cox® Technic and an important mentor to Dr. Poulin. His passing in March 2025 marked the loss of one of chiropractic’s most influential innovators, but his work continues through the patients and practitioners shaped by his method.</p>
-      <p>Dr. Poulin’s direct training relationship with Dr. Cox remains one of the defining strengths of this practice, reinforcing a standard of care rooted in technique, precision, and fidelity to the original clinical intent.</p>
+      <p>Dr. James Cox was the founder of Cox® Technic and a great friend and mentor to Dr. Poulin. He passed away in March 2025 at 84 years young. His legacy lives on through the countless patients who have benefited from his revolutionary treatment approach.</p>
       <div class="memory-gallery">
         <img src="/assets/local/doctor-cox.jpg" alt="Dr. Cox and Dr. Poulin">
         <img src="/assets/local/poulin-cox-2021.jpg" alt="Dr. Poulin with Dr. Cox">
       </div>
     </article>
-  </section>
-
-  <section class="trust-section">
-    <div class="trust-copy">
-      <h2>A Practice Built on Trust</h2>
-      <p>Poulin Chiropractic has grown through long-term patient relationships, specialist referrals, and a consistent reputation for conservative care that is calm, clear, and clinically grounded.</p>
-      <p>For many patients, the experience here is not only about relief, but about finally understanding what is happening in the spine and having a measured plan that feels responsible and realistic.</p>
-      <p>That combination of clinical experience, communication, and continuity is what continues to bring families back across Herndon, Ashburn, and the surrounding Northern Virginia communities.</p>
-    </div>
   </section>
 
   <section class="values">
@@ -243,18 +233,22 @@
     </div>
     <div class="values-grid">
       <article class="value-card">
+        <div class="value-icon">◉</div>
         <h3>Excellence</h3>
         <p>We stay up-to-date with the most recent research on spinal biomechanics, anatomy, imaging, and chiropractic treatment options.</p>
       </article>
       <article class="value-card">
+        <div class="value-icon">⌘</div>
         <h3>Education</h3>
         <p>We believe knowledge is power. Our mission is to help you understand your pain and provide knowledge to choose the best course of care.</p>
       </article>
       <article class="value-card">
+        <div class="value-icon">♡</div>
         <h3>Compassion</h3>
         <p>We recognize the importance of helping you regain your quality of life as soon as possible and intend to do so with your involvement.</p>
       </article>
       <article class="value-card">
+        <div class="value-icon">◎</div>
         <h3>Community</h3>
         <p>Involved in local community and church activities, serving the Fairfax and Loudoun County area for over 30 years.</p>
       </article>
